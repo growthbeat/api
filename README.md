@@ -1,5 +1,7 @@
 > :page_facing_up: API Documentation for Growthbeat
 
+[![wercker][wercker-badge]][wercker-link]
+
 <br>
 
 <p align="center">
@@ -19,7 +21,7 @@
 $ git clone git@github.com:growthbeat/api.git
 $ cd api
 $ npm install
-$ gulp
+$ npm run start
 ```
 
 ## License
@@ -30,3 +32,5 @@ Whenever code for docs is borrowed or inspired by awesome existing sources, we c
 
 
 [sirok]:          http://sirok.co.jp/
+[wercker-badge]:  https://img.shields.io/wercker/ci/growthbeat/docs.svg?style=flat-square
+[wercker-link]:   https://app.wercker.com/#applications/577f386ed48ae0af2282b689
