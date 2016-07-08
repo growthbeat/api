@@ -1,6 +1,6 @@
 > :page_facing_up: API Documentation for Growthbeat
 
-[![wercker][wercker-badge]][wercker-link]
+[![wercker status](https://app.wercker.com/status/f76cb089b3d78f20a7b5bfca5a436ff7/s/master "wercker status")](https://app.wercker.com/project/bykey/f76cb089b3d78f20a7b5bfca5a436ff7)
 
 <br>
 
@@ -32,5 +32,3 @@ Whenever code for docs is borrowed or inspired by awesome existing sources, we c
 
 
 [sirok]:          http://sirok.co.jp/
-[wercker-badge]:  https://img.shields.io/wercker/ci/growthbeat/docs.svg?style=flat-square
-[wercker-link]:   https://app.wercker.com/#applications/577f386ed48ae0af2282b689
