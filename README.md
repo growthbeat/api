@@ -5,6 +5,10 @@
 <br>
 
 <p align="center">
+<img src="https://dl.dropboxusercontent.com/u/74344418/github-image/docs.png" width="700" />
+</p>
+
+<p align="center">
   <b><a href="#setup">Setup</a></b>
   |
   <b><a href="#building">Building</a></b>

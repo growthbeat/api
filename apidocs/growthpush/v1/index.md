@@ -5,7 +5,14 @@ HOST: https://api.growthpush.com/1
 [Markdown](http://daringfireball.net/projects/markdown/syntax) **formatted** description.
 
 ## Description
-Growth Push API v1 のドキュメントです. こちらは **廃止予定** ですので、最新版[Growth Push API v4]()への切り替えをしてください.
+Growth Push API v1 のドキュメントです. 
+
+::: warning
+## Deprecation Notice
+こちらのAPIは **廃止予定** ですので、最新版 [Growth Push API v4](../v4) をご利用ください.
+
+詳細は [【重要】2016年6月現在ご利用のSDKはサポート対象外となります](https://sirok-growthbeat.amebaownd.com/posts/970274) ブログをご覧ください.
+:::
 
 # Group Clients
 
