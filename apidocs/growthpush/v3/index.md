@@ -2,115 +2,174 @@ FORMAT: 1A
 HOST: https://api.growthpush.com/3
 
 # Growth Push API v3
-[Markdown](http://daringfireball.net/projects/markdown/syntax) **formatted** description.
 
-## Description
+::: note
 Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](../v4)を御覧ください
+:::
 
-# Group Clients
+**Common Params**
 
-## Client [/clients/{clientId}{?applicationId}{&credentialId}{&token}]
-登録済みクライアントの取得・更新・登録.
+ Name | Type | Notes
+ :---- | ------ | -----------
+ growthbeatApplicationId  | String | [Grwothbeat Application Id](http://faq.growthbeat.com/article/130-growthbeat-id)
+ credentialId  | String| [Grwothbeat Credential Key (API Key)](http://faq.growthbeat.com/article/130-growthbeat-id)
 
-### Get Clients [GET]
-クライアントの取得.
+# Group Client
 
-+ Parameters
+**Client Object**
 
-    + applicationId: `PIaD6TaVt7wvKwao` (required, string) - Growthbeat アプリケーションID
-    + credentialId: `7gpJ51ZQPJhNzrk0p0ThnNwh9jVcDlRS` (required, string) - Growthbeat クレデンシャルキー
-    + token: `62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c` (required, string) - デバイストークン
+ Name | Type | Notes
+ :---- | ------ | -----------
+ growthbeatClientId  | String| Growthbeat Client Id
+ id  | int | Client Id
+ token  | String | Device Token
+ os  | enum [ios/android] | Device Os
+ status  | enum [unknown/validating/active/inactive/invalid] | Device Status
+ environment  | enum [development/production] | Device Environment
+ applicationId  | String | Growth Push Application Id
+ code  | String | Growth Push Code
+ created  | String [yyyy-MM-dd HH:mm:ss] | Created Date
 
-+ Response 200 (application/json)
+## Client List [/clients]
 
-    + Body
-
-            {
-                "growthbeatApplicationId": "PIaD6TaVt7wvKwao",
-                "code": "u0bAExbsVIz1Z1Pt",
-                "os": "ios",
-                "applicationId": 7700,
-                "growthbeatClientId": "PbdeyiRjTNcmxMHE",
-                "created": "2016-02-03 08:40:48",
-                "id": 265728187,
-                "environment": "development",
-                "status": "active",
-                "token": "62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c"
-            }
-
-+ Response 404 (application/json)
-
-    + Body
-
-            {
-                "error": "Note not found"
-            }
-
-### Create New Clients [POST]
-クライアントの作成.
-
-
-+ Request with body (application/json)
-
-    + Body
-
-            {
-                "clientId":"2KTYrVuTZOyJbEZp",
-                "credentialId":"7gpJ51ZQPJhNzrk0p0ThnNwh9jVcDlRS",
-                "token":"62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c",
-                "growthbeatClientId":"2KTYrVuTZOyJbEZp",
-                "token":"5a7e69734d159c8b3798acd3f34d8fc3b691e975fb813f67bff0f25be1d270f4",
-                "os":"ios",
-                "environment":"development"
-            }
-
-+ Response 200 (application/json)
-
-    + Body
-            {
-                "id":265728187,
-                "applicationId":7700,
-                "code":"1KWVpSLCud3ba736",
-                "growthbeatClientId":"2KTYrVuTZOyJbEZp",
-                "token":"62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c",
-                "os":"ios",
-                "environment":"development",
-                "status":"validating",
-                "created":"2013-07-01 16:52:42"
-            }
-
-### Update Clients [PUT]
+### Get Clients [GET /clients{?applicationId}{&credentialId}{&token}]
+Get a list of client.
 
 + Parameters
 
-    + clientId: `PIaD6TaVt7wvKwao` (required, string) - Growthbeat クライアントID
+    + applicationId: (required, string) - Growthbeat Application Id
+    + credentialId: (required, string) - Growthbeat Credential
+    + token: (required, string) - Device Token
+
++ Response 200 (application/json)
+
+    + Attributes (GrowthbeatClient)
+
++ Response 400 (application/json)
+
+    + Attributes (400)
+
++ Response 401 (application/json)
+
+    + Attributes (401)
+
+### Create New Client [POST /clients]
+Create a new client.
+
++ Parameters
 
 + Request (application/json)
-
     + Headers
+    + Attributes
+        + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat Client Id
+        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat Credential
+        + token: TOKEN (string) - Device Token
+        + os: ios (required, enum[string]) - Device Os
+            + ios
+            + android
+        + environment: development (required, enum[string]) - Device Environment
+            + production
+            + development
 
-    + Body
++ Response 200 (application/json)
+    + Attributes (GrowthbeatClient)
 
-            {
-                "clientId": "2KTYrVuTZOyJbEZp",
-                "credentialId":"7gpJ51ZQPJhNzrk0p0ThnNwh9jVcDlRS",
-                "token":"62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c",
-                "os":"ios",
-                "environment":"development"
-            }
++ Response 400 (application/json)
+    + Attributes (400)
 
-+ Response
++ Response 401 (application/json)
+    + Attributes (401)
 
-    + Body
+## Client [/clients/{clientId}]
 
-            {
-                "id":265728187,
-                "applicationId":7700,
-                "code":"1KWVpSLCud3ba736",
-                "growthbeatClientId":"2KTYrVuTZOyJbEZp",
-                "token":"62fb1363ac2336a9f188ff1cc6e54aeaf59a85c149e3f049643cb6f78357565c",
-                "os":"ios",
-                "environment":"development",
-                "status":"validating",
-                "created":"2013-07-01 16:52:42"
-            }
+### Update a Client [PUT /clients/{clientId}]
+Update a single client by clientId.
+
++ Parameters
+     + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat Client Id
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat Credential
+        + token: TOKEN (required, string) - Device Token
+        + environment: development (enum[string]) - Device Environment
+            + production
+            + development
+
++ Response 200 (application/json)
+    + Attributes (GrowthbeatClient)
+
++ Response 400 (application/json)
+    + Attributes (400)
+
++ Response 401 (application/json)
+    + Attributes (401)
+
+# Group Events
+
+## Event [/clients/{?goalId}{&applicationId}{&credentialId}{&token}]
+登録済みイベントの取得・更新・登録.
+
+### Get Events [GET]
+イベントの取得.
+
+# Data Structures
+
+## Result (object)
++ result: true (boolean)
+
+## Timestamp (object)
++ created: `2015-02-03 12:34:56` (string)
+
+## Growthbeat (object)
++ growthbeatClientId: GROWTHBEAT_CLIENT_ID (string)
++ growthbeatApplicationId: GRWOTHBEAT_APPLICATION_ID (string)
+
+## GrowthbeatClient (object)
++ id: CLIENT_ID (number)
++ code: DEVICE_CODE (string)
++ token: DEVICE_TOKEN (string)
++ Include Growthbeat
++ os: OS (enum[string])
+    + ios
+    + android
++ status: DEVICE_STATUS (enum[string])
+    + unknown
+    + validating
+    + active
+    + inactive
+    + invalid
++ environment: DEVICE_ENVIRONMENT (enum[string])
+    + production
+    + development
++ applicationId: APPLICATION_ID (number)
++ Include Timestamp
+
+## Client (object)
++ id: CLIENT_ID (number)
++ code: DEVICE_CODE (string)
++ token: DEVICE_TOKEN (string)
++ Include Growthbeat
++ os: OS (enum[string])
+    + ios
+    + android
++ status: DEVICE_STATUS (enum[string])
+    + unknown
+    + validating
+    + active
+    + inactive
+    + invalid
++ environment: DEVICE_ENVIRONMENT (enum[string])
+    + production
+    + development
++ applicationId: APPLICATION_ID (number)
++ Include Timestamp
+
+## 400 (object)
++ status: 400 (number)
++ message: Bad Request. (string)
+
+## 401 (object)
++ status: 401 (number)
++ message: Unauthorized. (string)
