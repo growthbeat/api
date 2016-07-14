@@ -97,7 +97,7 @@ value|string|イベント値
 + Parameters
     + goalId: (number) - イベントID
     + credentialId: (string) - Growthbeat クレデンシャル
-    + exclusiveTimestamp: (optional, long) - タイムスタンプ
+    + exclusiveTimestamp: (optional, number) - タイムスタンプ
     + limit: (number, optional) - リミット
         + Default: 100
     + order: (string, optional) - ソート
@@ -171,7 +171,7 @@ value|string|タグ値
 + Parameters
     + tagId: (required, number) - タグID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + exclusiveClientId: (optional, long) - Growth Push クライアントID
+    + exclusiveClientId: (optional, number) - Growth Push クライアントID
     + limit: (optional, number) - リミット
         + Default: 100
     + order: (optional, string) - ソート
