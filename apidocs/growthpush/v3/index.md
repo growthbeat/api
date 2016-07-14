@@ -12,7 +12,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
  Name | Type | Notes
  :---- | ------ | -----------
  growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- credentialId  | string| [Grwothbeat クレデンシャルID(API)](http://faq.growthbeat.com/article/130-growthbeat-id)
+ credentialId  | string | [Grwothbeat クレデンシャルID](http://faq.growthbeat.com/article/130-growthbeat-id)
 
 # Group Clients
 
@@ -21,26 +21,24 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
  Name | Type | Notes
  :---- | ------ | -----------
  growthbeatClientId  | string| Growthbeat クライアントID
- id  | int | クライアントID
+ id  | long | Growth Push クライアントID
  token  | string | デバイストークン
- os  | enum | デバイスOS ( ios/android )
- status  | enum | デバイスステータス ( unknown/validating/active/inactive/invalid )
+ os  | enum | OS ( ios/android )
+ status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
  environment  | enum | デバイス環境 ( development/production )
  applicationId  | string | Growth Push アプリケーションID
  code  | string | Growth Push Code
- created  | string | 作成日 ( yyyy-MM-dd HH:mm:ss )
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Client [GET /clients{?applicationId}{&credentialId}{&token}]
+## Get Client By Device Token [GET /clients{?applicationId}{&credentialId}{&token}]
 クライアント取得
 
 + Parameters
-
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + token: (required, string) - Device Token
+    + token: (required, string) - デバイストークン
 
 + Response 200 (application/json)
-
     + Attributes (GrowthbeatClient)
 
 ## Create New Client [POST /clients]
@@ -54,7 +52,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + token: TOKEN (string) - デバイストークン
-        + os: ios (required, enum[string]) - デバイスOS
+        + os: ios (required, enum[string]) - OS
             + ios
             + android
         + environment: development (required, enum[string]) - デバイス環境
@@ -68,13 +66,13 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 クライアント更新
 
 + Parameters
-     + clientId: (required, string) - Growthbeat クライアントID
+    + clientId: (string) - Growthbeat クライアントID
 
 + Request (application/json)
     + Headers
     + Attributes
         + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
-        + token: TOKEN (required, string) - デバイストークン
+        + token: TOKEN (string) - デバイストークン
         + environment: development (enum[string]) - デバイス環境
             + production
             + development
@@ -90,18 +88,23 @@ Name|Type|Note
 :---|---|---
 goalId|int|イベントID
 timestamp|long|作成日時
-clientId|long|クライアントID
+clientId|long|Growth Push クライアントID
 value|string|イベント値
 
 ## Get Events [GET /events{?goalId}{&credentialId}{&exclusiveTimestamp}{&limit}{&order}]
 イベント取得
 
 + Parameters
-    + goalId: (required, number) - イベントID
-    + credentialId: (required, string) - Growthbeat クレデンシャル
-    + exclusiveTimestamp: (number) - デバイストークン
-    + limit: (number) - リミット
-    + order: (number) - ascending / descending
+    + goalId: (number) - イベントID
+    + credentialId: (string) - Growthbeat クレデンシャル
+    + exclusiveTimestamp: (optional, long) - タイムスタンプ
+    + limit: (number, optional) - リミット
+        + Default: 100
+    + order: (string, optional) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
 
 + Response 200 (application/json)
     + Attributes (array[Goal])
@@ -129,37 +132,20 @@ value|string|イベント値
 Name|Type|Note
 :---|---|---
 id|int|タグID
-applicationId|int|アプリケーションID
+applicationId|int|Growth Push アプリケーションID
 type|enum|タグタイプ ( custom/message )
 name|string|タグ名
 value|string|タグ値
 invisible|boolean|削除フラグ
-created|string|作成日 ( yyyy-MM-dd HH:mm:ss )
+created|string|作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Tag Client [GET /tags{?applicationId}{&credentialId}{&name}]
+## Get Tag [GET /tags{?applicationId}{&credentialId}{&name}]
 タグ取得
 
 + Parameters
-    + applicationId: (required, number) - アプリケーションID
+    + applicationId: (required, number) - Growth Push アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + name: (required, string) - タグ名
-
-+ Response 200 (application/json)
-    + Attributes (Tag)
-
-## Create New Tag [POST /tags]
-新規タグ作成
-
-+ Parameters
-
-+ Request (application/json)
-    + Headers
-    + Attributes
-        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + token: TOKEN (required, string) - デバイストークン
-        + name: NAME (required, string) - タグ名
-        + value: VALUE (string) - タグ値
 
 + Response 200 (application/json)
     + Attributes (Tag)
@@ -175,33 +161,52 @@ created|string|作成日 ( yyyy-MM-dd HH:mm:ss )
 Name|Type|Note
 :---|---|---
 tagId|int|タグID
-clientId|long|クライアントID
+clientId|long|Growth Push クライアントID
 value|string|タグ値
 
 
-## Get Tag [GET /tags{?tagId}{&credentialId}{&exclusiveClientId}{&limit}{&order}]
+## Get Tag Clients By Tag Id [GET /tags{?tagId}{&credentialId}{&exclusiveClientId}{&limit}{&order}]
 タグクライアントリスト取得
 
 + Parameters
     + tagId: (required, number) - タグID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + exclusiveClientId: (number) - クライアントID
-    + limit: (number) - リミット
-    + order: (number) - ascending / descending
+    + exclusiveClientId: (optional, long) - Growth Push クライアントID
+    + limit: (optional, number) - リミット
+        + Default: 100
+    + order: (optional, string) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
 
 
-## Get Tag Client [GET /tags{?clientId}{&credentialId}]
+## Get Tag Clients By Client Id [GET /tags{?clientId}{&credentialId}{&type}{&exclusiveTagId}{&limit}{&order}]
 タグクライアントの取得
 
 + Parameters
-    + clientId: (required, number) - クライアントID
+    + clientId: (required, string) - Growthbeat クライアントID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + type: (optional, string) - タグタイプ
+        + Members
+            + `custom`
+            + `notification`
+            + `automation`
+            + `message`
+    + exclusiveTagId: (optional, number) - タグID
+    + limit: (optional, number) - リミット
+        + Default: 100
+    + order: (optional, string) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
 
 + Response 200 (application/json)
-    + Attributes (TagClient)
+    + Attributes (array[TagClient])
 
 ## Create New Tags [POST /tags]
 タグクライアントの作成
@@ -223,11 +228,11 @@ value|string|タグ値
 + Response 200 (application/json)
     + Attributes (array[TagClient])
 
-## Create New Tag [POST /tags]
+## Create New Tag By Client Id [POST /tags]
 タグクライアントの作成
 
 ::: note
-このAPIは、Growthbeat クライアントID と、Growthbeat クレデンシャルID の認証によってタグを生成します。
+このAPIは、Growthbeat クレデンシャルID と、Growthbeat クライアントID を元にタグを紐付けます。
 :::
 
 + Parameters
@@ -243,11 +248,11 @@ value|string|タグ値
 + Response 200 (application/json)
     + Attributes (TagClient)
 
-## Create New Tag [POST /tags]
+## Create New Tag By Device Token [POST /tags]
 タグクライアントの作成
 
 ::: note
-このAPIは、Growthbeat クレデンシャルID と、デバイストークンを元にタグを紐付けます。
+このAPIは、Growthbeat クレデンシャルID と、デバイストークン を元にタグを紐付けます。
 :::
 
 + Parameters
@@ -275,8 +280,56 @@ name|string|セグメント名
 query|string|**JSON形式** のセグメント。詳細は [Notification API クエリ指定方法](http://faq.growthbeat.com/article/96-notification-api) 参照。
 size|int|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
 invisible|boolean|削除フラグ
-modified|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
-created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
+modified|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
+created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
+
+:::note
+## Segment Query Example
+1. 男性ユーザー
+```
+{"type":"tag","tagId":2,"operator":"equal","value":"male"}
+```
+
+2. 指定のタグが紐づいているユーザー
+```
+{"type":"tag","tagId":3,"operator":"exist"}
+```
+
+3. 指定のタグに xxxx,YYYY,ZZzzAA…… の value が紐づいているユーザー (valueの値は **10件以上** 指定する必要がございます。)
+```
+{"type":"tag","tagId":4,"operator":"in","value":"xxxx,YYYY,ZZzzAA……"}
+```
+
+4. 72時間で1回以上起動しているユーザー
+```
+{"type":"event","goalId":1,"range":"relative","aggregation":"count","operator":"greater_equal","value":1.0,"begin":259200000,"end":0}
+```
+
+5. 男性ユーザー、かつ72時間で1回以上起動しているユーザー
+```
+{"type":"and","conditions":[{"type":"tag","tagId":2,"operator":"equal","value":"male"},{"type":"event","goalId":1,"range":"relative","aggregation":"count","operator":"greater_equal","value":1.0,"begin":259200000,"end":0}]}
+```
+
+6. 東京のユーザー、または神奈川のユーザー
+```
+{"type":"or","conditions":[{"type":"tag","tagId":4,"operator":"equal","value":"Tokyo"},{"type":"tag","tagId":4,"operator":"equal","value":"Kanagawa"}]}
+```
+
+7. ユーザーID複数して、24時間前の課金合計が5000以上のユーザー
+```
+{"type":"and","conditions":[{"type":"tag","tagId":25,"operator":"in","value":"111,23,90,150,72,65,55,1320"},{"type":"event","goalId":5,"range":"relative","aggregation":"summation","operator":"greater_equal","value":50000,"begin":3600000,"end":0}]}
+```
+
+8. 72時間で1回も起動していないユーザー
+```
+{"type":"not","condition":{"type":"event","goalId":1,"range":"relative","aggregation":"count","operator":"greater_equal","value":1.0,"begin":259200000,"end":0}}
+```
+
+9. セグメントを指定かつ、OSがiOSのユーザー
+```
+{"type":"and","conditions":[{"type":"segment","segmentId":10},{"type":"tag","tagId":4,"operator":"begin_with","value":"iOS"}]}
+```
+:::
 
 ## Get Segments [GET /segments{?applicationId}{&credentialId}{&page}{&limit}]
 セグメント一覧取得
@@ -284,8 +337,10 @@ created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + page: (number) - ページ数
-    + limit: (number) - リミット
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + limit: (optional, number) - リミット
+        + Default: 100
 
 + Response 200 (application/json)
     + Attributes (array[Segment])
@@ -296,7 +351,7 @@ created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + condition: (string) - query（**JSON形式** のセグメント）
+    + condition: (required, string) - query（**JSON形式** のセグメント）
 
 + Response 200 (application/json)
     + Attributes (number)
@@ -305,10 +360,14 @@ created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
 新規セグメント作成
 
 + Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + name: (required, string) - セグメント名
-    + query: (required, string) - **JSON形式** のセグメント
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: NAME (required, string) - セグメント名
+        + query: QUERY (required, string) - **JSON形式** のセグメント
 
 + Response 200 (application/json)
     + Attributes (Segment)
@@ -317,7 +376,7 @@ created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
 セグメント更新
 
 + Parameters
-     + segmentId: (required, string) - セグメントID
+    + segmentId: (required, string) - セグメントID
 
 + Request (application/json)
     + Headers
@@ -338,7 +397,7 @@ Name|Type|Note
 id|int|Notification ID
 applicationId|int|Growth Push アプリケーションID
 status|enum|送信状態 ( waiting/success/failure ) 
-created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
+created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 attachNotificationId|boolean|指定するとペイロードに "growthpush":{"notificationId":xxxxx} という形式で、通知IDが含まれます。
 duration|Long|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
 trial|array[Trial]|
@@ -355,17 +414,19 @@ text|string|配信文言
 sound|boolean|通知音
 badge|boolean|通知バッジ
 extra|boolean|ペイロードに任意のパラメータを **JSON形式** で指定します。ex. {"url":"https://growthpush.com"}
-scheduled|string|配信予定時刻 ( yyyy-MM-dd HH:mm:ss )
+scheduled|string|配信予定時刻 ( YYYY-MM-DD HH:mm:ss )
 status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 ## Get Notifications [GET /notifications{?applicationId}{&credentialId}{&page}{&limit}]
 配信一覧所得
 
 + Parameters
-    + applicationId: (required, number) - アプリケーションID
+    + applicationId: (required, number) - Growth Push アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + page: (number) - ページ数
-    + limit: (number) - リミット
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + limit: (optional, number) - リミット
+        + Default: 100
 
 + Response 200 (application/json)
     + Attributes (array[Notification])
@@ -420,7 +481,7 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 + environment: DEVICE_ENVIRONMENT (enum[string])
     + production
     + development
-+ applicationId: APPLICATION_ID (number)
++ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + Include Timestamp
 
 ## Client (object)
@@ -440,12 +501,12 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 + environment: DEVICE_ENVIRONMENT (enum[string])
     + production
     + development
-+ applicationId: APPLICATION_ID (number)
++ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + Include Timestamp
 
 ## Notification (object)
 + id: NOTIFICATION_ID (number)
-+ applicationId: APPLICATION_ID (number)
++ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + segmentId: SEGMENT_ID (number)
 + tagId: TAG_ID (number)
 + automationId: AUTOMATION_ID (number)
