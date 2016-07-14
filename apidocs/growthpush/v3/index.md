@@ -14,7 +14,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
  growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  credentialId  | string| [Grwothbeat クレデンシャルID(API)](http://faq.growthbeat.com/article/130-growthbeat-id)
 
-# Group Client
+# Group Clients
 
 **Clients Object**
 
@@ -35,7 +35,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
 + Parameters
 
-    + applicationId: (required, string) - Growthbeat アプリケーションID    
+    + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + token: (required, string) - Device Token
 
@@ -68,7 +68,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 クライアント更新
 
 + Parameters
-     + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+     + clientId: (required, string) - Growthbeat クライアントID
 
 + Request (application/json)
     + Headers
@@ -207,8 +207,8 @@ value|string|タグ値
 タグクライアントの作成
 
 ::: note
-* Growthbeat クレデンシャルID と、Growthbeat クレデンシャルID を使用します。
-* このAPIは、デバイスにまとめてタグ付けをします。既にタグが登録されている場合は、そのvalueを更新します。
+* Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用します。
+* このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグが登録されている場合は、そのvalueを更新します。
 * リクエスト数は指定したタグの件数分カウントされます。また、Notificationタグは更新する事はできません。
 * 大量のタグを更新することを想定しているため **反映までに時間がかかる場合があります(数時間以上かかる場合があります)**  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。
 :::
@@ -218,7 +218,7 @@ value|string|タグ値
 + Request (application/json)
     + Headers
     + Attributes
-        + tagBulkCreateV3Request: GROWTHBEAT_APPLICATION_ID (required, string) - JSON Object
+        + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
@@ -227,7 +227,7 @@ value|string|タグ値
 タグクライアントの作成
 
 ::: note
-このAPIは、Growthbeat クレデンシャルID と、Growthbeat クレデンシャルID の認証によってタグを生成します。
+このAPIは、Growthbeat クライアントID と、Growthbeat クレデンシャルID の認証によってタグを生成します。
 :::
 
 + Parameters
@@ -266,6 +266,69 @@ value|string|タグ値
 
 # Group Segments
 
+**Segment Object**
+
+Name|Type|Note
+:---|---|---
+id|int|セグメントID
+name|string|セグメント名
+query|string|**JSON形式** のセグメント。詳細は [Notification API クエリ指定方法](http://faq.growthbeat.com/article/96-notification-api) 参照。
+size|int|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
+invisible|boolean|削除フラグ
+modified|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
+created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
+
+## Get Segments [GET /segments{?applicationId}{&credentialId}{&page}{&limit}]
+セグメント一覧取得
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + page: (number) - ページ数
+    + limit: (number) - リミット
+
++ Response 200 (application/json)
+    + Attributes (array[Segment])
+
+## Get Segment Size [GET /segments/size{?applicationId}{&credentialId}{&condition}]
+セグメントサイズ取得
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + condition: (string) - query（**JSON形式** のセグメント）
+
++ Response 200 (application/json)
+    + Attributes (number)
+
+## Create New Segment [POST /segments]
+新規セグメント作成
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + name: (required, string) - セグメント名
+    + query: (required, string) - **JSON形式** のセグメント
+
++ Response 200 (application/json)
+    + Attributes (Segment)
+
+## Update a Segment [PUT /segments/{segmentId}]
+セグメント更新
+
++ Parameters
+     + segmentId: (required, string) - セグメントID
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: NAME (string) - セグメント名
+        + query: QUERY (string) - **JSON形式** のセグメント
+
++ Response 200 (application/json)
+    + Attributes (Segment)
+
 # Group Notifications
 
 **Notification Object**
@@ -295,24 +358,12 @@ extra|boolean|ペイロードに任意のパラメータを **JSON形式** で�
 scheduled|string|配信予定時刻 ( yyyy-MM-dd HH:mm:ss )
 status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
-**Segment Object**
-
-Name|Type|Note
-:---|---|---
-id|int|セグメントID
-name|string|セグメント名
-query|string|**JSON形式** のセグメント。詳細は [Notification API クエリ指定方法](http://faq.growthbeat.com/article/96-notification-api) 参照。
-size|int|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
-invisible|boolean|削除フラグ
-modified|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
-created|string|作成日時 ( yyyy-MM-dd HH:mm:ss )
-
 ## Get Notifications [GET /notifications{?applicationId}{&credentialId}{&page}{&limit}]
 配信一覧所得
 
 + Parameters
     + applicationId: (required, number) - アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャル
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
     + page: (number) - ページ数
     + limit: (number) - リミット
 
