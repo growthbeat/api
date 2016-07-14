@@ -475,10 +475,10 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
    + completed
 
 ## Segment (object)
-+ id: segment_id (number)
-+ name: name (string)
-+ query: query (string)
-+ size: size (number)
++ id: SEGMENT_ID (number)
++ name: NAME (string)
++ query: QUERY (string)
++ size: SIZE (number)
 + invisible: true (boolean)
 + modified: `2015-02-03 12:34:56` (string)
 + Include Timestamp
@@ -490,8 +490,8 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 + value: VALUE (string)
 
 ## Tag (object)
-+ id: tag_id (number)
-+ applicationId: application_id (number)
++ id: TAG_ID (number)
++ applicationId: APPLICATION_ID (number)
 + type: (enum[string])
     + custom
     + message
