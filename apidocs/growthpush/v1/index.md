@@ -8,7 +8,7 @@ HOST: https://api.growthpush.com/1
 Growth Push API v1 のドキュメントです. 
 
 ::: warning
-## Deprecation Notice
+## <i class="fa fa-warning"></i> Deprecation Notice
 こちらのAPIは **廃止予定** ですので、最新版 [Growth Push API v4](../v4) をご利用ください.
 
 詳細は [【重要】2016年6月現在ご利用のSDKはサポート対象外となります](https://sirok-growthbeat.amebaownd.com/posts/970274) ブログをご覧ください.
@@ -19,12 +19,12 @@ Growth Push API v1 のドキュメントです.
 ## Client List [/clients]
 登録済みクライアントのリストの取得・更新.
 
-+ Even
-+ More
-+ Markdown
-
 ### Get Clients [GET]
-クライアントリストの取得・更新・登録.
+
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+If the value for `title` or `body` is `null` or `undefined`, then the corresponding value is not modified on the server. However, if you send an empty string instead then it will **permanently overwrite** the original value.
+:::
 
 + Response 200 (application/json)
 
