@@ -50,7 +50,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
     + Headers
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + token: TOKEN (string) - デバイストークン
         + os: ios (required, enum[string]) - OS
             + ios
@@ -71,7 +71,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 + Request (application/json)
     + Headers
     + Attributes
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
         + token: TOKEN (string) - デバイストークン
         + environment: development (enum[string]) - デバイス環境
             + production
@@ -118,7 +118,7 @@ value|string|イベント値
     + Headers
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: NAME (required, string) - イベント名
         + value: VALUE (string) - イベント値
 
@@ -408,7 +408,7 @@ value|string|タグ値
     + Headers
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: NAME (required, string) - タグ名
         + value: VALUE (string) - タグ値
 
@@ -428,7 +428,7 @@ value|string|タグ値
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + token: TOKEN (required, string) - デバイストークン
         + name: NAME (required, string) - タグ名
         + value: VALUE (string) - タグ値
@@ -488,7 +488,7 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + query: {} (string) - セグメントクエリ
         + text: text (string) - テキスト
         + sound: true (boolean) - 通知音
