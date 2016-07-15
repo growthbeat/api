@@ -7,20 +7,14 @@ HOST: https://api.growthpush.com/3
 Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](../v4)を御覧ください
 :::
 
-**Common Params**
-
- Name | Type | Notes
- :---- | ------ | -----------
- credentialId  | string | [Grwothbeat クレデンシャルID](http://faq.growthbeat.com/article/130-growthbeat-id)
- growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- growthbeatClientId  | string| Growthbeat クライアントID
-
 # Group Clients
 
 **Clients Object**
 
  Name | Type | Notes
  :---- | ------ | -----------
+ growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ growthbeatClientId  | string| Growthbeat クライアントID
  id  | number | Growth Push クライアントID
  token  | string | デバイストークン
  os  | enum | OS ( ios/android )
@@ -96,7 +90,7 @@ value|string|イベント値
 
 + Parameters
     + goalId: (number) - イベントID
-    + credentialId: (string) - Growthbeat クレデンシャル
+    + credentialId: (string) - Growthbeat クレデンシャルID
     + exclusiveTimestamp: (optional, number) - タイムスタンプ
     + limit: (number, optional) - リミット
         + Default: 100
@@ -136,7 +130,7 @@ name|string|セグメント名
 query|string|**JSON形式** のセグメント。セグメントには、タグ・イベント・セグメントをかけ合わせて組み合わせることができます。
 size|number|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
 invisible|boolean|削除フラグ
-modified|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
+modified|string|更新日時 ( YYYY-MM-DD HH:mm:ss )
 created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 
 ## Segment Query
