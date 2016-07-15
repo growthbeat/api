@@ -11,8 +11,9 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
  Name | Type | Notes
  :---- | ------ | -----------
- growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  credentialId  | string | [Grwothbeat クレデンシャルID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ growthbeatClientId  | string| Growthbeat クライアントID
 
 # Group Clients
 
@@ -20,13 +21,12 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
  Name | Type | Notes
  :---- | ------ | -----------
- growthbeatClientId  | string| Growthbeat クライアントID
- id  | long | Growth Push クライアントID
+ id  | number | Growth Push クライアントID
  token  | string | デバイストークン
  os  | enum | OS ( ios/android )
  status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
  environment  | enum | デバイス環境 ( development/production )
- applicationId  | string | Growth Push アプリケーションID
+ applicationId  | number | Growth Push アプリケーションID
  code  | string | Growth Push Code
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
@@ -86,9 +86,9 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
 Name|Type|Note
 :---|---|---
-goalId|int|イベントID
-timestamp|long|作成日時
-clientId|long|Growth Push クライアントID
+goalId|number|イベントID
+timestamp|number|作成日時
+clientId|number|Growth Push クライアントID
 value|string|イベント値
 
 ## Get Events [GET /events{?goalId}{&credentialId}{&exclusiveTimestamp}{&limit}{&order}]
@@ -131,15 +131,16 @@ value|string|イベント値
 
 Name|Type|Note
 :---|---|---
-id|int|セグメントID
+id|number|セグメントID
 name|string|セグメント名
 query|string|**JSON形式** のセグメント。セグメントには、タグ・イベント・セグメントをかけ合わせて組み合わせることができます。
-size|int|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
+size|number|セグメント対象人数 詳細は [セグメントの概算人数とは？いつ更新されるのか？](http://faq.growthbeat.com/article/166-article) 参照。
 invisible|boolean|削除フラグ
 modified|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 
-## Notification Segment Query
+## Segment Query
+query パラメーターに指定する JSON形式 のセグメント作成方法
 
 **タグセグメント**
 Parameter|Value|Note
@@ -172,8 +173,8 @@ Parameter|Value|Note
 type|event|イベント指定は必ず event と入力してください
 goalId|任意のイベントID|管理画面から eventId(goalId) を確認してください
 range|relative(相対時間) / absolute(絶対時間) |相対時間もしくは絶対時間を指定できます
-begin|relative: 現在時刻からの指定時間までのミリ秒 / absolute: "YYYY-MM-DD HH:mm:ss" | 期限の開始時間を設定します
-end|relative: 現在時刻からの指定時間までのミリ秒 / absolute: "YYYY-MM-DD HH:mm:ss" | 期限の終了時間を設定します
+begin|relative(現在時刻からの指定時間までのミリ秒) / absolute(YYYY-MM-DD HH:mm:ss) | 期限の開始時間を設定します
+end|relative(現在時刻からの指定時間までのミリ秒) / absolute(YYYY-MM-DD HH:mm:ss) | 期限の終了時間を設定します
 aggregation|count(発生回数) / summation(値の合計) / maximu(値の合計) / minimum(値の最小) | イベントの計算豊富お
 operator|equal(=) / begin_witch(前方一致) / less_equal(>=) / less_than(<) / greater_qeual(>=)| 指定する value に合わせて変更してください
 value|任意の値|aggregation に対する指定値
@@ -268,7 +269,7 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: NAME (required, string) - セグメント名
         + query: QUERY (required, string) - **JSON形式** のセグメント
 
@@ -297,8 +298,8 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 Name|Type|Note
 :---|---|---
-id|int|タグID
-applicationId|int|Growth Push アプリケーションID
+id|number|タグID
+applicationId|number|Growth Push アプリケーションID
 type|enum|タグタイプ ( custom/message )
 name|string|タグ名
 value|string|タグ値
@@ -309,7 +310,7 @@ created|string|作成日 ( YYYY-MM-DD HH:mm:ss )
 タグ取得
 
 + Parameters
-    + applicationId: (required, number) - Growth Push アプリケーションID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + name: (required, string) - タグ名
 
@@ -326,8 +327,8 @@ created|string|作成日 ( YYYY-MM-DD HH:mm:ss )
 
 Name|Type|Note
 :---|---|---
-tagId|int|タグID
-clientId|long|Growth Push クライアントID
+tagId|number|タグID
+clientId|number|Growth Push クライアントID
 value|string|タグ値
 
 
@@ -441,12 +442,12 @@ value|string|タグ値
 
 Name|Type|Note
 :---|---|---
-id|int|Notification ID
-applicationId|int|Growth Push アプリケーションID
+id|number|Notification ID
+applicationId|number|Growth Push アプリケーションID
 status|enum|送信状態 ( waiting/success/failure ) 
 created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 attachNotificationId|boolean|指定するとペイロードに "growthpush":{"notificationId":xxxxx} という形式で、通知IDが含まれます。
-duration|Long|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
+duration|number|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
 trial|array[Trial]|
 segment|Segment|
 
@@ -454,9 +455,9 @@ segment|Segment|
 
 Name|Type|Note
 :---|---|---
-id|int|トライアルID
-notifiationId|int|Notification ID
-automationId|int| 自動配信ID
+id|number|トライアルID
+notifiationId|number|Notification ID
+automationId|number| 自動配信ID
 text|string|配信文言
 sound|boolean|通知音
 badge|boolean|通知バッジ
@@ -468,7 +469,7 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 配信一覧所得
 
 + Parameters
-    + applicationId: (required, number) - Growth Push アプリケーションID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + page: (optional, number) - ページ数
         + Default: 1
