@@ -45,7 +45,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + token: TOKEN (string) - デバイストークン
+        + token: DEVICE_TOKEN (string) - デバイストークン
         + os: ios (required, enum[string]) - OS
             + ios
             + android
@@ -66,7 +66,7 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
     + Headers
     + Attributes
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
-        + token: TOKEN (string) - デバイストークン
+        + token: DEVICE_TOKEN (string) - デバイストークン
         + environment: development (enum[string]) - デバイス環境
             + production
             + development
@@ -423,7 +423,7 @@ value|string|タグ値
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + token: TOKEN (required, string) - デバイストークン
+        + token: DEVICE_TOKEN (required, string) - デバイストークン
         + name: NAME (required, string) - タグ名
         + value: VALUE (string) - タグ値
 
