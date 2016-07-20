@@ -114,7 +114,7 @@ value|string|イベント値
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: NAME (required, string) - イベント名
-        + value: VALUE (string) - イベント値
+        + value: VALUE (optional, string) - イベント値
 
 + Response 200 (application/json)
     + Attributes (Goal)
