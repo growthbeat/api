@@ -221,7 +221,7 @@ created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
     + Headers
     + Attributes
         + applicationId: (required, number) - Growth Push アプリケーションID
-        + secret: (required, string) - Growth Push シークレットキー
+        + secret: SECRET (required, string) - Growth Push シークレットキー
         + name: NAME (required, string) - セグメント名
         + query: QUERY (required, string) - **JSON形式** のセグメント
 
@@ -241,7 +241,7 @@ created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 + Request (application/json)
     + Headers
     + Attributes
-        + secret: (required, string) - Growth Push シークレットキー
+        + secret: SECRET (required, string) - Growth Push シークレットキー
         + name: NAME (string) - セグメント名
         + query: QUERY (string) - **JSON形式** のセグメント
 
@@ -271,7 +271,7 @@ created|string|作成日 ( YYYY-MM-DD HH:mm:ss )
 :::
 
 + Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + applicationId: (required, number) - Grwoth Push アプリケーションID
     + secret: (required, string) - Growth Push シークレットキー
     + name: (required, string) - タグ名
 
@@ -324,10 +324,6 @@ value|string|タグ値
 こちらのAPIは **廃止予定** です。
 :::
 
-::: note
-このAPIは、Growthbeat クレデンシャルID と、Growthbeat クライアントID を元にタグを紐付けます。
-:::
-
 + Parameters
 
 + Request (application/json)
@@ -343,9 +339,9 @@ value|string|タグ値
 
 ## Create New Tag By Device Token [POST /tags]
 タグクライアントの作成
-
-::: note
-このAPIは、Growthbeat クレデンシャルID と、デバイストークン を元にタグを紐付けます。
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+こちらのAPIは **廃止予定** です。
 :::
 
 + Parameters
@@ -353,13 +349,84 @@ value|string|タグ値
 + Request (application/json)
     + Headers
     + Attributes
-        + secret: SECRET (required, string) - Growth Push シークレットキー
+        + secret: SECRET (required, number) - Growth Push シークレットキー
         + token: DEVICE_TOKEN (required, string) - デバイストークン
         + name: NAME (required, string) - タグ名
         + value: VALUE (optional, string) - タグ値
 
 + Response 200 (application/json)
     + Attributes (TagClient)
+
+# Group Notifications
+
+**Notification Object**
+
+Name|Type|Note
+:---|---|---
+id|number|Notification ID
+applicationId|number|Growth Push アプリケーションID
+status|enum|送信状態 ( waiting/success/failure ) 
+created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
+attachNotificationId|boolean|指定するとペイロードに "growthpush":{"notificationId":xxxxx} という形式で、通知IDが含まれます。
+duration|number|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
+trial|array[Trial]|
+segment|Segment|
+
+**Trial Object**
+
+Name|Type|Note
+:---|---|---
+id|number|トライアルID
+notifiationId|number|Notification ID
+automationId|number| 自動配信ID
+text|string|配信文言
+sound|boolean|通知音
+badge|boolean|通知バッジ
+extra|boolean|ペイロードに任意のパラメータを **JSON形式** で指定します。ex. {"url":"https://growthpush.com"}
+scheduled|string|配信予定時刻 ( YYYY-MM-DD HH:mm:ss )
+status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
+
+## Get Notifications [GET /notifications{?applicationId}{&secret}{&page}{&limit}]
+配信一覧所得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+こちらのAPIは **廃止予定** です。
+:::
+
++ Parameters
+    + applicationId: (required, number) - Growth Push アプリケーションID
+    + secret: (required, string) - Growth Push シークレットキー
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + limit: (optional, number) - リミット
+        + Default: 100
+
++ Response 200 (application/json)
+    + Attributes (array[Notification])
+
+## Create New Notification [POST /notifications]
+新規配信作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+こちらのAPIは **廃止予定** です。
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTH_PUSH_APPLICATION_ID (required, number) - Growth Push アプリケーションID
+        + secret: SECRET (required, string) - Growth Push シークレットキー
+        + query: {} (string) - セグメントクエリ
+        + text: text (string) - テキスト
+        + sound: true (boolean) - 通知音
+        + badge: true (boolean) - 通知バッジ
+        + extra: {} (string) - 任意のパラメータを追加
+        + attachNotificationId: true (boolean) - 通知IDの追加
+
++ Response 200 (application/json)
+    + Attributes (Job)
 
 # Data Structures
 
@@ -412,6 +479,8 @@ value|string|タグ値
     + development
 + applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + Include Timestamp
+
+
 
 ## Notification (object)
 + id: NOTIFICATION_ID (number)
