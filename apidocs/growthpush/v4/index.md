@@ -7,60 +7,87 @@ HOST: https://api.growthpush.com/4
 
 ::: note
 * リクエスト上限
-* 
+* Growth Push clientId, applicationId はレスポンスに含めない - Grwothbeat を使ってもらう
 :::
 
 
 **Clients Object**
 
+::: note
+* code は今後無くなる可能性があるので Client Objectから削除している
+:::
+
  Name | Type | Notes
  :---- | ------ | -----------
  growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  growthbeatClientId  | string| Growthbeat クライアントID
- id  | number | Growth Push クライアントID
  token  | string | デバイストークン
  os  | enum | OS ( ios/android )
  status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
  environment  | enum | デバイス環境 ( development/production )
- applicationId  | number | Growth Push アプリケーションID
- code  | string | Growth Push Code
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Client By Token [GET /clients{?applicationId}{&credentialId}{&token}]
+## Get Client [GET /clients/{growthbeatClientId}{?applicationId}{&credentialId}]
 クライアント取得
+::: note
+* URLは単体とリストの見分けがつきやすいよう /clients/{growthbeatClientId} にする
+:::
 
 + Parameters
+    + growthbeatClientId: (required, string) - Growthbeat クライアントID   
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + token: (required, string) - デバイストークン
 
 + Response 200 (application/json)
     + Attributes (ClientV4Response)
 
-+ Response 400 (application/json)
-    + Attributes (400)
 
-+ Response 401 (application/json)
-    + Attributes (401)
+## Get Client by token [GET /clients/{token}{?applicationId}{&credentialId}]
+クライアント取得
+::: note
+* v3,v1 API利用者用のtokenベースのクライアント取得API
+* tokenはparameterではなく、pathにしているけどどうですか？
+:::
 
-+ Response 404 (application/json)
-    + Attributes (404)
++ Parameters
+    + token: (requeired, string) - クライアントトークン
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
 
-+ Response 429 (application/json)
-    + Attributes (429)
++ Response 200 (application/json)
+    + Attributes (ClientV4Response)
 
-+ Response 500 (application/json)
-    + Attributes (500)
+## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
+クライアントリスト取得
+::: note
+* アプリケーションに紐づくクライアントをリストで取得
+* limit / page / order を付け加えた
+* tag や event の旧APIで `exclusiveClientId` を使用しているが get client して　ID 取得しなきゃいけないから page でいい気がするのですがどうなんだろう
+:::
 
-+ Response 503 (application/json)
-    + Attributes (503)
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - リミット
+        + Default: 100
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + order: (string, optional) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
 
-## Create a Client [POST /clients]
++ Response 200 (application/json)
+    + Attributes (array[ClientV4Response])
+
+## Create New Client [POST /clients]
 新規クライアント作成
 
-::: warning
-## <i class="fa fa-warning"></i> WARNING!
-* `token` が登録済みのクライアントは登録されません
+::: note
+* `token` が登録済みのクライアントは登録されない
+  * API と SDK の併用の弊害は他にもあるかもなので洗い出す必要がある
+* Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用
 :::
 
 + Parameters
@@ -78,29 +105,12 @@ HOST: https://api.growthpush.com/4
             + production
             + development
 
-+ Response 200 (application/json)
-    + Attributes (ClientV4Response)
+## Update a Client Environment [PUT /clients/{clientId}{?applicationId}{&credentialId}]
+クライアントのデバイス環境更新
 
-+ Response 400 (application/json)
-    + Attributes (400)
-
-+ Response 401 (application/json)
-    + Attributes (401)
-
-+ Response 404 (application/json)
-    + Attributes (404)
-
-+ Response 429 (application/json)
-    + Attributes (429)
-
-+ Response 500 (application/json)
-    + Attributes (500)
-
-+ Response 503 (application/json)
-    + Attributes (503)
-
-## Update a Client [PUT /clients/{clientId}]
-クライアント更新
+:::note
+/clients/{clientId}/environment で environment の update だけにするか
+:::
 
 + Parameters
     + clientId: (string) - Growthbeat クライアントID
@@ -117,24 +127,6 @@ HOST: https://api.growthpush.com/4
 
 + Response 200 (application/json)
     + Attributes (ClientV4Response)
-
-+ Response 400 (application/json)
-    + Attributes (400)
-
-+ Response 401 (application/json)
-    + Attributes (401)
-
-+ Response 404 (application/json)
-    + Attributes (404)
-
-+ Response 429 (application/json)
-    + Attributes (429)
-
-+ Response 500 (application/json)
-    + Attributes (500)
-
-+ Response 503 (application/json)
-    + Attributes (503)
 
 # Data Structures
 
