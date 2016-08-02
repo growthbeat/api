@@ -76,7 +76,7 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (array[ClientV4Response])
 
-## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
+## Get Clients 案2 これがいいと思う [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
 クライアントリスト取得
 ::: note
 * limit と exclusiveClientId を使用
