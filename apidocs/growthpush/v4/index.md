@@ -5,22 +5,17 @@ HOST: https://api.growthpush.com/4
 
 # Group Clients
 
-::: note
-* リクエスト上限
-* Growth Push clientId, applicationId はレスポンスに含めない - Grwothbeat を使ってもらう
-:::
-
-
 **Clients Object**
 
 ::: note
 * code は今後無くなる可能性があるので Client Objectから削除している
+* Growth Push clientId, applicationId はレスポンスに含めない（Growthbeat を使ってもらう）
 :::
 
  Name | Type | Notes
  :---- | ------ | -----------
- growthbeatApplicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- growthbeatClientId  | string| Growthbeat クライアントID
+ id  | string| Growthbeat クライアントID
+ applicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  token  | string | デバイストークン
  os  | enum | OS ( ios/android )
  status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
@@ -42,11 +37,11 @@ HOST: https://api.growthpush.com/4
     + Attributes (ClientV4Response)
 
 
-## Get Client by token [GET /clients/{token}{?applicationId}{&credentialId}]
+## Get Client by token [GET /clients{?token}{&applicationId}{&credentialId}]
 クライアント取得
 ::: note
 * v3,v1 API利用者用のtokenベースのクライアント取得API
-* tokenはparameterではなく、pathにしているけどどうですか？
+* tokenはparameterにした
 :::
 
 + Parameters
@@ -57,18 +52,18 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (ClientV4Response)
 
-## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
+## Get Clients 案1 [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
 クライアントリスト取得
 ::: note
-* アプリケーションに紐づくクライアントをリストで取得
-* limit / page / order を付け加えた
-* tag や event の旧APIで `exclusiveClientId` を使用しているが get client して　ID 取得しなきゃいけないから page でいい気がするのですがどうなんだろう
+* limit と page で取得
+* 懸念
+  * asc にした時に更新が大量にあるとページングが機能しないかも
 :::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - リミット
+    + limit: (number, optional) - max: 1000 min: 1
         + Default: 100
     + page: (optional, number) - ページ数
         + Default: 1
@@ -81,12 +76,87 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (array[ClientV4Response])
 
+## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
+クライアントリスト取得
+::: note
+* limit と page で取得して、レスポンスを clientList object に変更
+* n回リクエストしたら制限かけるみたいな感じで、リクエスト制限かけやすい？
+* 懸念
+  * asc にした時に更新が大量にあるとページングが機能しないかも
+  * 単体取得とレスポンス形式が異なる
+:::
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 1000 min: 1
+        + Default: 100
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + order: (string, optional) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
+
++ Response 200 (application/json)
+    + Attributes (ClientListV4Response)
+
+## Get Clients 案3 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
+クライアントリスト取得
+::: note
+* limit と exclusiveClientId を使用
+* 懸念
+  * 一度 clientId を取得する必要がある
+  * 単体取得とレスポンス形式が異なる
+:::
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 1000 min: 1
+        + Default: 100
+    + exclusiveClientId: (optional, string) - 前のページの最後のクライアントID
+    + order: (string, optional) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
+
++ Response 200 (application/json)
+    + Attributes (array[ClientV4Response])
+
+## Get Clients 案4 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
+クライアントリスト取得
+::: note
+* limit と exclusiveClientId を使用してレスポンスを clientList object に変更
+* n回リクエストしたら制限かけるみたいな感じで、リクエスト制限かけやすい？
+* 懸念
+  * 一度 clientId を取得する必要がある
+  * 単体取得とレスポンス形式が異なる
+:::
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 1000 min: 1
+        + Default: 100
+    + exclusiveClientId: (optional, string) - 前のページの最後のクライアントID
+    + order: (string, optional) - ソート
+        + Default: `descoding`
+        + Members
+            + `ascending`
+            + `descending`
+
++ Response 200 (application/json)
+    + Attributes (ClientListV4Response2)
+
 ## Create New Client [POST /clients]
 新規クライアント作成
 
 ::: note
 * `token` が登録済みのクライアントは登録されない
-  * API と SDK の併用の弊害は他にもあるかもなので洗い出す必要がある
+  * -> 設計段階で詳細に詰める
 * Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用
 :::
 
@@ -105,11 +175,11 @@ HOST: https://api.growthpush.com/4
             + production
             + development
 
-## Update a Client Environment [PUT /clients/{clientId}{?applicationId}{&credentialId}]
+## Update a Client [PUT /clients/{clientId}{?applicationId}{&credentialId}]
 クライアントのデバイス環境更新
 
 :::note
-/clients/{clientId}/environment で environment の update だけにするか
+* 旧tokenをnullにupdateさせる / environmentを帰る等で使えるように全体のupdateにしている
 :::
 
 + Parameters
@@ -157,6 +227,16 @@ HOST: https://api.growthpush.com/4
     + production
     + development
 + created: `2015-02-03 12:34:56` (string)
+
+## ClientListV4Response (object)
++ client_list: (array[ClientV4Response])
++ page: PAGE (number)
++ limit: LIMIT (number)
+
+## ClientListV4Response2 (object)
++ client_list: (array[ClientV4Response])
++ exclusiveClientId: EXCLUCICE_CLIENT_ID (string)
++ limit: LIMIT (number)
 
 ## GrowthbeatClient (object)
 + id: CLIENT_ID (number)
