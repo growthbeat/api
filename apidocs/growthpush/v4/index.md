@@ -76,13 +76,13 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (array[ClientV4Response])
 
-## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
+## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
 クライアントリスト取得
 ::: note
 * limit と exclusiveClientId を使用
+* リクエスト制限ひつようないならこのAPIで良いと思う
 * 懸念
   * 一度 clientId を取得する必要がある
-  * 単体取得とレスポンス形式が異なる
 :::
 
 + Parameters
@@ -90,7 +90,7 @@ HOST: https://api.growthpush.com/4
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 1000 min: 1
         + Default: 100
-    + exclusiveClientId: (optional, string) - 前のページの最後のクライアントID
+    + nextClientId: (optional, string) - 取得先頭のクライアントID
     + order: (string, optional) - ソート
         + Default: `descoding`
         + Members
@@ -104,7 +104,7 @@ HOST: https://api.growthpush.com/4
 クライアントリスト取得
 ::: note
 * limit と nextClientId を使用してレスポンスを clientList object に変更
-* n回リクエストしたら制限かけるみたいな感じで、リクエスト制限かけやすい？
+* あと何回リクエストできますみたいなオブジェクトを付け加えられる
 * 懸念
   * 一度 clientId を取得する必要がある
   * 単体取得とレスポンス形式が異なる
