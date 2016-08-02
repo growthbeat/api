@@ -76,33 +76,7 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (array[ClientV4Response])
 
-## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
-クライアントリスト取得
-::: note
-* limit と page で取得して、レスポンスを clientList object に変更
-* n回リクエストしたら制限かけるみたいな感じで、リクエスト制限かけやすい？
-* 懸念
-  * asc にした時に更新が大量にあるとページングが機能しないかも
-  * 単体取得とレスポンス形式が異なる
-:::
-
-+ Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - max: 1000 min: 1
-        + Default: 100
-    + page: (optional, number) - ページ数
-        + Default: 1
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
-
-+ Response 200 (application/json)
-    + Attributes (ClientListV4Response)
-
-## Get Clients 案3 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
+## Get Clients 案2 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
 クライアントリスト取得
 ::: note
 * limit と exclusiveClientId を使用
@@ -126,10 +100,10 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (array[ClientV4Response])
 
-## Get Clients 案4 [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveClientId}{&order}]
+## Get Clients 案3 [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
 クライアントリスト取得
 ::: note
-* limit と exclusiveClientId を使用してレスポンスを clientList object に変更
+* limit と nextClientId を使用してレスポンスを clientList object に変更
 * n回リクエストしたら制限かけるみたいな感じで、リクエスト制限かけやすい？
 * 懸念
   * 一度 clientId を取得する必要がある
@@ -141,7 +115,7 @@ HOST: https://api.growthpush.com/4
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 1000 min: 1
         + Default: 100
-    + exclusiveClientId: (optional, string) - 前のページの最後のクライアントID
+    + nextClientId: (optional, string) - 取得先頭のクライアントID
     + order: (string, optional) - ソート
         + Default: `descoding`
         + Members
@@ -149,7 +123,7 @@ HOST: https://api.growthpush.com/4
             + `descending`
 
 + Response 200 (application/json)
-    + Attributes (ClientListV4Response2)
+    + Attributes (ClientListV4Response)
 
 ## Create New Client [POST /clients]
 新規クライアント作成
@@ -230,12 +204,7 @@ HOST: https://api.growthpush.com/4
 
 ## ClientListV4Response (object)
 + client_list: (array[ClientV4Response])
-+ page: PAGE (number)
-+ limit: LIMIT (number)
-
-## ClientListV4Response2 (object)
-+ client_list: (array[ClientV4Response])
-+ exclusiveClientId: EXCLUCICE_CLIENT_ID (string)
++ nextClientId: NEXT_CLIENT_ID (string)
 + limit: LIMIT (number)
 
 ## GrowthbeatClient (object)
