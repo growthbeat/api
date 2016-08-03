@@ -23,10 +23,10 @@ HOST: https://api.growthpush.com/4
  updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Client [GET /clients/{growthbeatClientId}{?applicationId}{&credentialId}]
+## Get Client [GET /clients/{clientId}{?applicationId}{&credentialId}]
 クライアント取得
 ::: note
-* URLは単体とリストの見分けがつきやすいよう /clients/{growthbeatClientId} にする
+* URLは単体とリストの見分けがつきやすいよう /clients/{clientId} にする
 * rateLimit で残り何リクエスト可能かをレスポンスに含める（攻撃以外では超越しなさそうな値にする）
   * 秒間リクエスト制限
   * レスポンスに含めるのは1日のリクエスト制限 0時更新 上限はどう考えたら良いのだろうか…
@@ -61,7 +61,7 @@ HOST: https://api.growthpush.com/4
 ## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
 クライアントリスト取得
 ::: note
-* nextOffset と rateLimit をreturnしたいため、API用レスポンスオブジェクトを作成
+* nextClientId と rateLimit をreturnしたいため、API用レスポンスオブジェクトを作成
 :::
 
 + Parameters
