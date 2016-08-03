@@ -20,12 +20,18 @@ HOST: https://api.growthpush.com/4
  os  | enum | OS ( ios/android )
  status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
  environment  | enum | デバイス環境 ( development/production )
+ updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
 ## Get Client [GET /clients/{growthbeatClientId}{?applicationId}{&credentialId}]
 クライアント取得
 ::: note
 * URLは単体とリストの見分けがつきやすいよう /clients/{growthbeatClientId} にする
+* rateLimit で残り何リクエスト可能かをレスポンスに含める（攻撃以外では超越しなさそうな値にする）
+  * 秒間リクエスト制限
+  * レスポンスに含めるのは1日のリクエスト制限 0時更新 上限はどう考えたら良いのだろうか…
+  * 1日のリクエスト制限は
+  * 制限超えた場合は、HTTP 429 “Too Many Requests”
 :::
 
 + Parameters
@@ -52,62 +58,10 @@ HOST: https://api.growthpush.com/4
 + Response 200 (application/json)
     + Attributes (ClientV4Response)
 
-## Get Clients 案1 [GET /clients{?applicationId}{&credentialId}{&limit}{&page}{&order}]
+## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
 クライアントリスト取得
 ::: note
-* limit と page で取得
-* 懸念
-  * asc にした時に更新が大量にあるとページングが機能しないかも
-:::
-
-+ Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - max: 1000 min: 1
-        + Default: 100
-    + page: (optional, number) - ページ数
-        + Default: 1
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
-
-+ Response 200 (application/json)
-    + Attributes (array[ClientV4Response])
-
-## Get Clients 案2 これがいいと思う [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
-クライアントリスト取得
-::: note
-* limit と exclusiveClientId を使用
-* リクエスト制限ひつようないならこのAPIで良いと思う
-* 懸念
-  * 一度 clientId を取得する必要がある
-:::
-
-+ Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - max: 1000 min: 1
-        + Default: 100
-    + nextClientId: (optional, string) - 取得先頭のクライアントID
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
-
-+ Response 200 (application/json)
-    + Attributes (array[ClientV4Response])
-
-## Get Clients 案3 [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
-クライアントリスト取得
-::: note
-* limit と nextClientId を使用してレスポンスを clientList object に変更
-* あと何回リクエストできますみたいなオブジェクトを付け加えられる
-* 懸念
-  * 一度 clientId を取得する必要がある
-  * 単体取得とレスポンス形式が異なる
+* nextOffset と rateLimit をreturnしたいため、API用レスポンスオブジェクトを作成
 :::
 
 + Parameters
@@ -129,10 +83,13 @@ HOST: https://api.growthpush.com/4
 新規クライアント作成
 
 ::: note
+## 実装設計
 * `token` が登録済みのクライアントは登録されない
-  * -> 設計段階で詳細に詰める
-* Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用
+* iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのままになるので、API上では救えないという仕様で大丈夫か？
+* iOS9 新規tokenとしてインストールされる。古いトークンは次期配信でinactiveに変更される
+* Android iOS9の挙動と同様
 :::
+
 
 + Parameters
 
@@ -149,11 +106,20 @@ HOST: https://api.growthpush.com/4
             + production
             + development
 
++ Response 200 (application/json)
+    + Attributes (ClientV4Response)
+
 ## Update a Client [PUT /clients/{clientId}{?applicationId}{&credentialId}]
 クライアントのデバイス環境更新
 
-:::note
-* 旧tokenをnullにupdateさせる / environmentを帰る等で使えるように全体のupdateにしている
+::: note
+## 実装設計
+* …
+:::
+
+::: warning
+* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+* ↑ この注意書きをドキュメントに書く
 :::
 
 + Parameters
@@ -165,6 +131,9 @@ HOST: https://api.growthpush.com/4
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
         + token: DEVICE_TOKEN (required, string) - デバイストークン
+        + os: ios (required, enum[string]) - OS
+            + ios
+            + android
         + environment: development (optional, enum[string]) - デバイス環境
             + production
             + development
@@ -184,7 +153,7 @@ HOST: https://api.growthpush.com/4
 + growthbeatClientId: GROWTHBEAT_CLIENT_ID (string)
 + growthbeatApplicationId: GRWOTHBEAT_APPLICATION_ID (string)
 
-## ClientV4Response (object)
+## GrowthbeatClient (object)
 + id: GROWTHBEAT_CLIENT_ID (string)
 + applicationId: GROWTHBEAT_APPLICATION_ID (string)
 + token: DEVICE_TOKEN (string)
@@ -200,32 +169,17 @@ HOST: https://api.growthpush.com/4
 + environment: DEVICE_ENVIRONMENT (enum[string])
     + production
     + development
++ updated: `2015-02-03 12:34:56` (string)
 + created: `2015-02-03 12:34:56` (string)
 
-## ClientListV4Response (object)
-+ client_list: (array[ClientV4Response])
-+ nextClientId: NEXT_CLIENT_ID (string)
-+ limit: LIMIT (number)
+## ClientV4Response (object)
++ client: (GrowthbeatClient)
++ rateLimit: RATE_LIMIT (number)
 
-## GrowthbeatClient (object)
-+ id: CLIENT_ID (number)
-+ code: DEVICE_CODE (string)
-+ token: DEVICE_TOKEN (string)
-+ Include Growthbeat
-+ os: OS (enum[string])
-    + ios
-    + android
-+ status: DEVICE_STATUS (enum[string])
-    + unknown
-    + validating
-    + active
-    + inactive
-    + invalid
-+ environment: DEVICE_ENVIRONMENT (enum[string])
-    + production
-    + development
-+ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
-+ Include Timestamp
+## ClientListV4Response (object)
++ clients: (array[GrowthbeatClient])
++ rateLimit: RATE_LIMIT (number)
++ nextClientId: NEXT_CLIENT_ID (string)
 
 ## Client (object)
 + id: CLIENT_ID (number)
