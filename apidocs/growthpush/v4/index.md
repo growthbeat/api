@@ -19,13 +19,17 @@ All Other Resources API : 10 requests in 10 seconds.
 例えば…
 
 ## Error Codes & Responses
+:::note
+エラーコード作ったほうが良い？
+::::
+
 **HTTP Status Codes**
 
  Code | Text | Description
  :---- | ------ | -----------
  200  | OK | 
  400  | Bad Request | パラメーターに誤りがあります
- 401  | Unauthorized | credentialId に誤りがあります
+ 401  | Unauthorized | 認証が失敗しました
  403  | Forbidden | 権限がありません
  404  | Not Found | URIが見つかりません
  409  | Conflict | 競合するデータがあるためリクエストが受け付けられません
@@ -39,7 +43,8 @@ All Other Resources API : 10 requests in 10 seconds.
 **Error Responses**
 
 エラーメッセージをJSONフォーマットで返却します。
- 
+
+案1
 ```
 {
   "status": 400,
@@ -47,6 +52,14 @@ All Other Resources API : 10 requests in 10 seconds.
 }
 ```
 
+案2
+```
+{
+  "status": 400,
+  "message": "Bad Request",
+  "description": "Parameter limit cannot be larger than 1000."
+}
+```
 
 # Group Clients
 
