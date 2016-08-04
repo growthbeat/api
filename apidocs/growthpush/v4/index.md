@@ -3,9 +3,25 @@ HOST: https://api.growthpush.com/4
 
 # Growth Push API v4
 
+# Group REST API
+## Rate Limits
+
+APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のエラーコードが返却されます。以下がそれぞれのAPIに設けられている制限となります。
+
+Clients API : 10 requests in 10 seconds.
+
+Notifications API : 10 requests in 30 seconds.
+
+Tags / Events API : 10 requests in 30 seconds.
+
+All Other Resources API : 10 requests in 10 seconds.
+
+例えば…
+
+
 # Group Clients
 
-**Clients Object**
+**Client Object**
 
 ::: note
 * code は今後無くなる可能性があるので Client Objectから削除している
@@ -23,31 +39,27 @@ HOST: https://api.growthpush.com/4
  updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Client [GET /clients/{clientId}{?applicationId}{&credentialId}]
+## Get Client [GET /clients/{id}{?applicationId}{&credentialId}]
 クライアント取得
 ::: note
-* URLは単体とリストの見分けがつきやすいよう /clients/{clientId} にする
-* rateLimit で残り何リクエスト可能かをレスポンスに含める（攻撃以外では超越しなさそうな値にする）
-  * 秒間リクエスト制限
-  * レスポンスに含めるのは1日のリクエスト制限 0時更新 上限はどう考えたら良いのだろうか…
-  * 1日のリクエスト制限は
-  * 制限超えた場合は、HTTP 429 “Too Many Requests”
+* URLは単体とリストの見分けがつきやすいよう /clients/{id} にする
+* 秒間リクエスト制限
+* 制限超えた場合は、HTTP 429 “Too Many Requests”
 :::
 
 + Parameters
-    + growthbeatClientId: (required, string) - Growthbeat クライアントID   
+    + id: (required, string) - Growthbeat クライアントID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
 + Response 200 (application/json)
-    + Attributes (ClientV4Response)
+    + Attributes (GrowthbeatClient)
 
-
-## Get Client by token [GET /clients{?token}{&applicationId}{&credentialId}]
+## Get Client by token [GET /clients/token/{token}{?applicationId}{&credentialId}]
 クライアント取得
 ::: note
 * v3,v1 API利用者用のtokenベースのクライアント取得API
-* tokenはparameterにした
+* 
 :::
 
 + Parameters
@@ -56,12 +68,16 @@ HOST: https://api.growthpush.com/4
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
 + Response 200 (application/json)
-    + Attributes (ClientV4Response)
+    + Attributes (GrowthbeatClient)
 
-## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&nextClientId}{&order}]
+## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&lessThan}{&greaterThan}]
 クライアントリスト取得
 ::: note
-* nextClientId と rateLimit をreturnしたいため、API用レスポンスオブジェクトを作成
+* Growthbeat クライアントID の降順取得
+## parameter
+* lessThan: 指定値より小さい ClientId を `limit` 分取得
+* greaterThan: 指定値より大きい ClientId を `limit` 分取得
+* lessThan と greaterThan の両方を指定した場合はその間の値の limit 分を取得します
 :::
 
 + Parameters
@@ -69,23 +85,19 @@ HOST: https://api.growthpush.com/4
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 1000 min: 1
         + Default: 100
-    + nextClientId: (optional, string) - 取得先頭のクライアントID
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
+    + lessThan: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+    + greaterThan: (optional, string) - 指定値より大きい ClientId を `limit` 分取得
 
 + Response 200 (application/json)
-    + Attributes (ClientListV4Response)
+    + Attributes (array[GrowthbeatClient])
 
 ## Create New Client [POST /clients]
 新規クライアント作成
 
 ::: note
 ## メモ
-* `token` が登録済みのクライアントは登録されない
-* iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのままになるので、API上では救えないという仕様で大丈夫か？
+* `token` が登録済みのクライアントは登録されない -> ※エラー設計を考える
+* iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのまま
 * iOS9 新規tokenとしてインストールされる。古いトークンは次期配信でinactiveに変更される
 * Android iOS9の挙動と同様
 
@@ -113,42 +125,68 @@ HOST: https://api.growthpush.com/4
             + development
 
 + Response 200 (application/json)
-    + Attributes (ClientV4Response)
+    + Attributes (GrowthbeatClient)
 
-## Update a Client [PUT /clients/{clientId}{?applicationId}{&credentialId}]
-クライアントのデバイス環境更新
+## Update a Client token [PUT /clients/{id}/token]
+デバイストークンの更新
 
 ::: note
 ## 実装設計
 * clientId から client を検索
 * growthbeatApplicationIdからgrowthPushApplicationを検索
-* token に変更がある or environment に変更がある場合
-  * 
+* token null じゃない and 変更がある
+  * validating にして、activate
 :::
 
 ::: warning
 * SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
-* ↑ この注意書きをドキュメントに書く
 :::
 
 + Parameters
-    + clientId: (string) - Growthbeat クライアントID
+    + id: (required, string) - Growthbeat クライアントID
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + token: DEVICE_TOKEN (optional, string) - デバイストークン
+
+## Update a Client status [PUT /clients/{id}/status]
+クライアントのステータス環境更新
+
+::: note
+## 実装設計
+validating, unknown, invalid は指定させる必要ない？
+
+* clientId から client を検索
+* growthbeatApplicationIdからgrowthPushApplicationを検索
+* status の更新がある && active
+  * validating にして activate
+* active 以外
+:::
+
+::: warning
+* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+:::
+
++ Parameters
+    + id: (string) - Growthbeat クライアントID
 
 + Request (application/json)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
-        + token: DEVICE_TOKEN (required, string) - デバイストークン
-        + os: ios (required, enum[string]) - OS
-            + ios
-            + android
-        + environment: development (optional, enum[string]) - デバイス環境
-            + production
-            + development
+        + status: DEVICE_STATUS (enum[string])
+            + unknown
+            + validating
+            + active
+            + inactive
+            + invalid
 
 + Response 200 (application/json)
-    + Attributes (ClientV4Response)
+    + Attributes (GrowthbeatClient)
 
 # Data Structures
 
