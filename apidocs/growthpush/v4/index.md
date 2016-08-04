@@ -83,13 +83,19 @@ HOST: https://api.growthpush.com/4
 新規クライアント作成
 
 ::: note
-## 実装設計
+## メモ
 * `token` が登録済みのクライアントは登録されない
 * iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのままになるので、API上では救えないという仕様で大丈夫か？
 * iOS9 新規tokenとしてインストールされる。古いトークンは次期配信でinactiveに変更される
 * Android iOS9の挙動と同様
-:::
 
+## 実装設計
+* growthbeatClient ID が作成済みかチェック > なかった場合は作成する
+* growthbeatApplicationIdからgrowthPushApplicationを検索
+* token が登録済みかチェック > 登録済みだったら何もしない
+* token が null だったら invalid、null じゃなかったら validating に
+* 登録したら activatioin なげる
+:::
 
 + Parameters
 
@@ -114,7 +120,10 @@ HOST: https://api.growthpush.com/4
 
 ::: note
 ## 実装設計
-* …
+* clientId から client を検索
+* growthbeatApplicationIdからgrowthPushApplicationを検索
+* token に変更がある or environment に変更がある場合
+  * 
 :::
 
 ::: warning
