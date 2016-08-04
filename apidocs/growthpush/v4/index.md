@@ -19,45 +19,31 @@ All Other Resources API : 10 requests in 10 seconds.
 例えば…
 
 ## Error Codes & Responses
-:::note
-エラーコード作ったほうが良い？
-::::
 
-**HTTP Status Codes**
+**Error Codes**
 
- Code | Text | Description
- :---- | ------ | -----------
- 200  | OK | 
- 400  | Bad Request | パラメーターに誤りがあります
- 401  | Unauthorized | 認証が失敗しました
- 403  | Forbidden | 権限がありません
- 404  | Not Found | URIが見つかりません
- 409  | Conflict | 競合するデータがあるためリクエストが受け付けられません
- 429  | Too Many Requests | APIのリクエスト制限に達しています
- 500  | Internal Server Error | 不具合が発生しております.時間を置いても解消されないようでしたらお問い合わせください
- 502  | Bad Gateway | システムがダウンしています
- 503  | Service Unavailable | メンテナンス中です  
- 504  | Gateway timeout | 負荷が集中しています.時間を置いてお試しください
+Code | Text | Description
+:---- | ------ | -----------
+10 | account | アカウント情報系
+20 | permission | 権限系
+30 | Clients bad Request. | クライアント API 
+31 | Client not found. | 該当データ無し
+32 | Invalid device token length. | 不正なデバイストークン
+33 | Duplicate value. | 重複するデータ
+34 | Too Many Requests | 使用制限超過
+40 | notifications
+50 | tags
+60 | event
 
 
 **Error Responses**
-
 エラーメッセージをJSONフォーマットで返却します。
 
-案1
 ```
 {
-  "status": 400,
-  "message": "Parameter limit cannot be larger than 1000."
-}
-```
-
-案2
-```
-{
-  "status": 400,
-  "message": "Bad Request",
-  "description": "Parameter limit cannot be larger than 1000."
+    "code": 96,
+    "message": "Invalid signature",
+    "stat": "fail"
 }
 ```
 
