@@ -3,7 +3,7 @@ HOST: https://api.growthpush.com/4
 
 # Growth Push API v4
 
-# Group REST API
+# Group API Overview
 ## Rate Limits
 
 APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のエラーコードが返却されます。以下がそれぞれのAPIに設けられている制限となります。
@@ -17,6 +17,35 @@ Tags / Events API : 10 requests in 30 seconds.
 All Other Resources API : 10 requests in 10 seconds.
 
 例えば…
+
+## Error Codes & Responses
+**HTTP Status Codes**
+
+ Code | Text | Description
+ :---- | ------ | -----------
+ 200  | OK | 
+ 400  | Bad Request | パラメーターに誤りがあります
+ 401  | Unauthorized | credentialId に誤りがあります
+ 403  | Forbidden | 権限がありません
+ 404  | Not Found | URIが見つかりません
+ 409  | Conflict | 競合するデータがあるためリクエストが受け付けられません
+ 429  | Too Many Requests | APIのリクエスト制限に達しています
+ 500  | Internal Server Error | 不具合が発生しております.時間を置いても解消されないようでしたらお問い合わせください
+ 502  | Bad Gateway | システムがダウンしています
+ 503  | Service Unavailable | メンテナンス中です  
+ 504  | Gateway timeout | 負荷が集中しています.時間を置いてお試しください
+
+
+**Error Responses**
+
+エラーメッセージをJSONフォーマットで返却します。
+ 
+```
+{
+  "status": 400,
+  "message": "Parameter limit cannot be larger than 1000."
+}
+```
 
 
 # Group Clients
@@ -33,9 +62,9 @@ All Other Resources API : 10 requests in 10 seconds.
  id  | string| Growthbeat クライアントID
  applicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  token  | string | デバイストークン
- os  | enum | OS ( ios/android )
- status  | enum | プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )
- environment  | enum | デバイス環境 ( development/production )
+ os  | enum | OS ( ios \| android )
+ status  | enum | プッシュ通知ステータス ( unknown \| validating \| active \| inactive \| invalid )
+ environment  | enum | デバイス環境 ( development \| production )
  updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
@@ -96,13 +125,13 @@ All Other Resources API : 10 requests in 10 seconds.
 
 ::: note
 ## メモ
-* `token` が登録済みのクライアントは登録されない -> ※エラー設計を考える
+* `token` が登録済みのクライアントは登録されない
+
 * iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのまま
 * iOS9 新規tokenとしてインストールされる。古いトークンは次期配信でinactiveに変更される
 * Android iOS9の挙動と同様
 
 ## 実装設計
-* growthbeatClient ID が作成済みかチェック > なかった場合は作成する
 * growthbeatApplicationIdからgrowthPushApplicationを検索
 * token が登録済みかチェック > 登録済みだったら何もしない
 * token が null だったら invalid、null じゃなかったら validating に
@@ -126,6 +155,9 @@ All Other Resources API : 10 requests in 10 seconds.
 
 + Response 200 (application/json)
     + Attributes (GrowthbeatClient)
+
++ Response 400 (application/json)
+    + Attributes (400)
 
 ## Update a Client token [PUT /clients/{id}/token]
 デバイストークンの更新
@@ -152,13 +184,14 @@ All Other Resources API : 10 requests in 10 seconds.
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + token: DEVICE_TOKEN (optional, string) - デバイストークン
 
++ Response 200 (application/json)
+    + Attributes (GrowthbeatClient)
+
 ## Update a Client status [PUT /clients/{id}/status]
 クライアントのステータス環境更新
 
 ::: note
 ## 実装設計
-validating, unknown, invalid は指定させる必要ない？
-
 * clientId から client を検索
 * growthbeatApplicationIdからgrowthPushApplicationを検索
 * status の更新がある && active
@@ -313,23 +346,19 @@ validating, unknown, invalid は指定させる必要ない？
 
 ## 400 (object)
 + status: 400 (number) - ステータスコード
-+ message: Invalid Request. (string)
-+ description: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
++ message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
 
 ## 401 (object)
 + status: 401 (number)
-+ message: Unauthorized. (string)
-+ description: Bad credentials. (string)
++ message: Bad credentials. (string)
 
 ## 404 (object)
 + status: 404 (number)
-+ message: Not Found. (string)
-+ description: Client does not exist. (string)
++ message: Client does not exist. (string)
 
 ## 429 (object)
 + status: 429 (number)
 + message: Too many requests. (string)
-+ description: Number of allowed requests has been exceeded for this API. please try again soon. (string)
 
 ## 500 (object)
 + status: 500 (number)
@@ -338,4 +367,3 @@ validating, unknown, invalid は指定させる必要ない？
 ## 503 (object)
 + status: 503 (number)
 + message: Service Unavailable (string)
-+ description: XXX/XXX is under maintenance (string)
