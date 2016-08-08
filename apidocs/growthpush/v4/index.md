@@ -9,27 +9,29 @@ HOST: https://api.growthpush.com/4
 APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のHTTPエラーが返却されます。以下がそれぞれのAPIに設けられている制限となります。
 
 :::note
-Clients API : 10 requests in 10 seconds.
+Clients API : 2リクエスト / 秒
 
-Notifications API : 10 requests in 30 seconds.
+Notifications API : 2リクエスト / 秒
 
-Tags / Events API : 10 requests in 30 seconds.
+Tags / Events API : 2リクエスト / 秒
 
-All Other Resources API : 10 requests in 10 seconds.
+All Other Resources API : 2リクエスト / 秒
 :::
-
-例えば…
 
 ## Error Codes & Responses
 
+400系リクエストにはそれぞれ4桁のエラーコードを設けております。
+
 :::note
-400系のリクエストの詳細
-- エラーコードは4桁
-- 10xx : アカウント関連
-- 11xx : clients関連
-- 12xx : notifications系
-- 13xx : tags系
-- 14xx : events系
+10xx : 共通系
+
+11xx : clients系
+
+12xx : notifications系
+
+13xx : tags系
+
+14xx : events系
 :::
 
 **Accounts**
@@ -45,10 +47,11 @@ Code | Text | Description
 
 Code | Text | Description
 :---- | ------ | -----------
-1101 | Client not found. | クライアントが存在しません
-1102 | The OS is currently not supported. | サポート外のOSです
-1103 | Invalid device token length. | 不正なデバイストークンです
-1104 | Duplicate token. | トークンが重複しています
+1101 | Growthbeat client not found. | Growthbeat クライアント が存在しません
+1102 | Client not found. | クライアントが存在しません
+1103 | The OS is currently not supported. | サポート外のOSです
+1104 | Invalid device token length. | 不正なデバイストークンです
+1105 | Duplicate token. | トークンが重複しています
 
 **Notifications**
 
@@ -218,7 +221,6 @@ Code | Text | Description
 * growthbeatApplicationIdからgrowthPushApplicationを検索
 * status の更新がある && active
   * validating にして activate
-* active 以外
 :::
 
 ::: warning
