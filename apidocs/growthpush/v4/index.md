@@ -64,12 +64,13 @@ Code | Text | Description
 
 
 **Error Responses**
-エラーメッセージをJSONフォーマットで返却します。
+エラーメッセージをJSONフォーマットで返却します。 `sutatus` はHTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
 
 ```
 {
-    "code": 1001,
+    "status": 400,
     "message": "Invaid credential.",
+    "code": 1001
 }
 ```
 
