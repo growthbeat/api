@@ -20,20 +20,42 @@ All Other Resources API : 10 requests in 10 seconds.
 
 ## Error Codes & Responses
 
-**Error Codes**
+:::note
+400系のリクエストの詳細
+- エラーコードは4桁
+- 10xx : アカウント関連
+- 11xx : clients関連
+- 12xx : notifications系
+- 13xx : tags系
+- 14xx : events系
+:::
+
+**Accounts**
 
 Code | Text | Description
 :---- | ------ | -----------
-10 | account | アカウント情報系
-20 | permission | 権限系
-30 | Clients bad Request. | クライアント API 
-31 | Client not found. | 該当データ無し
-32 | Invalid device token length. | 不正なデバイストークン
-33 | Duplicate value. | 重複するデータ
-34 | Too Many Requests | 使用制限超過
-40 | notifications
-50 | tags
-60 | event
+1001 | Invaid credential. | 不正な認証キー
+1002 | Permission denied. | 権限がありません
+1003 | Too Many Requests | 使用制限超過
+1004 | Application not found. | 指定のアプリケーションが見つかりません
+
+**Clients**
+
+Code | Text | Description
+:---- | ------ | -----------
+1101 | Client not found. | クライアントが存在しません
+1102 | The OS is currently not supported. | サポート外のOSです
+1103 | Invalid device token length. | 不正なデバイストークンです
+1104 | Duplicate token. | トークンが重複しています
+
+**Notifications**
+
+Code | Text | Description
+:---- | ------ | -----------
+1201 | Text must not be null. | テキストは必須項目です
+1202 | Text includes unsupport character. | サポート外の文字列が含まれています
+1203 | Cannot parse extra string. | extra に正しいJSONを指定してください
+1204 | Cannot parse query string. | query に正しいJSONを指定してください
 
 
 **Error Responses**
@@ -41,9 +63,8 @@ Code | Text | Description
 
 ```
 {
-    "code": 96,
-    "message": "Invalid signature",
-    "stat": "fail"
+    "code": 1001,
+    "message": "Invaid credential.",
 }
 ```
 
