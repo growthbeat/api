@@ -6,8 +6,9 @@ HOST: https://api.growthpush.com/4
 # Group API Overview
 ## Rate Limits
 
-APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のエラーコードが返却されます。以下がそれぞれのAPIに設けられている制限となります。
+APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のHTTPエラーが返却されます。以下がそれぞれのAPIに設けられている制限となります。
 
+:::note
 Clients API : 10 requests in 10 seconds.
 
 Notifications API : 10 requests in 30 seconds.
@@ -15,6 +16,7 @@ Notifications API : 10 requests in 30 seconds.
 Tags / Events API : 10 requests in 30 seconds.
 
 All Other Resources API : 10 requests in 10 seconds.
+:::
 
 例えば…
 
@@ -36,7 +38,7 @@ Code | Text | Description
 :---- | ------ | -----------
 1001 | Invaid credential. | 不正な認証キー
 1002 | Permission denied. | 権限がありません
-1003 | Too Many Requests | 使用制限超過
+1003 | Too Many Requests. | 使用制限超過
 1004 | Application not found. | 指定のアプリケーションが見つかりません
 
 **Clients**
