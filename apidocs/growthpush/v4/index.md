@@ -34,7 +34,7 @@ All Other Resources API : 2リクエスト / 秒
 14xx : events系
 :::
 
-**Accounts**
+**Commons**
 
 Code | Text | Description
 :---- | ------ | -----------
