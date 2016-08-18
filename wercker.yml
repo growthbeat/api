@@ -20,3 +20,12 @@ deploy:
     - lukevivier/gh-pages:
         token:   $GITHUB_TOKEN
         basedir: public
+
+stg-deploy:
+  steps:
+    - s3sync:
+        key-id: $KEY
+        key-secret: $SECRET
+        bucket-url: $BUCKET
+        source-dir: public
+        opts: --acl-private
