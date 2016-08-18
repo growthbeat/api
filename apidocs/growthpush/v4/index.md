@@ -39,9 +39,10 @@ All Other Resources API : 2リクエスト / 秒
 Code | Text | Description
 :---- | ------ | -----------
 1001 | Invaid credential. | 不正な認証キー
-1002 | Permission denied. | 権限がありません
-1003 | Too Many Requests. | 使用制限超過
-1004 | Application not found. | 指定のアプリケーションが見つかりません
+1002 | Application not found. | 指定のアプリケーションが見つかりません
+1003 | Unauthorized. | 認証が必要です
+1004 | Permission denied. | 権限がありません
+1005 | Too Many Requests. | 使用制限超過
 
 **Clients**
 
