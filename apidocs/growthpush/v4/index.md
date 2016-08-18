@@ -65,6 +65,7 @@ Code | Text | Description
 
 
 **Error Responses**
+
 エラーメッセージをJSONフォーマットで返却します。 `sutatus` はHTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
 
 ```
