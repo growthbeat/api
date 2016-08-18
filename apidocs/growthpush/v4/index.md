@@ -79,11 +79,6 @@ Code | Text | Description
 
 **Client Object**
 
-::: note
-* code は今後無くなる可能性があるので Client Objectから削除している
-* Growth Push clientId, applicationId はレスポンスに含めない（Growthbeat を使ってもらう）
-:::
-
  Name | Type | Notes
  :---- | ------ | -----------
  id  | string| Growthbeat クライアントID
@@ -97,11 +92,6 @@ Code | Text | Description
 
 ## Get Client [GET /clients/{id}{?applicationId}{&credentialId}]
 クライアント取得
-::: note
-* URLは単体とリストの見分けがつきやすいよう /clients/{id} にする
-* 秒間リクエスト制限
-* 制限超えた場合は、HTTP 429 “Too Many Requests”
-:::
 
 + Parameters
     + id: (required, string) - Growthbeat クライアントID
@@ -113,10 +103,6 @@ Code | Text | Description
 
 ## Get Client by token [GET /clients/token/{token}{?applicationId}{&credentialId}]
 クライアント取得
-::: note
-* v3,v1 API利用者用のtokenベースのクライアント取得API
-* 
-:::
 
 + Parameters
     + token: (requeired, string) - クライアントトークン
@@ -150,21 +136,6 @@ Code | Text | Description
 ## Create New Client [POST /clients]
 新規クライアント作成
 
-::: note
-## メモ
-* `token` が登録済みのクライアントは登録されない
-
-* iOS8 インストール/アンインストールしてもtokenが変わらないため、一度アインインストールされるとinactiveのまま
-* iOS9 新規tokenとしてインストールされる。古いトークンは次期配信でinactiveに変更される
-* Android iOS9の挙動と同様
-
-## 実装設計
-* growthbeatApplicationIdからgrowthPushApplicationを検索
-* token が登録済みかチェック > 登録済みだったら何もしない
-* token が null だったら invalid、null じゃなかったら validating に
-* 登録したら activatioin なげる
-:::
-
 + Parameters
 
 + Request (application/json)
@@ -189,14 +160,6 @@ Code | Text | Description
 ## Update a Client token [PUT /clients/{id}/token]
 デバイストークンの更新
 
-::: note
-## 実装設計
-* clientId から client を検索
-* growthbeatApplicationIdからgrowthPushApplicationを検索
-* token null じゃない and 変更がある
-  * validating にして、activate
-:::
-
 ::: warning
 * SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
 :::
@@ -216,14 +179,6 @@ Code | Text | Description
 
 ## Update a Client status [PUT /clients/{id}/status]
 クライアントのステータス環境更新
-
-::: note
-## 実装設計
-* clientId から client を検索
-* growthbeatApplicationIdからgrowthPushApplicationを検索
-* status の更新がある && active
-  * validating にして activate
-:::
 
 ::: warning
 * SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
