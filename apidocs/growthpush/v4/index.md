@@ -27,11 +27,7 @@ All Other Resources API : 2リクエスト / 秒
 
 11xx : clients系
 
-12xx : notifications系
-
-13xx : tags系
-
-14xx : events系
+99xx : growthbeat系
 :::
 
 **Commons**
@@ -54,15 +50,17 @@ Code | Text | Description
 1104 | Invalid device token length. | 不正なデバイストークンです
 1105 | Duplicate token. | トークンが重複しています
 
-**Notifications**
+**Growthbeat**
 
 Code | Text | Description
 :---- | ------ | -----------
-1201 | Text must not be null. | テキストは必須項目です
-1202 | Text includes unsupport character. | サポート外の文字列が含まれています
-1203 | Cannot parse extra string. | extra に正しいJSONを指定してください
-1204 | Cannot parse query string. | query に正しいJSONを指定してください
-
+9901 | Bad Request. | 不正なリクエストです
+9902 | Unauthorized. | 許可されていません. 認証キーが異なる場合があります
+9903 | Payment Required. | 使用するには支払いが必要な機能です
+9904 | Forbidden. | アクセス権限がありません
+9905 | Not Found. | 指定のページが見つかりません
+9906 | Bad Request. | 不正なリクエストです
+9907 | Bad Request. | 不正なリクエストです
 
 **Error Responses**
 
@@ -113,14 +111,12 @@ Code | Text | Description
 + Response 200 (application/json)
     + Attributes (GrowthbeatClient)
 
-## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&lessThan}{&greaterThan}]
+## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveStartId}]
 クライアントリスト取得
 ::: note
 * Growthbeat クライアントID の降順取得
 ## parameter
-* lessThan: 指定値より小さい ClientId を `limit` 分取得
-* greaterThan: 指定値より大きい ClientId を `limit` 分取得
-* lessThan と greaterThan の両方を指定した場合はその間の値の limit 分を取得します
+* exclusiveStartId: 指定値より大きい ClientId を `limit` 分降順取得
 :::
 
 + Parameters
@@ -128,8 +124,7 @@ Code | Text | Description
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 1000 min: 1
         + Default: 100
-    + lessThan: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
-    + greaterThan: (optional, string) - 指定値より大きい ClientId を `limit` 分取得
+    + exclusiveStartId: (optional, string) - 指定値より大きい ClientId を `limit` 分取得
 
 + Response 200 (application/json)
     + Attributes (array[GrowthbeatClient])
