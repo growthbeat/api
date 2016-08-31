@@ -136,7 +136,7 @@ Code | Text | Description
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + token: DEVICE_TOKEN (optional, string) - デバイストークン
+        + token: DEVICE_TOKEN (required, string) - デバイストークン
         + os: ios (required, enum[string]) - OS
             + ios
             + android
