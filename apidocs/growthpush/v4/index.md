@@ -34,7 +34,8 @@ Code | Text | Description
 1002 | Application not found. | 指定のアプリケーションが見つかりません
 1003 | Unauthorized. | 認証が必要です
 1004 | Permission denied. | 権限がありません
-1005 | Too Many Requests. | 使用制限超過
+1005 | Not found. | 指定のページが見つかりません
+1006 | Too Many Requests. | 使用制限超過
 1000 | Unexpected error has occured. | 予期しないエラーが発生しました
 
 **Clients**
@@ -120,7 +121,7 @@ Code | Text | Description
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 指定値より大きい ClientId を `limit` 分取得
+    + exclusiveStartId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
 
 + Response 200 (application/json)
     + Attributes (array[GrowthbeatClient])
