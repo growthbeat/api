@@ -177,6 +177,9 @@ Code | Text | Description
 * SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
 :::
 
+::: note
+**ステータスの種類**
+
 Status | Description
 :---- | ------
 active | ステータスを強制的に `active` に変更します。同一端末に紐づく複数デバイストークンを `active` にした場合、 **重複配信** される可能性があります。
@@ -184,6 +187,7 @@ validating | プッシュ通知可能な端末か検証した後、通知可能�
 unknown | ステータスを `unknown` に変更します。この更新を行うと端末に通知が届かなくなります。
 inactive | ステータスを `inactive` に変更します。この更新を行うと端末に通知が届かなくなります。
 invalid | ステータスを `invalid` に変更します。この更新を行うと端末に通知が届かなくなります。
+:::
 
 + Parameters
     + id: (string) - Growthbeat クライアントID
