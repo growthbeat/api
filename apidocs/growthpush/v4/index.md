@@ -83,7 +83,7 @@ Code | Text | Description
  Name | Type | Notes
  :---- | ------ | -----------
  id  | string| Growthbeat クライアントID
- applicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  token  | string | デバイストークン
  os  | enum | OS ( ios \| android )
  status  | enum | プッシュ通知ステータス ( unknown \| validating \| active \| inactive \| invalid )
