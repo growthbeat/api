@@ -10,8 +10,6 @@ APIの呼び出しにはリクエスト制限が設けられております。�
 
 :::note
 Clients API : 2リクエスト / 秒
-
-All Other Resources API : 2リクエスト / 秒
 :::
 
 ## Error Codes & Responses
