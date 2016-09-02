@@ -4,6 +4,7 @@ HOST: https://api.growthpush.com/4
 # Growth Push API v4
 
 # Group API Overview
+<!--
 ## Rate Limits
 
 APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のHTTPエラーが返却されます。以下がそれぞれのAPIに設けられている制限となります。
@@ -11,6 +12,7 @@ APIの呼び出しにはリクエスト制限が設けられております。�
 :::note
 Clients API : 2リクエスト / 秒
 :::
+-->
 
 ## Error Codes & Responses
 
@@ -33,8 +35,8 @@ Code | Text | Description
 1003 | Unauthorized. | 認証が必要です
 1004 | Permission denied. | 権限がありません
 1005 | Not found. | 指定のページが見つかりません
-1006 | Too Many Requests. | 使用制限超過
 1000 | Unexpected error has occured. | 予期しないエラーが発生しました
+<!--1006 | Too Many Requests. | 使用制限超過-->
 
 **Clients**
 
