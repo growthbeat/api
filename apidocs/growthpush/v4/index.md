@@ -4,15 +4,15 @@ HOST: https://api.growthpush.com/4
 # Growth Push API v4
 
 # Group API Overview
+<!--
 ## Rate Limits
 
 APIの呼び出しにはリクエスト制限が設けられております。リクエスト制限を超えた場合は、 429 (Too Many Requests) のHTTPエラーが返却されます。以下がそれぞれのAPIに設けられている制限となります。
 
 :::note
 Clients API : 2リクエスト / 秒
-
-All Other Resources API : 2リクエスト / 秒
 :::
+-->
 
 ## Error Codes & Responses
 
@@ -26,7 +26,7 @@ All Other Resources API : 2リクエスト / 秒
 99xx : Growthbeat 共通基盤
 :::
 
-**Commons**
+**API 共通**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -35,10 +35,10 @@ Code | Text | Description
 1003 | Unauthorized. | 認証が必要です
 1004 | Permission denied. | 権限がありません
 1005 | Not found. | 指定のページが見つかりません
-1006 | Too Many Requests. | 使用制限超過
 1000 | Unexpected error has occured. | 予期しないエラーが発生しました
+<!--1006 | Too Many Requests. | 使用制限超過-->
 
-**Clients**
+**Clients API**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -50,7 +50,7 @@ Code | Text | Description
 1100 | Unexpected error has occured. | 予期しないエラーが発生しました
 
 
-**Growthbeat**
+**Growthbeat 共通基盤**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -83,7 +83,7 @@ Code | Text | Description
  Name | Type | Notes
  :---- | ------ | -----------
  id  | string| Growthbeat クライアントID
- applicationId  | string | [Grwothbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  token  | string | デバイストークン
  os  | enum | OS ( ios \| android )
  status  | enum | プッシュ通知ステータス ( unknown \| validating \| active \| inactive \| invalid )
@@ -175,6 +175,18 @@ Code | Text | Description
 
 ::: warning
 * SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+:::
+
+::: note
+**ステータスの種類**
+
+Status | Description
+:---- | ------
+active | ステータスを強制的に `active` に変更します。同一端末に紐づく複数デバイストークンを `active` にした場合、 **重複配信** される可能性があります。
+validating | プッシュ通知可能な端末か検証した後、通知可能な端末は `active` に、通知を拒否している端末、またはアンインストール済みの端末は `inactive` に変化します。
+unknown | ステータスを `unknown` に変更します。この更新を行うと端末に通知が届かなくなります。
+inactive | ステータスを `inactive` に変更します。この更新を行うと端末に通知が届かなくなります。
+invalid | ステータスを `invalid` に変更します。この更新を行うと端末に通知が届かなくなります。
 :::
 
 + Parameters
