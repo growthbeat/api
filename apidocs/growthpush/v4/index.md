@@ -26,7 +26,7 @@ Clients API : 2リクエスト / 秒
 99xx : Growthbeat 共通基盤
 :::
 
-**Commons**
+**API 共通**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -38,7 +38,7 @@ Code | Text | Description
 1000 | Unexpected error has occured. | 予期しないエラーが発生しました
 <!--1006 | Too Many Requests. | 使用制限超過-->
 
-**Clients**
+**Clients API**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -50,7 +50,7 @@ Code | Text | Description
 1100 | Unexpected error has occured. | 予期しないエラーが発生しました
 
 
-**Growthbeat**
+**Growthbeat 共通基盤**
 
 Code | Text | Description
 :---- | ------ | -----------
