@@ -320,7 +320,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 :::
 
 + Parameters
-    + clientId: (required, number) - Growthbeat クライアントID
+    + clientId: (required, string) - Growthbeat クライアントID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
@@ -369,6 +369,135 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
+
+# Group Events
+
+**Event Object**
+
+::: warning
+* goalId を eventId として扱えるか
+* 実装方法どうするかを考えて、工数を出す
+:::
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ id  | number| イベントID
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ type | enum | custom \( プッシュ通知 \) \| message \( ポップアップメッセージ \)
+ name  | string | イベント名
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+
+## Get Event [GET /events/{id}{?applicationId}{&credentialId}]
+イベント取得
+
++ Parameters
+    + id: (required, number) - イベントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (Event)
+
+## Get Events [GET /events{?applicationId}{&credentialId}]
+イベント一覧取得
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartTimestamp: (optional, string) - 指定値より小さい Timestamp を `limit` 分取得
+
++ Response 200 (application/json)
+    + Attributes (array[Event])
+
+## Create New Event [POST /events]
+新規イベント作成
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: EVENT_NAME (required, string) - イベント名
+        + type: custom (required, enum[string]) - イベントタイプ
+            + custom
+            + message
+
++ Response 200 (application/json)
+    + Attributes (Event)
+
++ Response 400 (application/json)
+    + Attributes (400)
+
+# Group EventClients
+
+**EventClient Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ eventId | number | イベントID
+ clientId | string | Growthbeat クライアントID
+ value | string | 任意の値
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+
+## Get EventClients by event [GET /event_clients/in_events/{eventId}{?applicationId}{&credentialId}]
+イベントに紐づくクライアントを取得
+::: warning
+* DynamoからexclusiveStartTIdでページングで取得できのか確認
+  * DynamoからclientIdでソートして取得しているので可能
+  * DynamoからのexclusiveIdを返してもらうこともできるかも
+:::
+
++ Parameters
+    + eventId: (required, number) - イベントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartClientId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+
++ Response 200 (application/json)
+    + Attributes (array[EventClient])
+
+## Get TagClients by client [GET /event_clients/to_client/{clientId}{?applicationId}{&credentialId}]
+クライアントに紐づくイベントを取得
+::: warning
+* timestamp を Date 型で送信してもらうほうがわかりやすい？どっちがいいのか？
+:::
+
++ Parameters
+    + clientId: (required, string) - Growthbeat クライアントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartTimestamp: (optional, string) - 指定値より小さい timestamp を `limit` 分取得
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
+## Create New EventClient [POST /event_clients]
+新規イベントクライアント作成
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+        + eventId: EVENT_ID (required, number) - イベントID
+        + value: VALUE (optional, string) - 任意の値
+
++ Response 200 (application/json)
+    + Attributes (EventClient)
+
++ Response 400 (application/json)
+    + Attributes (400)
 
 # Data Structures
 
@@ -470,11 +599,17 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + modified: `2015-02-03 12:34:56` (string)
 + Include Timestamp
 
-## Goal (object)
-+ goalId: GOAL_ID (number)
+## Event (object)
++ id: EVENT_ID (number)
 + timestamp: TIEMSTAMP (number)
-+ clientId: CLIENT_ID (number)
++ clientId: GROWTHBEAT_CLIENT_ID (string)
 + value: VALUE (string)
+
+## EventClient (object)
++ eventId: EVENT_ID (number)
++ clientId: GROWTHBEA_CLIENT_ID (string)
++ value: VALUE (string)
++ created: `2015-02-03 12:34:56` (string)
 
 ## Tag (object)
 + id: TAG_ID (number)
@@ -489,6 +624,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + tagId: TAG_ID (number)
 + clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
++ created: `2015-02-03 12:34:56` (string)
 
 ## Job (object)
 + jobId: JOB_ID (string)
