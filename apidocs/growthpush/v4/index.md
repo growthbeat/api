@@ -351,7 +351,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 400 (application/json)
     + Attributes (400)
 
-## Create New TagClients [POST /tags]
+## Create New TagClients [POST /tag_clients]
 タグクライアントの作成
 
 ::: note
