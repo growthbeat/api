@@ -23,6 +23,10 @@ Clients API : 2リクエスト / 秒
 
 11xx : Clients API
 
+12xx : Tag API
+
+13xx : Event API
+
 99xx : Growthbeat 共通基盤
 :::
 
@@ -43,12 +47,27 @@ Code | Text | Description
 Code | Text | Description
 :---- | ------ | -----------
 1101 | Growthbeat client not found. | Growthbeat クライアント が存在しません
-1102 | Client not found. | クライアントが存在しません
+1102 | Client not found. | 指定のクライアントが存在しません
 1103 | The OS is currently not supported. | サポート外のOSです
 1104 | Invalid device token length. | 不正なデバイストークンです
 1105 | Duplicate token. | トークンが重複しています
 1100 | Unexpected error has occured. | 予期しないエラーが発生しました
 
+**Tags API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1201 | Tag not found. | 指定のタグが存在しません
+1202 | Duplicate tag. | タグが重複しています
+1203 | Tag name cannot be longer than 64 characters. | タグ名は64文字以内に設定してください
+
+**Events API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1301 | Tag not found. | 指定のイベントが存在しません
+1302 | Duplicate event. | イベントが重複しています
+1303 | Event name cannot be longer than 64 characters. | イベント名は64文字以内に設定してください
 
 **Growthbeat 共通基盤**
 
