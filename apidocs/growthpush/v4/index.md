@@ -207,6 +207,169 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (GrowthbeatClient)
 
+# Group Tags
+
+**Tag Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ id  | number| タグID
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ type | enum | custom \( プッシュ通知 \) \| message \( ポップアップメッセージ \)
+ name  | string | タグ名
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+
+## Get Tag [GET /tag/{id}{?applicationId}{&credentialId}]
+タグ取得
+
++ Parameters
+    + id: (required, number) - タグID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (Tag)
+
+## Get Tags [GET /tag{?applicationId}{&credentialId}]
+タグ一覧取得
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartId: (optional, string) - 指定値より小さい TagId を `limit` 分取得
+
++ Response 200 (application/json)
+    + Attributes (array[Tag])
+
+## Create New Tag [POST /tags]
+新規タグ作成
+
+:::note
+* 同じ `name` のタグは作成できない
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: TAG_NAME (required, string) - タグ名
+        + type: custom (required, enum[string]) - タグタイプ
+            + custom
+            + message
+
++ Response 200 (application/json)
+    + Attributes (Tag)
+
++ Response 400 (application/json)
+    + Attributes (400)
+
+# Group TagClients
+
+**TagClient Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ tagId | number | タグID
+ clientId | string | Growthbeat クライアントID
+ value | string | 任意の値
+
+
+::: warning
+# パスの案
+* 前置詞
+  * /tag_clients/in_tags/{tagId}{?applicationId}{&credentialId}
+  * /tag_clients/to_clients/{clientId}{?applicationId}{&credentialId}
+
+* 形容詞
+  * /tag_clients/identical_tags/{tagId}{?applicationId}{&credentialId}
+  * /tag_clients/identical_clients/{tagId}{?applicationId}{&credentialId}
+
+* 他
+  * /tag_clients/{tagId}{?applicationId}{&credentialId}
+  * /tag_clients/{clientId}{?applicationId}{&credentialId}
+:::
+
+## Get TagClients by tag [GET /tag_clients/in_tags/{tagId}{?applicationId}{&credentialId}]
+タグに紐づくクライアントを取得
+::: warning
+* DynamoからexclusiveStartClientIdでページングで取得できのか確認
+  * DynamoからclientIdでソートして取得しているので可能
+  * DynamoからのexclusiveIdを返してもらうこともできるかも
+:::
+
++ Parameters
+    + tagId: (required, number) - タグID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartClientId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
+## Get TagClients by client [GET /tag_clients/to_client/{clientId}{?applicationId}{&credentialId}]
+クライアントに紐づくタグを取得
+::: warning
+* デフォルト 100 件の取得でページングは設けない
+:::
+
++ Parameters
+    + clientId: (required, number) - Growthbeat クライアントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
+## Create New TagClient [POST /tag_clients]
+新規タグクライアント作成
+
+:::note
+* 既にタグが登録されている場合は、valueを更新します。
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+        + tagId: TAG_ID (required, number) - タグID
+        + value: value (optional, string) - 任意の値
+
++ Response 200 (application/json)
+    + Attributes (TagClient)
+
++ Response 400 (application/json)
+    + Attributes (400)
+
+## Create New TagClients [POST /tags]
+タグクライアントの作成
+
+::: note
+* このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグが登録されている場合は、そのvalueを更新します。
+* リクエスト数は指定したタグの件数分カウントされます。また、Notificationタグは更新する事はできません。
+* 大量のタグを更新することを想定しているため **反映までに時間がかかる場合があります(数時間以上かかる場合があります)**  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
 # Data Structures
 
 ## Result (object)
@@ -319,12 +482,12 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + type: (enum[string])
     + custom
     + message
-+ invisible: true (boolean)
++ name: TAG_NAME (string)
 + created: `2015-02-03 12:34:56` (string)
 
 ## TagClient (object)
 + tagId: TAG_ID (number)
-+ clientId: CLIENT_ID (number)
++ clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
 
 ## Job (object)
