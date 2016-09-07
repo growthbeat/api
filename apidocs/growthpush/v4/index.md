@@ -234,24 +234,18 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  :---- | ------ | -----------
  id  | number| タグID
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- type | enum | custom \( プッシュ通知 \) \| message \( ポップアップメッセージ \)
+ type | enum | タグのタイプ ( custom \| notification \| automation \| message )
  name  | string | タグ名
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
 ## Get Tag [GET /tags/{id}{?applicationId}{&credentialId}]
 タグ取得
 
-::: warning
-# メモ
-* type はデフォルト custom にする。他の type の指定は可能。
-:::
-
 + Parameters
     + id: (required, number) - タグID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + type: (optional, enum[string]) - タグタイプ
-        + Default: custom
+
 
 + Response 200 (application/json)
     + Attributes (Tag)
@@ -259,12 +253,19 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get Tags [GET /tags{?applicationId}{&credentialId}]
 タグ一覧取得
 
+::: warning
+# メモ
+* type はデフォルト custom にする。他の type の指定は可能。
+:::
+
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
     + exclusiveStartId: (optional, number) - 指定値より小さい TagId を `limit` 分取得
+    + type: (optional, enum[string]) - タグタイプ
+        + Default: custom
 
 + Response 200 (application/json)
     + Attributes (array[Tag])
@@ -295,6 +296,10 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + Attributes (Tag)
 
 # Group TagClients
+
+:::note
+デバイスに紐づくタグの情報を取得できます。
+:::
 
 **TagClient Object**
 
@@ -394,7 +399,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  :---- | ------ | -----------
  id  | number| イベントID
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- type | enum | custom \( プッシュ通知 \) \| message \( ポップアップメッセージ \)
+ type | enum | イベントのタイプ ( custom \| message )
  name  | string | イベント名
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
@@ -418,6 +423,8 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
     + exclusiveStartId: (optional, string) - 指定値より小さい eventId を `limit` 分取得
+    + type: (optional, enum[string]) - タグタイプ
+        + Default: custom
 
 + Response 200 (application/json)
     + Attributes (array[Event])
@@ -433,9 +440,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: EVENT_NAME (required, string) - イベント名
-        + type: custom (required, enum[string]) - イベントタイプ
-            + custom
-            + message
 
 + Response 200 (application/json)
     + Attributes (Event)
@@ -492,6 +496,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ::: warning
 # メモ
 * v1,v3からの移行を優先して、イベントに紐づくクライアント一覧取得 / クライアントに紐づくイベント一覧取得 は追加開発項目にする
+* タイムスタンプは現在時刻を入れる仕様。（過去の時刻を許可する？）
 :::
 
 ## Create New EventClient [POST /event_clients]
@@ -574,9 +579,11 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Event (object)
 + id: EVENT_ID (number)
 + applicationId: APPLICATION_ID (string)
-+ timestamp: TIEMSTAMP (number)
-+ clientId: GROWTHBEAT_CLIENT_ID (string)
-+ value: VALUE (string)
++ type: (enum[string])
+    + custom
+    + message
++ name: TAG_NAME (string)
++ created: `2015-02-03 12:34:56` (string)
 
 ## EventClient (object)
 + eventId: EVENT_ID (number)
