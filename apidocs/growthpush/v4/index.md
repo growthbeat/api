@@ -408,7 +408,7 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartTimestamp: (optional, string) - 指定値より小さい Timestamp を `limit` 分取得
+    + exclusiveStartId: (optional, string) - 指定値より小さい eventId を `limit` 分取得
 
 + Response 200 (application/json)
     + Attributes (array[Event])
