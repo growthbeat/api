@@ -637,7 +637,7 @@ curl -X POST \
 
 ## Event (object)
 + id: EVENT_ID (number)
-+ applicationId: APPLICATION_ID (string)
++ applicationId: GRWOTHBEAT_APPLICATION_ID (string)
 + type: (enum[string])
     + custom
     + message
@@ -652,7 +652,7 @@ curl -X POST \
 
 ## Tag (object)
 + id: TAG_ID (number)
-+ applicationId: APPLICATION_ID (string)
++ applicationId: GRWOTHBEAT_APPLICATION_ID (string)
 + type: (enum[string])
     + custom
     + notification
