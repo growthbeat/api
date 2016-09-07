@@ -19,15 +19,15 @@ Clients API : 2リクエスト / 秒
 400系リクエストにはそれぞれ4桁のエラーコードを設けております。
 
 :::note
-10xx : API 共通
+10xx : 共通系
 
-11xx : Clients API
+11xx : Clients 系
 
-12xx : Tag API
+12xx : Tags 系　
 
-13xx : Event API
+13xx : Events 系
 
-99xx : Growthbeat 共通基盤
+99xx : Growthbeat 共通系
 :::
 
 **API 共通**
@@ -61,6 +61,13 @@ Code | Text | Description
 1202 | Duplicate tag. | タグが重複しています
 1203 | Tag name cannot be longer than 64 characters. | タグ名は64文字以内に設定してください
 
+**Client Tags API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1102 | Client not found. | 指定のクライアントが存在しません
+1201 | Tag not found. | 指定のタグが存在しません
+
 **Events API**
 
 Code | Text | Description
@@ -68,6 +75,13 @@ Code | Text | Description
 1301 | Tag not found. | 指定のイベントが存在しません
 1302 | Duplicate event. | イベントが重複しています
 1303 | Event name cannot be longer than 64 characters. | イベント名は64文字以内に設定してください
+
+**Client Events API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1102 | Client not found. | 指定のクライアントが存在しません
+1301 | Tag not found. | 指定のイベントが存在しません
 
 **Growthbeat 共通基盤**
 
@@ -133,14 +147,14 @@ Code | Text | Description
     + Attributes (GrowthbeatClient)
 
 ## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveStartId}]
-クライアントリスト取得
+クライアント一覧取得（降順取得固定）
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+    + exclusiveStartId: (optional, string) - 取得の起点となる `clientId` を指定してください
 
 + Response 200 (application/json)
     + Attributes (array[GrowthbeatClient])
@@ -251,7 +265,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + Attributes (Tag)
 
 ## Get Tags [GET /tags{?applicationId}{&credentialId}]
-タグ一覧取得
+タグ一覧取得（降順取得固定）
 
 ::: warning
 # メモ
@@ -263,7 +277,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, number) - 指定値より小さい TagId を `limit` 分取得
+    + exclusiveStartId: (optional, number) - 取得の起点となる `tagId` を指定してください
     + type: (optional, enum[string]) - タグタイプ
         + Default: custom
 
@@ -310,7 +324,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  value | string | 任意の値
 
 ## Get TagClients by tag [GET /tag_clients/tag/{tagId}{?applicationId}{&credentialId}]
-タグに紐づくクライアントを取得
+タグに紐づくクライアントを取得（降順取得固定）
 
 ::: warning
 # メモ
@@ -323,7 +337,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartClientId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+    + exclusiveStartClientId: (optional, string) - 取得の起点となる `clientId` を指定してください
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
@@ -369,9 +383,37 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 タグクライアントの作成
 
 ::: note
-* このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、そのvalueを更新します。
-* リクエスト数は指定したタグの件数分カウントされます。また、Notificationタグは更新する事はできません。
+* この API は、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、その value を更新します。
+* リクエスト数は指定したタグの件数分カウントされます。また、 Notification タグは更新する事はできません。
 * 大量のタグを更新することを想定しているため **反映までに時間がかかる場合があります(数時間以上かかる場合があります)**  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。
+
+* `body` には下記の `json` を指定してください
+```
+{
+  "clientId": "GROWTHBEAT_CLIENT_ID",
+  "credentialId": "GROWTHBEAT_CREDENTIAL_ID",
+  "tagIdValues": [
+    {
+      "tagId": 1,
+      "value": "hoge"
+    },
+    {
+      "tagId": 2,
+      "value": "fuga"
+    },
+    ……
+  ]
+}
+```
+
+* curl 例
+```
+curl -X POST \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]}' \
+    https://api.growthpush.com/4/tag_clients
+```
 :::
 
 + Parameters
@@ -415,14 +457,14 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + Attributes (Event)
 
 ## Get Events [GET /events{?applicationId}{&credentialId}]
-イベント一覧取得
+イベント一覧取得（降順取得固定）
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, number) - 指定値より小さい eventId を `limit` 分取得
+    + exclusiveStartId: (optional, number) - 取得の起点となる `eventId` を指定してください
     + type: (optional, enum[string]) - タグタイプ
         + Default: custom
 
@@ -453,7 +495,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  eventId | number | イベントID
  clientId | string | Growthbeat クライアントID
  value | string | 任意の値
- created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+ timestamp  | number | 作成日
 
 <!-- 開発検討
 ## Get EventClients by event [GET /event_clients/in_events/{eventId}{?applicationId}{&credentialId}]
@@ -589,7 +631,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + eventId: EVENT_ID (number)
 + clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
-+ created: `2015-02-03 12:34:56` (string)
++ timestamp: TIEMSTAMP (number)
 
 ## Tag (object)
 + id: TAG_ID (number)
