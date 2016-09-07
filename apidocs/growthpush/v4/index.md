@@ -245,6 +245,8 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + id: (required, number) - タグID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + type: (optional, enum[string]) - タグタイプ
+        + Default: custom
 
 + Response 200 (application/json)
     + Attributes (Tag)
@@ -252,12 +254,18 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get Tags [GET /tag{?applicationId}{&credentialId}]
 タグ一覧取得
 
+:::note
+```sql
+select * from tag where application_id = 1 and id < 4 and type = 'custom' and invisible = false order by id desc limit 2;
+```
+:::
+
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 指定値より小さい TagId を `limit` 分取得
+    + exclusiveStartId: (optional, number) - 指定値より小さい TagId を `limit` 分取得
 
 + Response 200 (application/json)
     + Attributes (array[Tag])
@@ -265,8 +273,9 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Create New Tag [POST /tags]
 新規タグ作成
 
-:::note
+::: note
 * 同じ `name` のタグは作成できない
+* type は custom 固定
 :::
 
 + Parameters
@@ -277,15 +286,9 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: TAG_NAME (required, string) - タグ名
-        + type: custom (required, enum[string]) - タグタイプ
-            + custom
-            + message
 
 + Response 200 (application/json)
     + Attributes (Tag)
-
-+ Response 400 (application/json)
-    + Attributes (400)
 
 # Group TagClients
 
@@ -297,28 +300,12 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  clientId | string | Growthbeat クライアントID
  value | string | 任意の値
 
-
-::: warning
-# パスの案
-* 前置詞
-  * /tag_clients/in_tags/{tagId}{?applicationId}{&credentialId}
-  * /tag_clients/to_clients/{clientId}{?applicationId}{&credentialId}
-
-* 形容詞
-  * /tag_clients/identical_tags/{tagId}{?applicationId}{&credentialId}
-  * /tag_clients/identical_clients/{tagId}{?applicationId}{&credentialId}
-
-* 他
-  * /tag_clients/{tagId}{?applicationId}{&credentialId}
-  * /tag_clients/{clientId}{?applicationId}{&credentialId}
-:::
-
-## Get TagClients by tag [GET /tag_clients/in_tags/{tagId}{?applicationId}{&credentialId}]
+## Get TagClients by tag [GET /tag_clients/tag/{tagId}{?applicationId}{&credentialId}]
 タグに紐づくクライアントを取得
+
 ::: warning
 * DynamoからexclusiveStartClientIdでページングで取得できのか確認
   * DynamoからclientIdでソートして取得しているので可能
-  * DynamoからのexclusiveIdを返してもらうこともできるかも
 :::
 
 + Parameters
@@ -332,7 +319,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (array[TagClient])
 
-## Get TagClients by client [GET /tag_clients/to_client/{clientId}{?applicationId}{&credentialId}]
+## Get TagClients by client [GET /tag_clients/client/{clientId}{?applicationId}{&credentialId}]
 クライアントに紐づくタグを取得
 ::: warning
 * デフォルト 100 件の取得でページングは設けない
@@ -350,7 +337,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 新規タグクライアント作成
 
 :::note
-* 既にタグが登録されている場合は、valueを更新します。
+* 既にタグクライアントが登録されている場合は、valueを更新します。
 :::
 
 + Parameters
@@ -367,14 +354,11 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (TagClient)
 
-+ Response 400 (application/json)
-    + Attributes (400)
-
 ## Create New TagClients [POST /tag_clients]
 タグクライアントの作成
 
 ::: note
-* このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグが登録されている場合は、そのvalueを更新します。
+* このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、そのvalueを更新します。
 * リクエスト数は指定したタグの件数分カウントされます。また、Notificationタグは更新する事はできません。
 * 大量のタグを更新することを想定しているため **反映までに時間がかかる場合があります(数時間以上かかる場合があります)**  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。
 :::
@@ -394,8 +378,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 **Event Object**
 
 ::: warning
-* goalId を eventId として扱えるか
-* 実装方法どうするかを考えて、工数を出す
+* @JsonProperty("id") で扱い、内部的な goalId, eventId の扱いは変更しなくてよいかと
 :::
 
  Name | Type | Notes
@@ -448,9 +431,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (Event)
 
-+ Response 400 (application/json)
-    + Attributes (400)
-
 # Group EventClients
 
 **EventClient Object**
@@ -462,6 +442,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  value | string | 任意の値
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
+<!-- 開発検討
 ## Get EventClients by event [GET /event_clients/in_events/{eventId}{?applicationId}{&credentialId}]
 イベントに紐づくクライアントを取得
 ::: warning
@@ -497,6 +478,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
+-->
 
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
@@ -514,9 +496,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Response 200 (application/json)
     + Attributes (EventClient)
-
-+ Response 400 (application/json)
-    + Attributes (400)
 
 # Data Structures
 
@@ -620,6 +599,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ## Event (object)
 + id: EVENT_ID (number)
++ applicationId: APPLICATION_ID (string)
 + timestamp: TIEMSTAMP (number)
 + clientId: GROWTHBEAT_CLIENT_ID (string)
 + value: VALUE (string)
@@ -632,10 +612,12 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ## Tag (object)
 + id: TAG_ID (number)
-+ applicationId: APPLICATION_ID (number)
++ applicationId: APPLICATION_ID (string)
 + type: (enum[string])
     + custom
     + message
+    + notification
+    + automation
 + name: TAG_NAME (string)
 + created: `2015-02-03 12:34:56` (string)
 
@@ -651,23 +633,29 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## 400 (object)
 + status: 400 (number) - ステータスコード
 + message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
++ code: 1101 (number) - エラーコード
 
 ## 401 (object)
 + status: 401 (number)
 + message: Bad credentials. (string)
++ code: 1103 (number) - エラーコード
 
 ## 404 (object)
 + status: 404 (number)
 + message: Client does not exist. (string)
++ code: 1105 (number) - エラーコード
 
 ## 429 (object)
 + status: 429 (number)
 + message: Too many requests. (string)
++ code: 1100 (number) - エラーコード
 
 ## 500 (object)
 + status: 500 (number)
 + message: Internal Server Error. (string)
++ code: 1100 (number) - エラーコード
 
 ## 503 (object)
 + status: 503 (number)
 + message: Service Unavailable (string)
++ code: 1100 (number) - エラーコード
