@@ -61,7 +61,7 @@ Code | Text | Description
 1202 | Duplicate tag. | タグが重複しています
 1203 | Tag name cannot be longer than 64 characters. | タグ名は64文字以内に設定してください
 
-**Client Tags API**
+**TagClients API**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -76,7 +76,7 @@ Code | Text | Description
 1302 | Duplicate event. | イベントが重複しています
 1303 | Event name cannot be longer than 64 characters. | イベント名は64文字以内に設定してください
 
-**Client Events API**
+**EventClients API**
 
 Code | Text | Description
 :---- | ------ | -----------
@@ -99,7 +99,7 @@ Code | Text | Description
 
 **Error Responses**
 
-エラーメッセージをJSONフォーマットで返却します。 `sutatus` はHTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
+エラーメッセージを JSONフォーマット で返却します。 `sutatus` は HTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
 
 ```
 {
@@ -187,7 +187,7 @@ Code | Text | Description
 デバイストークンの更新
 
 ::: warning
-* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+* SDK と併用する場合、データの上書きが発生するため、SDK での更新が無効になる場合がございます。
 :::
 
 + Parameters
@@ -207,7 +207,7 @@ Code | Text | Description
 クライアントのステータス環境更新
 
 ::: warning
-* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+* SDK と併用する場合、データの上書きが発生するため、SDK での更新が無効になる場合がございます。
 :::
 
 ::: note
@@ -248,7 +248,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  :---- | ------ | -----------
  id  | number| タグID
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
- type | enum | タグのタイプ ( custom \| notification \| automation \| message )
+ type | enum | タグのタイプ ( custom \| notification \| automation )
  name  | string | タグ名
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
@@ -259,7 +259,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + id: (required, number) - タグID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
-
 
 + Response 200 (application/json)
     + Attributes (Tag)
@@ -312,7 +311,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 # Group TagClients
 
 :::note
-デバイスに紐づくタグの情報を取得できます。
+* デバイスに紐づくタグの情報を取得できます。
 :::
 
 **TagClient Object**
@@ -329,6 +328,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ::: warning
 # メモ
 * パスは tagId, clientId 両方を指定するパターンはないので `/tag_clients/tag/{tagId}` にしようと思う
+* 指定した tagId の type は custom 以外でも取得可能
 :::
 
 + Parameters
@@ -362,7 +362,12 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 新規タグクライアント作成
 
 :::note
-* 既にタグクライアントが登録されている場合は、valueを更新します。
+* 既にタグクライアントが登録されている場合は、 value を更新します。
+:::
+
+::: warning
+# メモ
+* 指定した tagId の type が custom の場合のみしか作成許可しない
 :::
 
 + Parameters
@@ -381,6 +386,12 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ## Create New TagClients [POST /tag_clients]
 タグクライアントの作成
+
+::: warning
+# メモ
+* 既存の仕様と統一するか、レスポンスどうするか
+* 優先度低めで must ではない
+:::
 
 ::: note
 * この API は、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、その value を更新します。
@@ -424,7 +435,7 @@ curl -X POST \
         + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
 
 + Response 200 (application/json)
-    + Attributes (array[TagClient])
+    + Attributes (Job)
 
 # Group Events
 
@@ -432,7 +443,7 @@ curl -X POST \
 
 ::: warning
 # メモ
-* 内部的な goalId, eventId の扱いは変更しなくてよいかと
+* 内部的な goalId , eventId の扱いは変更しなくてよいかと
   * Response @JsonProperty("id") で返却
   * converter で変換させる
 :::
@@ -537,12 +548,18 @@ curl -X POST \
 
 ::: warning
 # メモ
-* v1,v3からの移行を優先して、イベントに紐づくクライアント一覧取得 / クライアントに紐づくイベント一覧取得 は追加開発項目にする
-* タイムスタンプは現在時刻を入れる仕様。（過去の時刻を許可する？）
+* v1,v3 からの移行を優先して、イベントに紐づくクライアント一覧取得 / クライアントに紐づくイベント一覧取得 は追加開発項目にする
+* タイムスタンプは現在時刻を入れる仕様。
 :::
 
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
+
+::: warning
+# メモ
+* 指定した eventId の type が custom の場合のみしか作成許可しない
+* タイムスタンプは作成日時にする
+:::
 
 + Parameters
 
@@ -638,7 +655,6 @@ curl -X POST \
 + applicationId: APPLICATION_ID (string)
 + type: (enum[string])
     + custom
-    + message
     + notification
     + automation
 + name: TAG_NAME (string)
@@ -649,6 +665,9 @@ curl -X POST \
 + clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
 + created: `2015-02-03 12:34:56` (string)
+
+## Job (object)
++ jobId: JOB_ID (string)
 
 ## 400 (object)
 + status: 400 (number) - ステータスコード
