@@ -422,7 +422,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 指定値より小さい eventId を `limit` 分取得
+    + exclusiveStartId: (optional, number) - 指定値より小さい eventId を `limit` 分取得
     + type: (optional, enum[string]) - タグタイプ
         + Default: custom
 
