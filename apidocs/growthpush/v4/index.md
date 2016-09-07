@@ -241,6 +241,11 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get Tag [GET /tags/{id}{?applicationId}{&credentialId}]
 タグ取得
 
+::: warning
+# メモ
+* type はデフォルト custom にする。他の type の指定は可能。
+:::
+
 + Parameters
     + id: (required, number) - タグID
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -253,12 +258,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ## Get Tags [GET /tags{?applicationId}{&credentialId}]
 タグ一覧取得
-
-:::note
-```sql
-select * from tag where application_id = 1 and id < 4 and type = 'custom' and invisible = false order by id desc limit 2;
-```
-:::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -274,6 +273,11 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 新規タグ作成
 
 ::: note
+* 同じ `name` のタグは作成できません
+:::
+
+::: warning
+# メモ
 * 同じ `name` のタグは作成できない
 * type は custom 固定
 :::
@@ -304,8 +308,8 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 タグに紐づくクライアントを取得
 
 ::: warning
-* DynamoからexclusiveStartClientIdでページングで取得できのか確認
-  * DynamoからclientIdでソートして取得しているので可能
+# メモ
+* パスは tagId, clientId 両方を指定するパターンはないので `/tag_clients/tag/{tagId}` にしようと思う
 :::
 
 + Parameters
@@ -321,7 +325,9 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 
 ## Get TagClients by client [GET /tag_clients/client/{clientId}{?applicationId}{&credentialId}]
 クライアントに紐づくタグを取得
+
 ::: warning
+# メモ
 * デフォルト 100 件の取得でページングは設けない
 :::
 
@@ -378,7 +384,10 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 **Event Object**
 
 ::: warning
-* @JsonProperty("id") で扱い、内部的な goalId, eventId の扱いは変更しなくてよいかと
+# メモ
+* 内部的な goalId, eventId の扱いは変更しなくてよいかと
+  * Response @JsonProperty("id") で返却
+  * converter で変換させる
 :::
 
  Name | Type | Notes
@@ -480,6 +489,11 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
     + Attributes (array[TagClient])
 -->
 
+::: warning
+# メモ
+* v1,v3からの移行を優先して、イベントに紐づくクライアント一覧取得 / クライアントに紐づくイベント一覧取得 は追加開発項目にする
+:::
+
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
 
@@ -557,46 +571,6 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 + applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + Include Timestamp
 
-## Notification (object)
-+ id: NOTIFICATION_ID (number)
-+ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
-+ segmentId: SEGMENT_ID (number)
-+ tagId: TAG_ID (number)
-+ automationId: AUTOMATION_ID (number)
-+ status: (enum[string])
-    + waiting
-    + success
-    + failure
-+ Include Timestamp
-+ trial: (array[Trial])
-+ segment: (Segment)
-
-## Trial (object)
-+ id: TRIALS_ID (number)
-+ notificationId: NOTIFICATION_ID (number)
-+ automationTrialId: AUTOMATION_TRIAL_ID (number)
-+ text: TEXT (string)
-+ sound: true (boolean)
-+ badge: true (boolean)
-+ extra: EXTRA (string)
-+ scheduled: `2015-02-03 12:34:56` (string)
-+ status: (enum[string])
-   + standby
-   + creating
-   + waiting
-   + pending
-   + sending
-   + completed
-
-## Segment (object)
-+ id: SEGMENT_ID (number)
-+ name: NAME (string)
-+ query: QUERY (string)
-+ size: SIZE (number)
-+ invisible: true (boolean)
-+ modified: `2015-02-03 12:34:56` (string)
-+ Include Timestamp
-
 ## Event (object)
 + id: EVENT_ID (number)
 + applicationId: APPLICATION_ID (string)
@@ -626,9 +600,6 @@ select * from tag where application_id = 1 and id < 4 and type = 'custom' and in
 + clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
 + created: `2015-02-03 12:34:56` (string)
-
-## Job (object)
-+ jobId: JOB_ID (string)
 
 ## 400 (object)
 + status: 400 (number) - ステータスコード
