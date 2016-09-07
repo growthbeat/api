@@ -238,7 +238,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  name  | string | タグ名
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
 
-## Get Tag [GET /tag/{id}{?applicationId}{&credentialId}]
+## Get Tag [GET /tags/{id}{?applicationId}{&credentialId}]
 タグ取得
 
 + Parameters
@@ -251,7 +251,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (Tag)
 
-## Get Tags [GET /tag{?applicationId}{&credentialId}]
+## Get Tags [GET /tags{?applicationId}{&credentialId}]
 タグ一覧取得
 
 :::note
