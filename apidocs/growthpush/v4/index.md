@@ -60,6 +60,8 @@ Code | Text | Description
 1201 | Tag not found. | 指定のタグが存在しません
 1202 | Duplicate tag. | タグが重複しています
 1203 | Tag name cannot be longer than 64 characters. | タグ名は64文字以内に設定してください
+1204 | IN segment must be specified more than 10. | INの値は、10件以上指定する必要があります
+1205 | Invalid tag. | 不正なタグです
 
 **TagClients API**
 
