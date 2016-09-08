@@ -257,7 +257,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Parameters
     + id: (required, number) - タグID
-    + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
 + Response 200 (application/json)
@@ -461,7 +460,6 @@ curl -X POST \
 
 + Parameters
     + id: (required, number) - イベントID
-    + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
 + Response 200 (application/json)
