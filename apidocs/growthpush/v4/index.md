@@ -75,7 +75,6 @@ Code | Text | Description
 :---- | ------ | -----------
 1301 | Event not found. | 指定のイベントが存在しません
 1302 | Duplicate event. | イベントが重複しています
-1303 | Event name cannot be longer than 64 characters. | イベント名は64文字以内に設定してください
 
 **EventClients API**
 
