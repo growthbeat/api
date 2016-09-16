@@ -641,7 +641,7 @@ curl -X POST \
 + type: (enum[string])
     + custom
     + message
-+ name: TAG_NAME (string)
++ name: EVENT_NAME (string)
 + created: `2015-02-03 12:34:56` (string)
 
 ## EventClient (object)
