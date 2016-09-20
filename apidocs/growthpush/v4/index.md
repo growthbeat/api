@@ -664,7 +664,6 @@ curl -X POST \
 + tagId: TAG_ID (number)
 + clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
-+ created: `2015-02-03 12:34:56` (string)
 
 ## Job (object)
 + jobId: JOB_ID (string)
