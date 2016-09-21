@@ -27,6 +27,8 @@ Clients API : 2リクエスト / 秒
 
 13xx : Events 系
 
+14xx : TagClients 系
+
 99xx : Growthbeat 共通系
 :::
 
@@ -66,6 +68,7 @@ Code | Text | Description
 
 Code | Text | Description
 :---- | ------ | -----------
+1401 | TagClient not found. | 指定のタグクライアントが存在しません
 1102 | Client not found. | 指定のクライアントが存在しません
 1201 | Tag not found. | 指定のタグが存在しません
 
