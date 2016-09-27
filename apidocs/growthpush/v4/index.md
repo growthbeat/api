@@ -157,7 +157,7 @@ Code | Text | Description
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 取得の起点となる `clientId` を指定してください
+    + exclusiveStartId: (optional, string) - 指定の `clientId` の次の値を取得します
 
 + Response 200 (application/json)
     + Attributes (array[GrowthbeatClient])
@@ -279,7 +279,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, number) - 取得の起点となる `tagId` を指定してください
+    + exclusiveStartId: (optional, number) - 指定の `tagId` の次の値を取得します
     + type: (optional, enum[string]) - タグタイプ
         + Default: custom
 
@@ -340,7 +340,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartClientId: (optional, string) - 取得の起点となる `clientId` を指定してください
+    + exclusiveStartClientId: (optional, string) - 指定の `clientId` の次の値を取得します
 
 + Response 200 (application/json)
     + Attributes (array[TagClient])
@@ -478,7 +478,7 @@ curl -X POST \
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, number) - 取得の起点となる `eventId` を指定してください
+    + exclusiveStartId: (optional, number) - 指定の `eventId` の次の値を取得します
     + type: (optional, enum[string]) - タグタイプ
         + Default: custom
 
