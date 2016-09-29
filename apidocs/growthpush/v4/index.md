@@ -270,11 +270,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get Tags [GET /tags{?applicationId}{&credentialId}]
 タグ一覧取得（降順取得固定）
 
-::: warning
-# メモ
-* type はデフォルト custom にする。他の type の指定は可能。
-:::
-
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
@@ -292,12 +287,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ::: note
 * 同じ `name` のタグは作成できません
-:::
-
-::: warning
-# メモ
-* 同じ `name` のタグは作成できない
-* type は custom 固定
 :::
 
 + Parameters
@@ -329,12 +318,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get TagClients by tag [GET /tag_clients/tag/{tagId}{?applicationId}{&credentialId}]
 タグに紐づくクライアントを取得（降順取得固定）
 
-::: warning
-# メモ
-* パスは tagId, clientId 両方を指定するパターンはないので `/tag_clients/tag/{tagId}` にしようと思う
-* 指定した tagId の type は custom 以外でも取得可能
-:::
-
 + Parameters
     + tagId: (required, number) - タグID
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -348,11 +331,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 ## Get TagClients by client [GET /tag_clients/client/{clientId}{?applicationId}{&credentialId}]
 クライアントに紐づくタグを取得
-
-::: warning
-# メモ
-* デフォルト 100 件の取得でページングは設けない
-:::
 
 + Parameters
     + clientId: (required, string) - Growthbeat クライアントID
@@ -369,11 +347,6 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 * 既にタグクライアントが登録されている場合は、 value を更新します。
 :::
 
-::: warning
-# メモ
-* 指定した tagId の type が custom の場合のみしか作成許可しない
-:::
-
 + Parameters
 
 + Request (application/json)
@@ -388,14 +361,8 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Response 200 (application/json)
     + Attributes (TagClient)
 
-## Create New TagClients [POST /tag_clients]
+<!-- ## Create New TagClients [POST /tag_clients]
 タグクライアントの作成
-
-::: warning
-# メモ
-* 既存の仕様と統一するか、レスポンスどうするか
-* 優先度低めで must ではない
-:::
 
 ::: note
 * この API は、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、その value を更新します。
@@ -440,17 +407,11 @@ curl -X POST \
 
 + Response 200 (application/json)
     + Attributes (Job)
+-->
 
 # Group Events
 
 **Event Object**
-
-::: warning
-# メモ
-* 内部的な goalId , eventId の扱いは変更しなくてよいかと
-  * Response @JsonProperty("id") で返却
-  * converter で変換させる
-:::
 
  Name | Type | Notes
  :---- | ------ | -----------
@@ -550,20 +511,8 @@ curl -X POST \
     + Attributes (array[TagClient])
 -->
 
-::: warning
-# メモ
-* v1,v3 からの移行を優先して、イベントに紐づくクライアント一覧取得 / クライアントに紐づくイベント一覧取得 は追加開発項目にする
-* タイムスタンプは現在時刻を入れる仕様。
-:::
-
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
-
-::: warning
-# メモ
-* 指定した eventId の type が custom の場合のみしか作成許可しない
-* タイムスタンプは作成日時にする
-:::
 
 + Parameters
 
