@@ -78,6 +78,7 @@ Code | Text | Description
 :---- | ------ | -----------
 1301 | Event not found. | 指定のイベントが存在しません
 1302 | Duplicate event. | イベントが重複しています
+1303 | Invalid event type. | 不正なイベントのタイプです
 
 **EventClients API**
 
