@@ -29,6 +29,8 @@ Clients API : 2リクエスト / 秒
 
 14xx : TagClients 系
 
+15xx : EventClients 系
+
 99xx : Growthbeat 共通系
 :::
 
@@ -84,6 +86,7 @@ Code | Text | Description
 
 Code | Text | Description
 :---- | ------ | -----------
+1501 | EventClients not found. | 指定のイベントクライアントが存在しません
 1102 | Client not found. | 指定のクライアントが存在しません
 1301 | Tag not found. | 指定のイベントが存在しません
 
@@ -473,44 +476,6 @@ curl -X POST \
  value | string | 任意の値
  timestamp  | number | 作成日
 
-<!-- 開発検討
-## Get EventClients by event [GET /event_clients/in_events/{eventId}{?applicationId}{&credentialId}]
-イベントに紐づくクライアントを取得
-::: warning
-* DynamoからexclusiveStartTIdでページングで取得できのか確認
-  * DynamoからclientIdでソートして取得しているので可能
-  * DynamoからのexclusiveIdを返してもらうこともできるかも
-:::
-
-+ Parameters
-    + eventId: (required, number) - イベントID
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - max: 100 min: 1
-        + Default: 100
-    + exclusiveStartClientId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
-
-+ Response 200 (application/json)
-    + Attributes (array[EventClient])
-
-## Get TagClients by client [GET /event_clients/to_client/{clientId}{?applicationId}{&credentialId}]
-クライアントに紐づくイベントを取得
-::: warning
-* timestamp を Date 型で送信してもらうほうがわかりやすい？どっちがいいのか？
-:::
-
-+ Parameters
-    + clientId: (required, string) - Growthbeat クライアントID
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + limit: (number, optional) - max: 100 min: 1
-        + Default: 100
-    + exclusiveStartTimestamp: (optional, string) - 指定値より小さい timestamp を `limit` 分取得
-
-+ Response 200 (application/json)
-    + Attributes (array[TagClient])
--->
-
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
 
@@ -625,28 +590,3 @@ curl -X POST \
 + status: 400 (number) - ステータスコード
 + message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
 + code: 1101 (number) - エラーコード
-
-## 401 (object)
-+ status: 401 (number)
-+ message: Bad credentials. (string)
-+ code: 1103 (number) - エラーコード
-
-## 404 (object)
-+ status: 404 (number)
-+ message: Client does not exist. (string)
-+ code: 1105 (number) - エラーコード
-
-## 429 (object)
-+ status: 429 (number)
-+ message: Too many requests. (string)
-+ code: 1100 (number) - エラーコード
-
-## 500 (object)
-+ status: 500 (number)
-+ message: Internal Server Error. (string)
-+ code: 1100 (number) - エラーコード
-
-## 503 (object)
-+ status: 503 (number)
-+ message: Service Unavailable (string)
-+ code: 1100 (number) - エラーコード
