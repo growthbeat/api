@@ -78,6 +78,7 @@ Code | Text | Description
 Code | Text | Description
 :---- | ------ | -----------
 1401 | TagClient not found. | 指定のタグクライアントが存在しません
+1402 | Failed to create tagClient. | タグクライアントの作成に失敗しました
 1102 | Client not found. | 指定のクライアントが存在しません
 1201 | Tag not found. | 指定のタグが存在しません
 1203 | Invalid tag type. | 不正なタグのタイプです
@@ -87,6 +88,7 @@ Code | Text | Description
 Code | Text | Description
 :---- | ------ | -----------
 1501 | EventClients not found. | 指定のイベントクライアントが存在しません
+1502 | Failed to create eventClient. | イベントクライアントの作成に失敗しました
 1102 | Client not found. | 指定のクライアントが存在しません
 1301 | Tag not found. | 指定のイベントが存在しません
 1303 | Invalid event type. | 不正なイベントのタイプです
