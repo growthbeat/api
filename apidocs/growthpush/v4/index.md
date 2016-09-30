@@ -63,16 +63,7 @@ Code | Text | Description
 :---- | ------ | -----------
 1201 | Tag not found. | 指定のタグが存在しません
 1202 | Duplicate tag. | タグが重複しています
-1203 | Tag name cannot be longer than 64 characters. | タグ名は64文字以内に設定してください
-1204 | Invalid tag. | 不正なタグです
-
-**TagClients API**
-
-Code | Text | Description
-:---- | ------ | -----------
-1401 | TagClient not found. | 指定のタグクライアントが存在しません
-1102 | Client not found. | 指定のクライアントが存在しません
-1201 | Tag not found. | 指定のタグが存在しません
+1203 | Invalid tag type. | 不正なタグのタイプです
 
 **Events API**
 
@@ -82,6 +73,15 @@ Code | Text | Description
 1302 | Duplicate event. | イベントが重複しています
 1303 | Invalid event type. | 不正なイベントのタイプです
 
+**TagClients API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1401 | TagClient not found. | 指定のタグクライアントが存在しません
+1102 | Client not found. | 指定のクライアントが存在しません
+1201 | Tag not found. | 指定のタグが存在しません
+1203 | Invalid tag type. | 不正なタグのタイプです
+
 **EventClients API**
 
 Code | Text | Description
@@ -89,6 +89,7 @@ Code | Text | Description
 1501 | EventClients not found. | 指定のイベントクライアントが存在しません
 1102 | Client not found. | 指定のクライアントが存在しません
 1301 | Tag not found. | 指定のイベントが存在しません
+1303 | Invalid event type. | 不正なイベントのタイプです
 
 **Growthbeat 共通基盤**
 
