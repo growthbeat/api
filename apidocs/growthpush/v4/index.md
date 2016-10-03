@@ -19,11 +19,19 @@ Clients API : 2リクエスト / 秒
 400系リクエストにはそれぞれ4桁のエラーコードを設けております。
 
 :::note
-10xx : API 共通
+10xx : 共通系
 
-11xx : Clients API
+11xx : Clients 系
 
-99xx : Growthbeat 共通基盤
+12xx : Tags 系　
+
+13xx : Events 系
+
+14xx : TagClients 系
+
+15xx : EventClients 系
+
+99xx : Growthbeat 共通系
 :::
 
 **API 共通**
@@ -43,12 +51,47 @@ Code | Text | Description
 Code | Text | Description
 :---- | ------ | -----------
 1101 | Growthbeat client not found. | Growthbeat クライアント が存在しません
-1102 | Client not found. | クライアントが存在しません
+1102 | Client not found. | 指定のクライアントが存在しません
 1103 | The OS is currently not supported. | サポート外のOSです
 1104 | Invalid device token length. | 不正なデバイストークンです
 1105 | Duplicate token. | トークンが重複しています
 1100 | Unexpected error has occured. | 予期しないエラーが発生しました
 
+**Tags API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1201 | Tag not found. | 指定のタグが存在しません
+1202 | Duplicate tag. | タグが重複しています
+1203 | Invalid tag type. | 不正なタグのタイプです
+
+**TagClients API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1401 | TagClient not found. | 指定のタグクライアントが存在しません
+1402 | Failed to create tagClient. | タグクライアントの作成に失敗しました
+1102 | Client not found. | 指定のクライアントが存在しません
+1201 | Tag not found. | 指定のタグが存在しません
+1203 | Invalid tag type. | 不正なタグのタイプです
+
+**Events API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1301 | Event not found. | 指定のイベントが存在しません
+1302 | Duplicate event. | イベントが重複しています
+1303 | Invalid event type. | 不正なイベントのタイプです
+
+**EventClients API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1501 | EventClients not found. | 指定のイベントクライアントが存在しません
+1502 | Failed to create eventClient. | イベントクライアントの作成に失敗しました
+1102 | Client not found. | 指定のクライアントが存在しません
+1301 | Event not found. | 指定のイベントが存在しません
+1303 | Invalid event type. | 不正なイベントのタイプです
 
 **Growthbeat 共通基盤**
 
@@ -59,14 +102,14 @@ Code | Text | Description
 9903 | Payment Required. | 使用するには支払いが必要な機能です
 9904 | Forbidden. | アクセス権限がありません
 9905 | Not Found. | 指定のページが見つかりません
-9906 | Not Acceptable. | 受け入れ受け入れられない値があります
+9906 | Not Acceptable. | 受け入れられない値があります
 9907 | Unsupprted Media Type. | 予期していない値が入力されました
 9908 | Unexpected error has occured. | 予期しないエラーが発生しました
 9909 | Service Unavailable. | サービスを使用できません
 
 **Error Responses**
 
-エラーメッセージをJSONフォーマットで返却します。 `sutatus` はHTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
+エラーメッセージを JSONフォーマット で返却します。 `sutatus` は HTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
 
 ```
 {
@@ -106,7 +149,7 @@ Code | Text | Description
 クライアント取得
 
 + Parameters
-    + token: (requeired, string) - クライアントトークン
+    + token: (requeired, string) - デバイストークン
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
@@ -114,14 +157,14 @@ Code | Text | Description
     + Attributes (GrowthbeatClient)
 
 ## Get Clients [GET /clients{?applicationId}{&credentialId}{&limit}{&exclusiveStartId}]
-クライアントリスト取得
+クライアント一覧取得（降順取得固定）
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
     + limit: (number, optional) - max: 100 min: 1
         + Default: 100
-    + exclusiveStartId: (optional, string) - 指定値より小さい ClientId を `limit` 分取得
+    + exclusiveStartId: (optional, string) - 指定の `clientId` の次の値を取得します
 
 + Response 200 (application/json)
     + Attributes (array[GrowthbeatClient])
@@ -154,7 +197,7 @@ Code | Text | Description
 デバイストークンの更新
 
 ::: warning
-* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+* SDK と併用する場合、データの上書きが発生するため、SDK での更新が無効になる場合がございます。
 :::
 
 + Parameters
@@ -174,7 +217,7 @@ Code | Text | Description
 クライアントのステータス環境更新
 
 ::: warning
-* SDKと併用する場合、データの上書きが発生するため、SDKでの更新が無効になる場合がございます。
+* SDK と併用する場合、データの上書きが発生するため、SDK での更新が無効になる場合がございます。
 :::
 
 ::: note
@@ -206,6 +249,256 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Response 200 (application/json)
     + Attributes (GrowthbeatClient)
+
+# Group Tags
+
+**Tag Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ id  | number| タグID
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ type | enum | タグのタイプ ( custom \| notification \| automation )
+ name  | string | タグ名
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+
+## Get Tag [GET /tags/{id}{?applicationId}{&credentialId}]
+タグ取得
+
++ Parameters
+    + id: (required, number) - タグID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (Tag)
+
+## Get Tags [GET /tags{?applicationId}{&credentialId}]
+タグ一覧取得（降順取得固定）
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartId: (optional, number) - 指定の `tagId` の次の値を取得します
+    + type: (optional, enum[string]) - タグタイプ
+        + Default: custom
+
++ Response 200 (application/json)
+    + Attributes (array[Tag])
+
+## Create New Tag [POST /tags]
+新規タグ作成
+
+::: note
+* 同じ `name` のタグは作成できません
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: TAG_NAME (required, string) - タグ名
+
++ Response 200 (application/json)
+    + Attributes (Tag)
+
+# Group TagClients
+
+:::note
+* デバイスに紐づくタグの情報を取得できます。
+:::
+
+**TagClient Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ tagId | number | タグID
+ clientId | string | Growthbeat クライアントID
+ value | string | 任意の値
+
+## Get TagClients by tag [GET /tag_clients/tag/{tagId}{?applicationId}{&credentialId}]
+タグに紐づくクライアントを取得（降順取得固定）
+
++ Parameters
+    + tagId: (required, number) - タグID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartClientId: (optional, string) - 指定の `clientId` の次の値を取得します
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
+## Get TagClients by client [GET /tag_clients/client/{clientId}{?applicationId}{&credentialId}]
+クライアントに紐づくタグを取得
+
++ Parameters
+    + clientId: (required, string) - Growthbeat クライアントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (array[TagClient])
+
+## Create New TagClient [POST /tag_clients]
+新規タグクライアント作成
+
+:::note
+* 既にタグクライアントが登録されている場合は、 value を更新します。
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+        + tagId: TAG_ID (required, number) - タグID
+        + value: value (optional, string) - 任意の値
+
++ Response 200 (application/json)
+    + Attributes (TagClient)
+
+<!-- ## Create New TagClients [POST /tag_clients]
+タグクライアントの作成
+
+::: note
+* この API は、指定のデバイスにまとめてタグ付けをします。既にタグクライアントが登録されている場合は、その value を更新します。
+* リクエスト数は指定したタグの件数分カウントされます。また、 Notification タグは更新する事はできません。
+* 大量のタグを更新することを想定しているため **反映までに時間がかかる場合があります(数時間以上かかる場合があります)**  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。
+
+* `body` には下記の `json` を指定してください
+```
+{
+  "clientId": "GROWTHBEAT_CLIENT_ID",
+  "credentialId": "GROWTHBEAT_CREDENTIAL_ID",
+  "tagIdValues": [
+    {
+      "tagId": 1,
+      "value": "hoge"
+    },
+    {
+      "tagId": 2,
+      "value": "fuga"
+    },
+    ……
+  ]
+}
+```
+
+* curl 例
+```
+curl -X POST \
+    -H 'Accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]}' \
+    https://api.growthpush.com/4/tag_clients
+```
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
+
++ Response 200 (application/json)
+    + Attributes (Job)
+-->
+
+# Group Events
+
+**Event Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ id  | number| イベントID
+ applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
+ type | enum | イベントのタイプ ( custom \| message )
+ name  | string | イベント名
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+
+## Get Event [GET /events/{id}{?applicationId}{&credentialId}]
+イベント取得
+
++ Parameters
+    + id: (required, number) - イベントID
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (Event)
+
+## Get Events [GET /events{?applicationId}{&credentialId}]
+イベント一覧取得（降順取得固定）
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + limit: (number, optional) - max: 100 min: 1
+        + Default: 100
+    + exclusiveStartId: (optional, number) - 指定の `eventId` の次の値を取得します
+    + type: (optional, enum[string]) - タグタイプ
+        + Default: custom
+
++ Response 200 (application/json)
+    + Attributes (array[Event])
+
+## Create New Event [POST /events]
+新規イベント作成
+
+::: note
+* 同じ `name` のイベントは作成できません
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + name: EVENT_NAME (required, string) - イベント名
+
++ Response 200 (application/json)
+    + Attributes (Event)
+
+# Group EventClients
+
+**EventClient Object**
+
+ Name | Type | Notes
+ :---- | ------ | -----------
+ eventId | number | イベントID
+ clientId | string | Growthbeat クライアントID
+ value | string | 任意の値
+ timestamp  | number | 作成日
+
+## Create New EventClient [POST /event_clients]
+新規イベントクライアント作成
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+        + eventId: EVENT_ID (required, number) - イベントID
+        + value: VALUE (optional, string) - 任意の値
+
++ Response 200 (application/json)
+    + Attributes (EventClient)
 
 # Data Structures
 
@@ -267,64 +560,34 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + applicationId: GROWTH_PUSH_APPLICATION_ID (number)
 + Include Timestamp
 
-## Notification (object)
-+ id: NOTIFICATION_ID (number)
-+ applicationId: GROWTH_PUSH_APPLICATION_ID (number)
-+ segmentId: SEGMENT_ID (number)
-+ tagId: TAG_ID (number)
-+ automationId: AUTOMATION_ID (number)
-+ status: (enum[string])
-    + waiting
-    + success
-    + failure
-+ Include Timestamp
-+ trial: (array[Trial])
-+ segment: (Segment)
-
-## Trial (object)
-+ id: TRIALS_ID (number)
-+ notificationId: NOTIFICATION_ID (number)
-+ automationTrialId: AUTOMATION_TRIAL_ID (number)
-+ text: TEXT (string)
-+ sound: true (boolean)
-+ badge: true (boolean)
-+ extra: EXTRA (string)
-+ scheduled: `2015-02-03 12:34:56` (string)
-+ status: (enum[string])
-   + standby
-   + creating
-   + waiting
-   + pending
-   + sending
-   + completed
-
-## Segment (object)
-+ id: SEGMENT_ID (number)
-+ name: NAME (string)
-+ query: QUERY (string)
-+ size: SIZE (number)
-+ invisible: true (boolean)
-+ modified: `2015-02-03 12:34:56` (string)
-+ Include Timestamp
-
-## Goal (object)
-+ goalId: GOAL_ID (number)
-+ timestamp: TIEMSTAMP (number)
-+ clientId: CLIENT_ID (number)
-+ value: VALUE (string)
-
-## Tag (object)
-+ id: TAG_ID (number)
-+ applicationId: APPLICATION_ID (number)
+## Event (object)
++ id: EVENT_ID (number)
++ applicationId: GRWOTHBEAT_APPLICATION_ID (string)
 + type: (enum[string])
     + custom
     + message
-+ invisible: true (boolean)
++ name: EVENT_NAME (string)
++ created: `2015-02-03 12:34:56` (string)
+
+## EventClient (object)
++ eventId: EVENT_ID (number)
++ clientId: GROWTHBEA_CLIENT_ID (string)
++ value: VALUE (string)
++ timestamp: TIEMSTAMP (number)
+
+## Tag (object)
++ id: TAG_ID (number)
++ applicationId: GRWOTHBEAT_APPLICATION_ID (string)
++ type: (enum[string])
+    + custom
+    + notification
+    + automation
++ name: TAG_NAME (string)
 + created: `2015-02-03 12:34:56` (string)
 
 ## TagClient (object)
 + tagId: TAG_ID (number)
-+ clientId: CLIENT_ID (number)
++ clientId: GROWTHBEA_CLIENT_ID (string)
 + value: VALUE (string)
 
 ## Job (object)
@@ -333,23 +596,4 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## 400 (object)
 + status: 400 (number) - ステータスコード
 + message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
-
-## 401 (object)
-+ status: 401 (number)
-+ message: Bad credentials. (string)
-
-## 404 (object)
-+ status: 404 (number)
-+ message: Client does not exist. (string)
-
-## 429 (object)
-+ status: 429 (number)
-+ message: Too many requests. (string)
-
-## 500 (object)
-+ status: 500 (number)
-+ message: Internal Server Error. (string)
-
-## 503 (object)
-+ status: 503 (number)
-+ message: Service Unavailable (string)
++ code: 1101 (number) - エラーコード
