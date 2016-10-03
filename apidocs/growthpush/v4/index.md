@@ -65,14 +65,6 @@ Code | Text | Description
 1202 | Duplicate tag. | タグが重複しています
 1203 | Invalid tag type. | 不正なタグのタイプです
 
-**Events API**
-
-Code | Text | Description
-:---- | ------ | -----------
-1301 | Event not found. | 指定のイベントが存在しません
-1302 | Duplicate event. | イベントが重複しています
-1303 | Invalid event type. | 不正なイベントのタイプです
-
 **TagClients API**
 
 Code | Text | Description
@@ -83,6 +75,14 @@ Code | Text | Description
 1201 | Tag not found. | 指定のタグが存在しません
 1203 | Invalid tag type. | 不正なタグのタイプです
 
+**Events API**
+
+Code | Text | Description
+:---- | ------ | -----------
+1301 | Event not found. | 指定のイベントが存在しません
+1302 | Duplicate event. | イベントが重複しています
+1303 | Invalid event type. | 不正なイベントのタイプです
+
 **EventClients API**
 
 Code | Text | Description
@@ -90,7 +90,7 @@ Code | Text | Description
 1501 | EventClients not found. | 指定のイベントクライアントが存在しません
 1502 | Failed to create eventClient. | イベントクライアントの作成に失敗しました
 1102 | Client not found. | 指定のクライアントが存在しません
-1301 | Tag not found. | 指定のイベントが存在しません
+1301 | Event not found. | 指定のイベントが存在しません
 1303 | Invalid event type. | 不正なイベントのタイプです
 
 **Growthbeat 共通基盤**
@@ -102,7 +102,7 @@ Code | Text | Description
 9903 | Payment Required. | 使用するには支払いが必要な機能です
 9904 | Forbidden. | アクセス権限がありません
 9905 | Not Found. | 指定のページが見つかりません
-9906 | Not Acceptable. | 受け入れ受け入れられない値があります
+9906 | Not Acceptable. | 受け入れられない値があります
 9907 | Unsupprted Media Type. | 予期していない値が入力されました
 9908 | Unexpected error has occured. | 予期しないエラーが発生しました
 9909 | Service Unavailable. | サービスを使用できません
@@ -149,7 +149,7 @@ Code | Text | Description
 クライアント取得
 
 + Parameters
-    + token: (requeired, string) - クライアントトークン
+    + token: (requeired, string) - デバイストークン
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
@@ -455,6 +455,10 @@ curl -X POST \
 
 ## Create New Event [POST /events]
 新規イベント作成
+
+::: note
+* 同じ `name` のイベントは作成できません
+:::
 
 + Parameters
 
