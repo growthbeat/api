@@ -174,8 +174,8 @@ Code | Text | Description
 
 Name | Type | Notes
 :---- | ------ | -----------
-id | number | タスクID
-applicationId | number | Growthbeat アプリケーションID
+id | string | タスクID
+applicationId | string | Growthbeat アプリケーションID
 goalId | number | ゴールID
 segmentId | number | セグメントID
 orientation | enum | (vartical/horizontal)
@@ -192,11 +192,36 @@ created | string | データ作成時間
 ## Get list tasks [GET /tasks]
 
 + Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+    + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+
 
 + Response 200 (application/json)
     + Attributes (array[Task])
+
+# Group Message
+
+## Receive message [GET /receive]
+
++ Parameters
+    + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+    + taskId: TASK_ID (required, string) - タスクID
+    + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+    + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (Message)
+
+## Count up show message [POST /receive/count]
+
++ Request (application/json)
+    + Headers
+    + Attributes
+      + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
+      + taskId: TASK_ID (required, string) - タスクID
+      + messageId: MESSAGE_ID (required, string) - メッセージID
+      + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+      + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
 
 # Data Structures
 
@@ -250,12 +275,23 @@ created | string | データ作成時間
       + horizontal
 + goal: GOAL (object)
 + segment: SEGMENT (object)
-+ messages: LIST MESSAGE (object)
-+ begin: BEGIN (string)
-+ end: END (string)
-+ capacity: CAPACITY (number)
-+ stopped: STOPPED (string)
-+ updated: UPDATED (string)
++ messages: LIST MESSAGE (array[Message])
++ begin: `2016-10-01 12:00:00` (string)
++ end: `2016-10-30 12:00:00` (string)
++ capacity: 5 (number)
++ stopped: (string)
++ updated: `2016-10-01 12:00:00` (string)
++ created: `2016-10-01 12:00:00` (string)
+
+## Message (object)
++ id: MESSAGE_ID (number)
++ type: MESSAGE_TYPE (enum[string])
+    + plain
+    + card
+    + swipe
++ task: TASK (Task)
++ buttons: BUTTON (array[object])
++ background: BACKGROUND (object)
 + created: CREATED (string)
 
 ## 400 (object)
