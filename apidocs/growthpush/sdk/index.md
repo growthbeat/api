@@ -170,6 +170,34 @@ Code | Text | Description
 + Response 200 (application/json)
     + Attributes (Event)
 
+# Group Task
+
+Name | Type | Notes
+:---- | ------ | -----------
+id | number | タスクID
+applicationId | number | Growthbeat アプリケーションID
+goalId | number | ゴールID
+segmentId | number | セグメントID
+orientation | enum | (vartical/horizontal)
+goal | object | ゴール
+segment | object | セグメント
+messages | array | メッセージ一覧
+begin | string | メッセージ開始時間
+end | string | メッセージ終了時間
+capacity | number | 配信上限数
+stopped | string | 配信停止時間
+updated | string | データ更新時間
+created | string | データ作成時間
+
+## Get list tasks [GET /tasks]
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (array[Task])
+
 # Data Structures
 
 ## Result (object)
