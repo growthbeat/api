@@ -40,6 +40,15 @@ Code | Text | Description
 1105 | Duplicate token. | トークンが重複しています
 1100 | Unexpected error has occured. | 予期しないエラーが発生しました
 
+**Receive API**
+Code | Text | Description
+:---- | ------ | -----------
+1611 | Segment not found. | セグメントが存在しません。
+1701 | Task not found. | 配信メッセージが存在しません。
+1702 | Task was stopped. | 配信メッセージは停止中です。
+1703 | Task is inactive. | 配信メッセージは、配信期間外です。
+1801 | Intent not found. | アクションが存在しません。
+
 **Growthbeat 共通基盤**
 
 Code | Text | Description
