@@ -13,12 +13,6 @@
 
 15xx : EventClients 系
 
-16xx : Segment 系
-
-17xx : Task 系
-
-18xx : Intent 系
-
 99xx : Growthbeat 共通系
 :::
 
@@ -71,25 +65,6 @@ Code | Text | Description
 1301 | Event not found. | 指定のイベントが存在しません
 1302 | Duplicate event. | イベントが重複しています
 1303 | Invalid event type. | 不正なイベントのタイプです
-
-**EventClients API**
-
-Code | Text | Description
-:---- | ------ | -----------
-1501 | EventClients not found. | 指定のイベントクライアントが存在しません
-1502 | Failed to create eventClient. | イベントクライアントの作成に失敗しました
-1102 | Client not found. | 指定のクライアントが存在しません
-1301 | Event not found. | 指定のイベントが存在しません
-1303 | Invalid event type. | 不正なイベントのタイプです
-
-**Receive API**
-Code | Text | Description
-:---- | ------ | -----------
-1611 | Segment not found. | セグメントが存在しません。
-1701 | Task not found. | 配信メッセージが存在しません。
-1702 | Task was stopped. | 配信メッセージは停止中です。
-1703 | Task is inactive. | 配信メッセージは、配信期間外です。
-1801 | Intent not found. | アクションが存在しません。
 
 **Growthbeat 共通基盤**
 

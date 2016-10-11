@@ -495,4 +495,3 @@ curl -X POST \
 ## 400 (object)
 + status: 400 (number) - ステータスコード
 + message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
-+ code: 1101 (number) - エラーコード
