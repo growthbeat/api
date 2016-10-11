@@ -7,73 +7,7 @@ HOST: https://api.growthpush.com/4
 
 ## Error Codes & Responses
 
-400系リクエストにはそれぞれ4桁のエラーコードを設けております。
-
-:::note
-10xx : API 共通
-
-11xx : Clients API
-
-99xx : Growthbeat 共通基盤
-:::
-
-**API 共通**
-
-Code | Text | Description
-:---- | ------ | -----------
-1001 | Invaid credential. | 不正な認証キー
-1002 | Application not found. | 指定のアプリケーションが見つかりません
-1003 | Unauthorized. | 認証が必要です
-1004 | Permission denied. | 権限がありません
-1005 | Not found. | 指定のページが見つかりません
-1000 | Unexpected error has occured. | 予期しないエラーが発生しました
-<!--1006 | Too Many Requests. | 使用制限超過-->
-
-**Clients API**
-
-Code | Text | Description
-:---- | ------ | -----------
-1101 | Growthbeat client not found. | Growthbeat クライアント が存在しません
-1102 | Client not found. | クライアントが存在しません
-1103 | The OS is currently not supported. | サポート外のOSです
-1104 | Invalid device token length. | 不正なデバイストークンです
-1105 | Duplicate token. | トークンが重複しています
-1100 | Unexpected error has occured. | 予期しないエラーが発生しました
-
-**Receive API**
-Code | Text | Description
-:---- | ------ | -----------
-1611 | Segment not found. | セグメントが存在しません。
-1701 | Task not found. | 配信メッセージが存在しません。
-1702 | Task was stopped. | 配信メッセージは停止中です。
-1703 | Task is inactive. | 配信メッセージは、配信期間外です。
-1801 | Intent not found. | アクションが存在しません。
-
-**Growthbeat 共通基盤**
-
-Code | Text | Description
-:---- | ------ | -----------
-9901 | Bad Request. | 不正なリクエストです
-9902 | Unauthorized. | 認証キーが異なります
-9903 | Payment Required. | 使用するには支払いが必要な機能です
-9904 | Forbidden. | アクセス権限がありません
-9905 | Not Found. | 指定のページが見つかりません
-9906 | Not Acceptable. | 受け入れ受け入れられない値があります
-9907 | Unsupprted Media Type. | 予期していない値が入力されました
-9908 | Unexpected error has occured. | 予期しないエラーが発生しました
-9909 | Service Unavailable. | サービスを使用できません
-
-**Error Responses**
-
-エラーメッセージをJSONフォーマットで返却します。 `sutatus` はHTTPレスポンス、 `message` はエラーの詳細、 `code` はエラーコードを表しています。
-
-```
-{
-    "status": 400,
-    "message": "Invaid credential.",
-    "code": 1001
-}
-```
+<!-- include(../error.md) -->
 
 # Group Clients
 
