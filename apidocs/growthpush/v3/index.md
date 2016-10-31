@@ -85,24 +85,6 @@ timestamp|number|作成日時
 clientId|number|Growth Push クライアントID
 value|string|イベント値
 
-## Get Events [GET /events{?goalId}{&credentialId}{&exclusiveTimestamp}{&limit}{&order}]
-イベント取得
-
-+ Parameters
-    + goalId: (number) - イベントID
-    + credentialId: (string) - Growthbeat クレデンシャルID
-    + exclusiveTimestamp: (optional, number) - タイムスタンプ
-    + limit: (number, optional) - リミット
-        + Default: 100
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
-
-+ Response 200 (application/json)
-    + Attributes (array[Goal])
-
 ## Create New Event [POST /events]
 新規イベント作成
 
@@ -615,4 +597,4 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 ## 401 (object)
 + status: 401 (number)
-+ message: Unauthorized. (string)
++ message: Unauthorized. (string)/
