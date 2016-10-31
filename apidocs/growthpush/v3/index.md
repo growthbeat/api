@@ -597,4 +597,4 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 ## 401 (object)
 + status: 401 (number)
-+ message: Unauthorized. (string)/
++ message: Unauthorized. (string)
