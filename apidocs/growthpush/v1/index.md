@@ -98,28 +98,6 @@ timestamp|number|作成日時
 clientId|number|Growth Push クライアントID
 value|string|イベント値
 
-## Get Events [GET /events{?goalId}{&secret}{&exclusiveTimestamp}{&limit}{&order}]
-イベント取得
-::: warning
-## <i class="fa fa-warning"></i> Deprecation Notice
-こちらのAPIは **廃止予定** です。
-:::
-
-+ Parameters
-    + goalId: (number) - イベントID
-    + secret: (string) - Growth Push シークレットキー
-    + exclusiveTimestamp: (optional, number) - 前のページの最後のタイムスタンプ
-    + limit: (number, optional) - リミット
-        + Default: 100
-    + order: (string, optional) - ソート
-        + Default: `descoding`
-        + Members
-            + `ascending`
-            + `descending`
-
-+ Response 200 (application/json)
-    + Attributes (array[Goal])
-
 ## Create New Event By Client Id [POST /events]
 新規イベント作成
 ::: warning
