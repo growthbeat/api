@@ -69,7 +69,7 @@ Clients API : 2リクエスト / 秒
     + Attributes (array[GrowthbeatClient])
 
 ## Create New Client [POST /clients]
-新規クライアント作成併用
+新規クライアント作成
 
 ::: warning
 * SDK と併用する場合、データの上書きが発生するため、SDK での更新が無効になる場合がございます。
