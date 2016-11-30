@@ -241,6 +241,10 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 ## Get TagClients by client [GET /tag_clients/client/{clientId}{?applicationId}{&credentialId}]
 クライアントに紐づくタグを取得
 
+:::warning
+* 最新の登録タグ100件の中から合致するものを抽出いたします。101件以上ある場合、検索結果が安定いたしません、ご注意下さい。
+:::
+
 + Parameters
     + clientId: (required, string) - Growthbeat クライアントID
     + applicationId: (required, string) - Growthbeat アプリケーションID
