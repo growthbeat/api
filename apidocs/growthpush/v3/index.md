@@ -458,6 +458,10 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 ## Create New Notification [POST /notifications]
 新規配信作成
 
+::: warning
+配信端末が100件に満たない場合は、配信一覧画面に表示されません。予めご了承下さい。
+:::
+
 + Parameters
 
 + Request (application/json)
