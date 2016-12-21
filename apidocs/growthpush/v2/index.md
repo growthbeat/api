@@ -62,7 +62,7 @@ created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
 ## Create New Notification [POST /notifications]
 ::: warning
 ## <i class="fa fa-warning"></i> Deprecation Notice
-このAPIは **2016年12月21日** をもって **廃止** となりました。
+このAPIは **2016年12月21日** をもって **廃止** となりました。Notification APIをご利用の場合は、 [Growth Push Notification API v3](../v3) をご利用ください.
 :::
 
 :::note
