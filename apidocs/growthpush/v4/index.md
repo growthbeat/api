@@ -48,7 +48,18 @@ Clients API : 2リクエスト / 秒
 クライアント取得
 
 + Parameters
-    + token: (requeired, string) - デバイストークン
+    + token: (required, string) - デバイストークン
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+
++ Response 200 (application/json)
+    + Attributes (GrowthbeatClient)
+
+## Get Client by v1 client id [GET /clients/{?v1ClientId}{&applicationId}{&credentialId}]
+クライアント取得 (V1 Client APIのクライアントIDを元に)
+
++ Parameters
+    + v1ClientId: (required, number) - v1 API ClientID
     + applicationId: (required, string) - Growthbeat アプリケーションID
     + credentialId: (required, string) - Growthbeat クレデンシャルID
 
