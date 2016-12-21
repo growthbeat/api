@@ -3,9 +3,80 @@ HOST: https://api.growthpush.com/3
 
 # Growth Push API v3
 
-::: note
-Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](../v4)を御覧ください
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+NotificationAPI 以外のAPIは **廃止予定** です。APIをご利用の場合は、最新版 [Growth Push API v4](../v4) をご利用ください.
+
+詳細は [【重要】12/6再掲：一部のAPI廃止について](https://sirok-growthbeat.amebaownd.com/posts/1402007) ブログをご覧ください.
 :::
+
+# Group Notifications
+
+**Notification Object**
+
+Name|Type|Note
+:---|---|---
+id|number|Notification ID
+applicationId|number|Growth Push アプリケーションID
+status|enum|送信状態 ( waiting/success/failure )
+created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
+attachNotificationId|boolean|指定するとペイロードに "growthpush":{"notificationId":xxxxx} という形式で、通知IDが含まれます。
+duration|number|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
+trial|array[Trial]|
+segment|Segment|
+
+**Trial Object**
+
+Name|Type|Note
+:---|---|---
+id|number|トライアルID
+notifiationId|number|Notification ID
+automationId|number| 自動配信ID
+text|string|配信文言
+sound|boolean|通知音
+badge|boolean|通知バッジ
+extra|boolean|ペイロードに任意のパラメータを **JSON形式** で指定します。ex. {"url":"https://growthpush.com"}
+scheduled|string|配信予定時刻 ( YYYY-MM-DD HH:mm:ss )
+status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
+
+## Get Notifications [GET /notifications{?applicationId}{&credentialId}{&page}{&limit}]
+配信一覧所得
+
++ Parameters
+    + applicationId: (required, string) - Growthbeat アプリケーションID
+    + credentialId: (required, string) - Growthbeat クレデンシャルID
+    + page: (optional, number) - ページ数
+        + Default: 1
+    + limit: (optional, number) - リミット
+        + Default: 100
+
++ Response 200 (application/json)
+    + Attributes (array[Notification])
+
+## Create New Notification [POST /notifications]
+新規配信作成
+
+::: warning
+配信端末が100件に満たない場合は、配信一覧画面に表示されません。予めご了承下さい。
+:::
+
++ Parameters
+
++ Request (application/json)
+    + Headers
+    + Attributes
+        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
+        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
+        + query: {} (string) - セグメントクエリ
+        + text: text (string) - テキスト
+        + sound: true (boolean) - 通知音
+        + badge: true (boolean) - 通知バッジ
+        + extra: {} (string) - 任意のパラメータを追加
+        + attachNotificationId: true (boolean) - 通知IDの追加
+        + duration: (number) - ミリ秒で指定
+
++ Response 200 (application/json)
+    + Attributes (Job)
 
 # Group Clients
 
@@ -26,6 +97,10 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
 ## Get Client By Device Token [GET /clients{?applicationId}{&credentialId}{&token}]
 クライアント取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -37,6 +112,10 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
 ## Create New Client [POST /clients]
 新規クライアント作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
 
@@ -58,6 +137,10 @@ Growth Push API v3 のドキュメントです 最新版は[Growth Push API v4](
 
 ## Update a Client [PUT /clients/{clientId}]
 クライアント更新
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + clientId: (string) - Growthbeat クライアントID
@@ -87,6 +170,10 @@ value|string|イベント値
 
 ## Create New Event [POST /events]
 新規イベント作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
 
@@ -213,6 +300,10 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 ## Get Segments [GET /segments{?applicationId}{&credentialId}{&page}{&limit}]
 セグメント一覧取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -227,6 +318,10 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 ## Get Segment Size [GET /segments/size{?applicationId}{&credentialId}{&condition}]
 セグメントサイズ取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -238,6 +333,10 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 ## Create New Segment [POST /segments]
 新規セグメント作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
 
@@ -254,6 +353,10 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 ## Update a Segment [PUT /segments/{segmentId}]
 セグメント更新
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + segmentId: (required, string) - セグメントID
@@ -284,6 +387,10 @@ created|string|作成日 ( YYYY-MM-DD HH:mm:ss )
 
 ## Get Tag [GET /tags{?applicationId}{&credentialId}{&name}]
 タグ取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + applicationId: (required, string) - Growthbeat アプリケーションID
@@ -310,6 +417,10 @@ value|string|タグ値
 
 ## Get Tag Clients By Tag Id [GET /tags{?tagId}{&credentialId}{&exclusiveClientId}{&limit}{&order}]
 タグクライアントリスト取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + tagId: (required, number) - タグID
@@ -329,6 +440,10 @@ value|string|タグ値
 
 ## Get Tag Clients By Client Id [GET /tags{?clientId}{&credentialId}{&type}{&exclusiveTagId}{&limit}{&order}]
 タグクライアントの取得
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 + Parameters
     + clientId: (required, string) - Growthbeat クライアントID
@@ -353,6 +468,10 @@ value|string|タグ値
 
 ## Create New Tags [POST /tags]
 タグクライアントの作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 ::: note
 * Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用します。
@@ -373,6 +492,10 @@ value|string|タグ値
 
 ## Create New Tag By Client Id [POST /tags]
 タグクライアントの作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 ::: note
 このAPIは、Growthbeat クレデンシャルID と、Growthbeat クライアントID を元にタグを紐付けます。
@@ -393,6 +516,10 @@ value|string|タグ値
 
 ## Create New Tag By Device Token [POST /tags]
 タグクライアントの作成
+::: warning
+## <i class="fa fa-warning"></i> Deprecation Notice
+このAPIは **廃止予定** です。
+:::
 
 ::: note
 このAPIは、Growthbeat クレデンシャルID と、デバイストークン を元にタグを紐付けます。
@@ -411,74 +538,6 @@ value|string|タグ値
 
 + Response 200 (application/json)
     + Attributes (TagClient)
-
-# Group Notifications
-
-**Notification Object**
-
-Name|Type|Note
-:---|---|---
-id|number|Notification ID
-applicationId|number|Growth Push アプリケーションID
-status|enum|送信状態 ( waiting/success/failure ) 
-created|string|作成日時 ( YYYY-MM-DD HH:mm:ss )
-attachNotificationId|boolean|指定するとペイロードに "growthpush":{"notificationId":xxxxx} という形式で、通知IDが含まれます。
-duration|number|配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。
-trial|array[Trial]|
-segment|Segment|
-
-**Trial Object**
-
-Name|Type|Note
-:---|---|---
-id|number|トライアルID
-notifiationId|number|Notification ID
-automationId|number| 自動配信ID
-text|string|配信文言
-sound|boolean|通知音
-badge|boolean|通知バッジ
-extra|boolean|ペイロードに任意のパラメータを **JSON形式** で指定します。ex. {"url":"https://growthpush.com"}
-scheduled|string|配信予定時刻 ( YYYY-MM-DD HH:mm:ss )
-status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
-
-## Get Notifications [GET /notifications{?applicationId}{&credentialId}{&page}{&limit}]
-配信一覧所得
-
-+ Parameters
-    + applicationId: (required, string) - Growthbeat アプリケーションID
-    + credentialId: (required, string) - Growthbeat クレデンシャルID
-    + page: (optional, number) - ページ数
-        + Default: 1
-    + limit: (optional, number) - リミット
-        + Default: 100
-
-+ Response 200 (application/json)
-    + Attributes (array[Notification])
-
-## Create New Notification [POST /notifications]
-新規配信作成
-
-::: warning
-配信端末が100件に満たない場合は、配信一覧画面に表示されません。予めご了承下さい。
-:::
-
-+ Parameters
-
-+ Request (application/json)
-    + Headers
-    + Attributes
-        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + query: {} (string) - セグメントクエリ
-        + text: text (string) - テキスト
-        + sound: true (boolean) - 通知音
-        + badge: true (boolean) - 通知バッジ
-        + extra: {} (string) - 任意のパラメータを追加
-        + attachNotificationId: true (boolean) - 通知IDの追加
-        + duration: (number) - ミリ秒で指定
-
-+ Response 200 (application/json)
-    + Attributes (Job)
 
 # Data Structures
 
