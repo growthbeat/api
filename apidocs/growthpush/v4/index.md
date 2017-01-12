@@ -28,7 +28,7 @@ Clients API : 2リクエスト / 秒
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  token  | string | デバイストークン
  os  | enum | OS ( ios \| android )
- status  | enum | プッシュ通知ステータス ( unknown \| validating \| active \| inactive \| invalid )
+ status  | enum | [プッシュ通知ステータス](http://support.growthbeat.com/manual/growthpush/#デバイス) ( unknown \| validating \| active \| inactive \| invalid )
  environment  | enum | デバイス環境 ( development \| production )
  updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
  created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
@@ -135,7 +135,7 @@ Clients API : 2リクエスト / 秒
 :::
 
 ::: note
-**ステータスの種類**
+**[ステータスの種類](http://support.growthbeat.com/manual/growthpush/#デバイス)**
 
 Status | Description
 :---- | ------
@@ -206,7 +206,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 新規タグ作成
 
 ::: note
-* 同じ `name` のタグは作成できません
+* 作成済タグ（削除済であっても）と同じ `name` のタグは作成できません
 :::
 
 + Parameters
@@ -375,7 +375,7 @@ curl -X POST \
 新規イベント作成
 
 ::: note
-* 同じ `name` のイベントは作成できません
+* 作成済イベント（削除済であっても）と同じ `name` のイベントは作成できません
 :::
 
 + Parameters
@@ -514,3 +514,4 @@ curl -X POST \
 ## 400 (object)
 + status: 400 (number) - ステータスコード
 + message: Growthbeat Client id cannot be longer than 16 characters. (string) - 不正な値の説明
+
