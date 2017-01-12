@@ -21,7 +21,7 @@
 
 Code | Text | Description
 :---- | ------ | -----------
-1001 | Invaid credential. | 不正な認証キー
+1001 | Invaid credential. | 不正なクレデンシャルキー
 1002 | Application not found. | 指定のアプリケーションが見つかりません
 1003 | Unauthorized. | 認証が必要です
 1004 | Permission denied. | 権限がありません
@@ -71,7 +71,7 @@ Code | Text | Description
 Code | Text | Description
 :---- | ------ | -----------
 9901 | Bad Request. | 不正なリクエストです
-9902 | Unauthorized. | 認証キーが異なります
+9902 | Unauthorized. | クレデンシャルキーが異なります
 9903 | Payment Required. | 使用するには支払いが必要な機能です
 9904 | Forbidden. | アクセス権限がありません
 9905 | Not Found. | 指定のページが見つかりません

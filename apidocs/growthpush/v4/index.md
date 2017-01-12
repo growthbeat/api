@@ -30,8 +30,8 @@ Clients API : 2リクエスト / 秒
  os  | enum | OS ( ios \| android )
  status  | enum | [プッシュ通知ステータス](http://support.growthbeat.com/manual/growthpush/#デバイス) ( unknown \| validating \| active \| inactive \| invalid )
  environment  | enum | デバイス環境 ( development \| production )
- updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss )
- created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+ updated  | string | 更新日 ( YYYY-MM-DD HH:mm:ss ) ※ UTC 時間表記となります
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss ) ※ UTC 時間表記となります
 
 ## Get Client [GET /clients/{id}{?applicationId}{&credentialId}]
 クライアント取得
@@ -174,7 +174,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  type | enum | タグのタイプ ( custom \| notification \| automation )
  name  | string | タグ名
- created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss ) ※ UTC 時間表記となります
 
 ## Get Tag [GET /tags/{id}{?applicationId}{&credentialId}]
 タグ取得
@@ -343,7 +343,7 @@ curl -X POST \
  applicationId  | string | [Growthbeat アプリケーションID](http://faq.growthbeat.com/article/130-growthbeat-id)
  type | enum | イベントのタイプ ( custom \| message )
  name  | string | イベント名
- created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss )
+ created  | string | 作成日 ( YYYY-MM-DD HH:mm:ss ) ※ UTC 時間表記となります
 
 ## Get Event [GET /events/{id}{?applicationId}{&credentialId}]
 イベント取得
