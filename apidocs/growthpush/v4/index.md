@@ -399,7 +399,7 @@ curl -X POST \
  eventId | number | イベントID
  clientId | string | Growthbeat クライアントID
  value | string | 任意の値
- timestamp  | number | 作成日
+ timestamp  | number | 作成日 (ナノ秒単位)
 
 ## Create New EventClient [POST /event_clients]
 新規イベントクライアント作成
