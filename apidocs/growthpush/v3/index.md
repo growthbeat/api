@@ -64,7 +64,6 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
@@ -122,7 +121,6 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
@@ -149,7 +147,6 @@ status|enum|送信状態 ( standby/creating/waiting/pending/sending/completed )
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャル
         + token: DEVICE_TOKEN (string) - デバイストークン
@@ -182,7 +179,6 @@ value|string|イベント値
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
@@ -346,7 +342,6 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
@@ -368,7 +363,6 @@ segmentId | 任意のセグメントID| 既に作成済みのセグメントID�
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
         + name: NAME (string) - セグメント名
@@ -490,7 +484,6 @@ value|string|タグ値
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
 
@@ -512,7 +505,6 @@ value|string|タグ値
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + clientId: GROWTHBEAT_CLIENT_ID (required, string) - Growthbeat クライアントID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
@@ -537,7 +529,6 @@ value|string|タグ値
 
 + Request (application/x-www-form-urlencoded)
     + Headers
-        + Content-Type: application/x-www-form-urlencoded
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
         + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
