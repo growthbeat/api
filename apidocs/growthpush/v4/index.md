@@ -88,7 +88,7 @@ Clients API : 2リクエスト / 秒
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -117,7 +117,7 @@ Clients API : 2リクエスト / 秒
 + Parameters
     + id: (required, string) - Growthbeat クライアントID
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -149,7 +149,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 + Parameters
     + id: (string) - Growthbeat クライアントID
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -211,7 +211,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -273,7 +273,7 @@ invalid | ステータスを `invalid` に変更します。この更新を行�
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -324,7 +324,7 @@ curl -X POST \
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + {"clientId":"GROWTHBEAT_CLIENT_ID","credentialId":"GROWTHBEAT_CREDENTIAL_ID","tagIdValues":[{"tagId":1,"value":"hoge"},{"tagId":2,"value":"fuga"}]} (required, string) - JSON
@@ -380,7 +380,7 @@ curl -X POST \
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
@@ -406,7 +406,7 @@ curl -X POST \
 
 + Parameters
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
         + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
