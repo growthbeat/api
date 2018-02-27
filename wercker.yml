@@ -17,7 +17,7 @@ deploy:
   steps:
     - install-packages:
         packages: git ssh-client liberror-perl
-     - leipert/git-push:
+    - leipert/git-push:
         gh_oauth: $GITHUB_TOKEN
         repo: growthbeat/api
         branch: gh-pages
