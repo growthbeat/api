@@ -19,6 +19,8 @@ deploy:
         packages: git ssh-client liberror-perl
     - lukevivier/gh-pages@0.2.1:
         token:   $GITHUB_TOKEN
+        domain: growthbeat.github.io
+        repo: growthbeat/api
         basedir: public
 
 stg-deploy:
