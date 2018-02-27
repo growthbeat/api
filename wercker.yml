@@ -17,10 +17,8 @@ deploy:
   steps:
     - install-packages:
         packages: git ssh-client liberror-perl
-    - leipert/git-push:
-        gh_oauth: $GITHUB_TOKEN
-        gh_pages: true
-        gh_pages_domain: growthbeat.github.io
+    - lukevivier/gh-pages@0.2.1:
+        token:   $GITHUB_TOKEN
         basedir: public
 
 stg-deploy:
