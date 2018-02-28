@@ -1,0 +1,1602 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Growth Push API v3</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#fff;background-color:#337ab7}.action h4.action-heading .method.head{color:#fff;background-color:#337ab7}.action h4.action-heading .method.options{color:#fff;background-color:#337ab7}.action h4.action-heading .method.put{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.post{color:#fff;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#fff;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#top">Overview</a></div><div class="collapse-content"><ul><li><a href="#header-deprecation-notice"> Deprecation Notice</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#notifications">Notifications</a></div><div class="collapse-content"><ul><li><a href="#notifications-get-notifications-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Notifications</a></li><li><a href="#notifications-create-new-notification-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Notification</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#clients">Clients</a></div><div class="collapse-content"><ul><li><a href="#clients-get-client-by-device-token-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Client By Device Token</a></li><li><a href="#clients-create-new-client-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Client</a></li><li><a href="#clients-update-a-client-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Update a Client</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#events">Events</a></div><div class="collapse-content"><ul><li><a href="#events-create-new-event-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Event</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#segments">Segments</a></div><div class="collapse-content"><ul><li><a href="#header-segment-query">Segment Query</a></li><li><a href="#segments-get-segments-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Segments</a></li><li><a href="#segments-get-segment-size-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Segment Size</a></li><li><a href="#segments-create-new-segment-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Segment</a></li><li><a href="#segments-update-a-segment-put"><span class="badge put"><i class="fa fa-pencil"></i></span>Update a Segment</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#tags">Tags</a></div><div class="collapse-content"><ul><li><a href="#tags-get-tag-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Tag</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#tag-clients">Tag Clients</a></div><div class="collapse-content"><ul><li><a href="#tag-clients-get-tag-clients-by-tag-id-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Tag Clients By Tag Id</a></li><li><a href="#tag-clients-get-tag-clients-by-client-id-get"><span class="badge get"><i class="fa fa-arrow-down"></i></span>Get Tag Clients By Client Id</a></li><li><a href="#tag-clients-create-new-tags-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Tags</a></li><li><a href="#tag-clients-create-new-tag-by-client-id-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Tag By Client Id</a></li><li><a href="#tag-clients-create-new-tag-by-device-token-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create New Tag By Device Token</a></li></ul></div></div><p style="text-align: center; word-wrap: break-word;"><a href="https://api.growthpush.com/3">https://api.growthpush.com/3</a></p></nav><div class="content"><header><h1 id="top">Growth Push API v3</h1></header><div class="warning">
+<h2 id="header-deprecation-notice"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice" aria-hidden="true">¶</a></h2>
+<p>NotificationAPI 以外のAPIは <strong>廃止予定</strong> です。APIをご利用の場合は、最新版 <a href="../v4">Growth Push API v4</a> をご利用ください.</p>
+<p>詳細は <a href="https://sirok-growthbeat.amebaownd.com/posts/1402007">【重要】12/6再掲：一部のAPI廃止について</a> ブログをご覧ください.</p>
+</div>
+<section id="notifications" class="resource-group"><h2 class="group-heading">Notifications <a href="#notifications" class="permalink">&para;</a></h2><p><strong>Notification Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
+<td>number</td>
+<td>Notification ID</td>
+</tr>
+<tr>
+<td style="text-align:left">applicationId</td>
+<td>number</td>
+<td>Growth Push アプリケーションID</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td>enum</td>
+<td>送信状態 ( waiting/success/failure )</td>
+</tr>
+<tr>
+<td style="text-align:left">created</td>
+<td>string</td>
+<td>作成日時 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+<tr>
+<td style="text-align:left">attachNotificationId</td>
+<td>boolean</td>
+<td>指定するとペイロードに “growthpush”:{“notificationId”:xxxxx} という形式で、通知IDが含まれます。</td>
+</tr>
+<tr>
+<td style="text-align:left">duration</td>
+<td>number</td>
+<td>配信時刻からこの時間以上の時間が経過したpushは配信されずに破棄されます。ミリ秒で指定してください。</td>
+</tr>
+<tr>
+<td style="text-align:left">trial</td>
+<td>array[Trial]</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">segment</td>
+<td>Segment</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trial Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
+<td>number</td>
+<td>トライアルID</td>
+</tr>
+<tr>
+<td style="text-align:left">notifiationId</td>
+<td>number</td>
+<td>Notification ID</td>
+</tr>
+<tr>
+<td style="text-align:left">automationId</td>
+<td>number</td>
+<td>自動配信ID</td>
+</tr>
+<tr>
+<td style="text-align:left">text</td>
+<td>string</td>
+<td>配信文言</td>
+</tr>
+<tr>
+<td style="text-align:left">sound</td>
+<td>boolean</td>
+<td>通知音</td>
+</tr>
+<tr>
+<td style="text-align:left">badge</td>
+<td>boolean</td>
+<td>通知バッジ</td>
+</tr>
+<tr>
+<td style="text-align:left">extra</td>
+<td>boolean</td>
+<td>ペイロードに任意のパラメータを <strong>JSON形式</strong> で指定します。ex. {“url”:&quot;<a href="https://growthpush.com">https://growthpush.com</a>&quot;}</td>
+</tr>
+<tr>
+<td style="text-align:left">scheduled</td>
+<td>string</td>
+<td>配信予定時刻 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td>enum</td>
+<td>送信状態 ( standby/creating/waiting/pending/sending/completed )</td>
+</tr>
+</tbody>
+</table>
+<div id="notifications-get-notifications" class="resource"><h3 class="resource-heading">Get Notifications <a href="#notifications-get-notifications" class="permalink">&nbsp;&para;</a></h3><div id="notifications-get-notifications-get" class="action get"><h4 class="action-heading"><div class="name">Get Notifications</div><a href="#notifications-get-notifications-get" class="method get">GET</a><code class="uri">/notifications{?applicationId}{&amp;credentialId}{&amp;page}{&amp;limit}</code></h4><p>配信一覧所得</p>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/notifications?<span class="hljs-attribute">applicationId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">page=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>applicationId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat アプリケーションID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>1</span></span>&nbsp;<p>ページ数</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>100</span></span>&nbsp;<p>リミット</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">segmentId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">automationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"waiting"</span></span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+    "<span class="hljs-attribute">trial</span>": <span class="hljs-value">[
+      {
+        "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">notificationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">automationTrialId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+        "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"TEXT"</span></span>,
+        "<span class="hljs-attribute">sound</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+        "<span class="hljs-attribute">badge</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+        "<span class="hljs-attribute">extra</span>": <span class="hljs-value"><span class="hljs-string">"EXTRA"</span></span>,
+        "<span class="hljs-attribute">scheduled</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+        "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"standby"</span>
+      </span>}
+    ]</span>,
+    "<span class="hljs-attribute">segment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+      "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+      "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span></span>,
+      "<span class="hljs-attribute">size</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+      "<span class="hljs-attribute">invisible</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+      "<span class="hljs-attribute">modified</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+      "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+    </span>}
+  </span>}
+]</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="notifications-create-new-notification" class="resource"><h3 class="resource-heading">Create New Notification <a href="#notifications-create-new-notification" class="permalink">&nbsp;&para;</a></h3><div id="notifications-create-new-notification-post" class="action post"><h4 class="action-heading"><div class="name">Create New Notification</div><a href="#notifications-create-new-notification-post" class="method post">POST</a><code class="uri">/notifications</code></h4><p>新規配信作成</p>
+<div class="warning">
+<p>配信端末が100件に満たない場合は、配信一覧画面に表示されません。予めご了承下さい。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/notifications</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"{}"</span></span>,
+  "<span class="hljs-attribute">text</span>": <span class="hljs-value"><span class="hljs-string">"text"</span></span>,
+  "<span class="hljs-attribute">sound</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">badge</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">extra</span>": <span class="hljs-value"><span class="hljs-string">"{}"</span></span>,
+  "<span class="hljs-attribute">attachNotificationId</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">duration</span>": <span class="hljs-value"><span class="hljs-number">1</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat アプリケーションID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"セグメントクエリ"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">text</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"テキスト"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">sound</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"通知音"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">badge</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"通知バッジ"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">extra</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"任意のパラメータを追加"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">attachNotificationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"通知IDの追加"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">duration</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"ミリ秒で指定"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"applicationId"</span>,
+    <span class="hljs-string">"credentialId"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">jobId</span>": <span class="hljs-value"><span class="hljs-string">"JOB_ID"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">jobId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="clients" class="resource-group"><h2 class="group-heading">Clients <a href="#clients" class="permalink">&para;</a></h2><p><strong>Clients Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">growthbeatApplicationId</td>
+<td>string</td>
+<td><a href="http://faq.growthbeat.com/article/130-growthbeat-id">Grwothbeat アプリケーションID</a></td>
+</tr>
+<tr>
+<td style="text-align:left">growthbeatClientId</td>
+<td>string</td>
+<td>Growthbeat クライアントID</td>
+</tr>
+<tr>
+<td style="text-align:left">id</td>
+<td>number</td>
+<td>Growth Push クライアントID</td>
+</tr>
+<tr>
+<td style="text-align:left">token</td>
+<td>string</td>
+<td>デバイストークン</td>
+</tr>
+<tr>
+<td style="text-align:left">os</td>
+<td>enum</td>
+<td>OS ( ios/android )</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td>enum</td>
+<td>プッシュ通知ステータス ( unknown/validating/active/inactive/invalid )</td>
+</tr>
+<tr>
+<td style="text-align:left">environment</td>
+<td>enum</td>
+<td>デバイス環境 ( development/production )</td>
+</tr>
+<tr>
+<td style="text-align:left">applicationId</td>
+<td>number</td>
+<td>Growth Push アプリケーションID</td>
+</tr>
+<tr>
+<td style="text-align:left">code</td>
+<td>string</td>
+<td>Growth Push Code</td>
+</tr>
+<tr>
+<td style="text-align:left">created</td>
+<td>string</td>
+<td>作成日 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+</tbody>
+</table>
+<div id="clients-get-client-by-device-token" class="resource"><h3 class="resource-heading">Get Client By Device Token <a href="#clients-get-client-by-device-token" class="permalink">&nbsp;&para;</a></h3><div id="clients-get-client-by-device-token-get" class="action get"><h4 class="action-heading"><div class="name">Get Client By Device Token</div><a href="#clients-get-client-by-device-token-get" class="method get">GET</a><code class="uri">/clients{?applicationId}{&amp;credentialId}{&amp;token}</code></h4><p>クライアント取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-1"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-1" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/clients?<span class="hljs-attribute">applicationId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">token=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>applicationId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat アプリケーションID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>デバイストークン</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_CODE"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value"><span class="hljs-string">"GRWOTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">os</span>": <span class="hljs-value"><span class="hljs-string">"ios"</span></span>,
+  "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"unknown"</span></span>,
+  "<span class="hljs-attribute">environment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span></span>,
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">os</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"ios"</span>,
+        <span class="hljs-string">"android"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"unknown"</span>,
+        <span class="hljs-string">"validating"</span>,
+        <span class="hljs-string">"active"</span>,
+        <span class="hljs-string">"inactive"</span>,
+        <span class="hljs-string">"invalid"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">environment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"production"</span>,
+        <span class="hljs-string">"development"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="clients-create-new-client" class="resource"><h3 class="resource-heading">Create New Client <a href="#clients-create-new-client" class="permalink">&nbsp;&para;</a></h3><div id="clients-create-new-client-post" class="action post"><h4 class="action-heading"><div class="name">Create New Client</div><a href="#clients-create-new-client-post" class="method post">POST</a><code class="uri">/clients</code></h4><p>新規クライアント作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-2"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-2" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/clients</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">os</span>": <span class="hljs-value"><span class="hljs-string">"ios"</span></span>,
+  "<span class="hljs-attribute">environment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クライアントID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"デバイストークン"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">os</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"ios"</span>,
+        <span class="hljs-string">"android"</span>
+      ]</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"OS"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">environment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"production"</span>,
+        <span class="hljs-string">"development"</span>
+      ]</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"デバイス環境"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"clientId"</span>,
+    <span class="hljs-string">"credentialId"</span>,
+    <span class="hljs-string">"os"</span>,
+    <span class="hljs-string">"environment"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_CODE"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value"><span class="hljs-string">"GRWOTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">os</span>": <span class="hljs-value"><span class="hljs-string">"ios"</span></span>,
+  "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"unknown"</span></span>,
+  "<span class="hljs-attribute">environment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span></span>,
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">os</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"ios"</span>,
+        <span class="hljs-string">"android"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"unknown"</span>,
+        <span class="hljs-string">"validating"</span>,
+        <span class="hljs-string">"active"</span>,
+        <span class="hljs-string">"inactive"</span>,
+        <span class="hljs-string">"invalid"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">environment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"production"</span>,
+        <span class="hljs-string">"development"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="clients-update-a-client" class="resource"><h3 class="resource-heading">Update a Client <a href="#clients-update-a-client" class="permalink">&nbsp;&para;</a></h3><div id="clients-update-a-client-put" class="action put"><h4 class="action-heading"><div class="name">Update a Client</div><a href="#clients-update-a-client-put" class="method put">PUT</a><code class="uri">/clients/{clientId}</code></h4><p>クライアント更新</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-3"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-3" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/clients/<span class="hljs-attribute" title="clientId">clientId</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>clientId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クライアントID</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">environment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャル"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"デバイストークン"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">environment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"production"</span>,
+        <span class="hljs-string">"development"</span>
+      ]</span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"デバイス環境"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"credentialId"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">code</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_CODE"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value"><span class="hljs-string">"GRWOTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">os</span>": <span class="hljs-value"><span class="hljs-string">"ios"</span></span>,
+  "<span class="hljs-attribute">status</span>": <span class="hljs-value"><span class="hljs-string">"unknown"</span></span>,
+  "<span class="hljs-attribute">environment</span>": <span class="hljs-value"><span class="hljs-string">"production"</span></span>,
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">code</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatClientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">growthbeatApplicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">os</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"ios"</span>,
+        <span class="hljs-string">"android"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">status</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"unknown"</span>,
+        <span class="hljs-string">"validating"</span>,
+        <span class="hljs-string">"active"</span>,
+        <span class="hljs-string">"inactive"</span>,
+        <span class="hljs-string">"invalid"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">environment</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"production"</span>,
+        <span class="hljs-string">"development"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="events" class="resource-group"><h2 class="group-heading">Events <a href="#events" class="permalink">&para;</a></h2><p><strong>Event Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">goalId</td>
+<td>number</td>
+<td>イベントID</td>
+</tr>
+<tr>
+<td style="text-align:left">timestamp</td>
+<td>number</td>
+<td>作成日時</td>
+</tr>
+<tr>
+<td style="text-align:left">clientId</td>
+<td>number</td>
+<td>Growth Push クライアントID</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td>string</td>
+<td>イベント値</td>
+</tr>
+</tbody>
+</table>
+<div id="events-create-new-event" class="resource"><h3 class="resource-heading">Create New Event <a href="#events-create-new-event" class="permalink">&nbsp;&para;</a></h3><div id="events-create-new-event-post" class="action post"><h4 class="action-heading"><div class="name">Create New Event</div><a href="#events-create-new-event-post" class="method post">POST</a><code class="uri">/events</code></h4><p>新規イベント作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-4"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-4" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/events</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クライアントID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"イベント名"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"イベント値"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"clientId"</span>,
+    <span class="hljs-string">"credentialId"</span>,
+    <span class="hljs-string">"name"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">goalId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">timestamp</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">goalId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">timestamp</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="segments" class="resource-group"><h2 class="group-heading">Segments <a href="#segments" class="permalink">&para;</a></h2><p><strong>Segment Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
+<td>number</td>
+<td>セグメントID</td>
+</tr>
+<tr>
+<td style="text-align:left">name</td>
+<td>string</td>
+<td>セグメント名</td>
+</tr>
+<tr>
+<td style="text-align:left">query</td>
+<td>string</td>
+<td><strong>JSON形式</strong> のセグメント。セグメントには、タグ・イベント・セグメントをかけ合わせて組み合わせることができます。</td>
+</tr>
+<tr>
+<td style="text-align:left">size</td>
+<td>number</td>
+<td>セグメント対象人数 詳細は <a href="http://faq.growthbeat.com/article/166-article">セグメントの概算人数とは？いつ更新されるのか？</a> 参照。</td>
+</tr>
+<tr>
+<td style="text-align:left">invisible</td>
+<td>boolean</td>
+<td>削除フラグ</td>
+</tr>
+<tr>
+<td style="text-align:left">modified</td>
+<td>string</td>
+<td>更新日時 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+<tr>
+<td style="text-align:left">created</td>
+<td>string</td>
+<td>作成日時 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+</tbody>
+</table>
+<h2 id="header-segment-query">Segment Query <a class="permalink" href="#header-segment-query" aria-hidden="true">¶</a></h2>
+<p>query パラメーターに指定する JSON形式 のセグメント作成方法</p>
+<p><strong>タグセグメント</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td>tag</td>
+<td>タグ指定は必ず <code>tag</code> と入力してください。</td>
+</tr>
+<tr>
+<td style="text-align:left">tagId</td>
+<td>任意のタグID</td>
+<td>管理画面から tagId を確認してください</td>
+</tr>
+<tr>
+<td style="text-align:left">operator</td>
+<td>equal(=) / begin_witch(前方一致) / less_equal(&gt;=) / less_than(&lt;) / greater_qeual(&gt;=) / greater_than(&gt;) / exist(存在) / in(含む)</td>
+<td>指定する value に合わせて変更してください</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td>任意の値</td>
+<td>抽出するタグの値</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<ol>
+<li>男性ユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">2</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"male"</span></span>}</code></pre>
+<ol start="2">
+<li>指定のタグが紐づいているユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">3</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"exist"</span></span>}</code></pre>
+<ol start="3">
+<li>指定のタグに xxxx,YYYY,ZZzzAA…… の value が紐づいているユーザー (valueの値は <strong>10件以上</strong> 指定する必要がございます。)</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">4</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"in"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"xxxx,YYYY,ZZzzAA……"</span></span>}</code></pre>
+</div>
+<p><strong>イベントセグメント</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td>event</td>
+<td>イベント指定は必ず event と入力してください</td>
+</tr>
+<tr>
+<td style="text-align:left">goalId</td>
+<td>任意のイベントID</td>
+<td>管理画面から eventId(goalId) を確認してください</td>
+</tr>
+<tr>
+<td style="text-align:left">range</td>
+<td>relative(相対時間) / absolute(絶対時間)</td>
+<td>相対時間もしくは絶対時間を指定できます</td>
+</tr>
+<tr>
+<td style="text-align:left">begin</td>
+<td>relative(現在時刻からの指定時間までのミリ秒) / absolute(YYYY-MM-DD HH:mm:ss)</td>
+<td>期限の開始時間を設定します</td>
+</tr>
+<tr>
+<td style="text-align:left">end</td>
+<td>relative(現在時刻からの指定時間までのミリ秒) / absolute(YYYY-MM-DD HH:mm:ss)</td>
+<td>期限の終了時間を設定します</td>
+</tr>
+<tr>
+<td style="text-align:left">aggregation</td>
+<td>count(発生回数) / summation(値の合計) / maximu(値の合計) / minimum(値の最小)</td>
+<td>イベントの計算豊富お</td>
+</tr>
+<tr>
+<td style="text-align:left">operator</td>
+<td>equal(=) / begin_witch(前方一致) / less_equal(&gt;=) / less_than(&lt;) / greater_qeual(&gt;=)</td>
+<td>指定する value に合わせて変更してください</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td>任意の値</td>
+<td>aggregation に対する指定値</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<ol>
+<li>72時間で1回以上起動しているユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"event"</span></span>,"<span class="hljs-attribute">goalId</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>,"<span class="hljs-attribute">range</span>":<span class="hljs-value"><span class="hljs-string">"relative"</span></span>,"<span class="hljs-attribute">aggregation</span>":<span class="hljs-value"><span class="hljs-string">"count"</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"greater_equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-number">1.0</span></span>,"<span class="hljs-attribute">begin</span>":<span class="hljs-value"><span class="hljs-number">259200000</span></span>,"<span class="hljs-attribute">end</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>}</code></pre>
+</div>
+<p><strong>セグメント掛けあわせ</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td>and / or</td>
+<td>and 演算子、 or 演算子で計算します</td>
+</tr>
+<tr>
+<td style="text-align:left">conditions</td>
+<td>タグ・イベントの掛けあわせ</td>
+<td>JSON形式</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<ol>
+<li>男性ユーザー、かつ72時間で1回以上起動しているユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"and"</span></span>,"<span class="hljs-attribute">conditions</span>":<span class="hljs-value">[{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">2</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"male"</span></span>},{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"event"</span></span>,"<span class="hljs-attribute">goalId</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>,"<span class="hljs-attribute">range</span>":<span class="hljs-value"><span class="hljs-string">"relative"</span></span>,"<span class="hljs-attribute">aggregation</span>":<span class="hljs-value"><span class="hljs-string">"count"</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"greater_equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-number">1.0</span></span>,"<span class="hljs-attribute">begin</span>":<span class="hljs-value"><span class="hljs-number">259200000</span></span>,"<span class="hljs-attribute">end</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>}]</span>}</code></pre>
+<ol start="2">
+<li>東京のユーザー、または神奈川のユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"or"</span></span>,"<span class="hljs-attribute">conditions</span>":<span class="hljs-value">[{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">4</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"Tokyo"</span></span>},{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">4</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"Kanagawa"</span></span>}]</span>}</code></pre>
+<ol start="3">
+<li>ユーザーID複数して、24時間前の課金合計が5000以上のユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"and"</span></span>,"<span class="hljs-attribute">conditions</span>":<span class="hljs-value">[{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">25</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"in"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"111,23,90,150,72,65,55,1320"</span></span>},{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"event"</span></span>,"<span class="hljs-attribute">goalId</span>":<span class="hljs-value"><span class="hljs-number">5</span></span>,"<span class="hljs-attribute">range</span>":<span class="hljs-value"><span class="hljs-string">"relative"</span></span>,"<span class="hljs-attribute">aggregation</span>":<span class="hljs-value"><span class="hljs-string">"summation"</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"greater_equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-number">50000</span></span>,"<span class="hljs-attribute">begin</span>":<span class="hljs-value"><span class="hljs-number">3600000</span></span>,"<span class="hljs-attribute">end</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>}]</span>}</code></pre>
+</div>
+<p><strong>否定セグメント</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td>not</td>
+<td>論理否定</td>
+</tr>
+<tr>
+<td style="text-align:left">conditions</td>
+<td>タグ・イベントの掛けあわせ</td>
+<td>JSON形式</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<ol>
+<li>72時間で1回も起動していないユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"not"</span></span>,"<span class="hljs-attribute">condition</span>":<span class="hljs-value">{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"event"</span></span>,"<span class="hljs-attribute">goalId</span>":<span class="hljs-value"><span class="hljs-number">1</span></span>,"<span class="hljs-attribute">range</span>":<span class="hljs-value"><span class="hljs-string">"relative"</span></span>,"<span class="hljs-attribute">aggregation</span>":<span class="hljs-value"><span class="hljs-string">"count"</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"greater_equal"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-number">1.0</span></span>,"<span class="hljs-attribute">begin</span>":<span class="hljs-value"><span class="hljs-number">259200000</span></span>,"<span class="hljs-attribute">end</span>":<span class="hljs-value"><span class="hljs-number">0</span></span>}</span>}</code></pre>
+</div>
+<p><strong>既存セグメント</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Parameter</th>
+<th>Value</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">type</td>
+<td>segment</td>
+<td>セグメント指定の場合は必ず segment と入力してください</td>
+</tr>
+<tr>
+<td style="text-align:left">segmentId</td>
+<td>任意のセグメントID</td>
+<td>既に作成済みのセグメントIDを指定してください</td>
+</tr>
+</tbody>
+</table>
+<div class="note">
+<ol>
+<li>セグメントを指定かつ、OSがiOSのユーザー</li>
+</ol>
+<pre><code>{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"and"</span></span>,"<span class="hljs-attribute">conditions</span>":<span class="hljs-value">[{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"segment"</span></span>,"<span class="hljs-attribute">segmentId</span>":<span class="hljs-value"><span class="hljs-number">10</span></span>},{"<span class="hljs-attribute">type</span>":<span class="hljs-value"><span class="hljs-string">"tag"</span></span>,"<span class="hljs-attribute">tagId</span>":<span class="hljs-value"><span class="hljs-number">4</span></span>,"<span class="hljs-attribute">operator</span>":<span class="hljs-value"><span class="hljs-string">"begin_with"</span></span>,"<span class="hljs-attribute">value</span>":<span class="hljs-value"><span class="hljs-string">"iOS"</span></span>}]</span>}</code></pre>
+</div>
+<div id="segments-get-segments" class="resource"><h3 class="resource-heading">Get Segments <a href="#segments-get-segments" class="permalink">&nbsp;&para;</a></h3><div id="segments-get-segments-get" class="action get"><h4 class="action-heading"><div class="name">Get Segments</div><a href="#segments-get-segments-get" class="method get">GET</a><code class="uri">/segments{?applicationId}{&amp;credentialId}{&amp;page}{&amp;limit}</code></h4><p>セグメント一覧取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-5"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-5" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/segments?<span class="hljs-attribute">applicationId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">page=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>applicationId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat アプリケーションID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>page</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>1</span></span>&nbsp;<p>ページ数</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>100</span></span>&nbsp;<p>リミット</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span></span>,
+    "<span class="hljs-attribute">size</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">invisible</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+    "<span class="hljs-attribute">modified</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+  </span>}
+]</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="segments-get-segment-size" class="resource"><h3 class="resource-heading">Get Segment Size <a href="#segments-get-segment-size" class="permalink">&nbsp;&para;</a></h3><div id="segments-get-segment-size-get" class="action get"><h4 class="action-heading"><div class="name">Get Segment Size</div><a href="#segments-get-segment-size-get" class="method get">GET</a><code class="uri">/segments/size{?applicationId}{&amp;credentialId}{&amp;condition}</code></h4><p>セグメントサイズ取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-6"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-6" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/segments/size?<span class="hljs-attribute">applicationId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">condition=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>applicationId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat アプリケーションID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>condition</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>query（<strong>JSON形式</strong> のセグメント）</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>1</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="segments-create-new-segment" class="resource"><h3 class="resource-heading">Create New Segment <a href="#segments-create-new-segment" class="permalink">&nbsp;&para;</a></h3><div id="segments-create-new-segment-post" class="action post"><h4 class="action-heading"><div class="name">Create New Segment</div><a href="#segments-create-new-segment-post" class="method post">POST</a><code class="uri">/segments</code></h4><p>新規セグメント作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-7"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-7" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/segments</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat アプリケーションID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"セグメント名"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"**JSON形式** のセグメント"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"applicationId"</span>,
+    <span class="hljs-string">"credentialId"</span>,
+    <span class="hljs-string">"name"</span>,
+    <span class="hljs-string">"query"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span></span>,
+  "<span class="hljs-attribute">size</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">invisible</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">modified</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">size</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">invisible</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">modified</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="segments-update-a-segment" class="resource"><h3 class="resource-heading">Update a Segment <a href="#segments-update-a-segment" class="permalink">&nbsp;&para;</a></h3><div id="segments-update-a-segment-put" class="action put"><h4 class="action-heading"><div class="name">Update a Segment</div><a href="#segments-update-a-segment-put" class="method put">PUT</a><code class="uri">/segments/{segmentId}</code></h4><p>セグメント更新</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-8"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-8" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/segments/<span class="hljs-attribute" title="segmentId">segmentId</span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>segmentId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>セグメントID</p>
+</dd></dl></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"セグメント名"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"**JSON形式** のセグメント"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"credentialId"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">query</span>": <span class="hljs-value"><span class="hljs-string">"QUERY"</span></span>,
+  "<span class="hljs-attribute">size</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">invisible</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">modified</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">query</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">size</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">invisible</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">modified</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="tags" class="resource-group"><h2 class="group-heading">Tags <a href="#tags" class="permalink">&para;</a></h2><p><strong>Tag Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">id</td>
+<td>number</td>
+<td>タグID</td>
+</tr>
+<tr>
+<td style="text-align:left">applicationId</td>
+<td>number</td>
+<td>Growth Push アプリケーションID</td>
+</tr>
+<tr>
+<td style="text-align:left">type</td>
+<td>enum</td>
+<td>タグタイプ ( custom/message )</td>
+</tr>
+<tr>
+<td style="text-align:left">name</td>
+<td>string</td>
+<td>タグ名</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td>string</td>
+<td>タグ値</td>
+</tr>
+<tr>
+<td style="text-align:left">invisible</td>
+<td>boolean</td>
+<td>削除フラグ</td>
+</tr>
+<tr>
+<td style="text-align:left">created</td>
+<td>string</td>
+<td>作成日 ( YYYY-MM-DD HH:mm:ss )</td>
+</tr>
+</tbody>
+</table>
+<div id="tags-get-tag" class="resource"><h3 class="resource-heading">Get Tag <a href="#tags-get-tag" class="permalink">&nbsp;&para;</a></h3><div id="tags-get-tag-get" class="action get"><h4 class="action-heading"><div class="name">Get Tag</div><a href="#tags-get-tag-get" class="method get">GET</a><code class="uri">/tags{?applicationId}{&amp;credentialId}{&amp;name}</code></h4><p>タグ取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-9"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-9" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags?<span class="hljs-attribute">applicationId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">name=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>applicationId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat アプリケーションID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>タグ名</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"custom"</span></span>,
+  "<span class="hljs-attribute">invisible</span>": <span class="hljs-value"><span class="hljs-literal">true</span></span>,
+  "<span class="hljs-attribute">created</span>": <span class="hljs-value"><span class="hljs-string">"2015-02-03 12:34:56"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">id</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">type</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">enum</span>": <span class="hljs-value">[
+        <span class="hljs-string">"custom"</span>,
+        <span class="hljs-string">"message"</span>
+      ]
+    </span>}</span>,
+    "<span class="hljs-attribute">invisible</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"boolean"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">created</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="tag-clients" class="resource-group"><h2 class="group-heading">Tag Clients <a href="#tag-clients" class="permalink">&para;</a></h2><div class="note">
+<p>タグに紐づくクライアントを抽出するAPIです</p>
+</div>
+<p><strong>Tag Client Object</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th>Type</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">tagId</td>
+<td>number</td>
+<td>タグID</td>
+</tr>
+<tr>
+<td style="text-align:left">clientId</td>
+<td>number</td>
+<td>Growth Push クライアントID</td>
+</tr>
+<tr>
+<td style="text-align:left">value</td>
+<td>string</td>
+<td>タグ値</td>
+</tr>
+</tbody>
+</table>
+<div id="tag-clients-get-tag-clients-by-tag-id" class="resource"><h3 class="resource-heading">Get Tag Clients By Tag Id <a href="#tag-clients-get-tag-clients-by-tag-id" class="permalink">&nbsp;&para;</a></h3><div id="tag-clients-get-tag-clients-by-tag-id-get" class="action get"><h4 class="action-heading"><div class="name">Get Tag Clients By Tag Id</div><a href="#tag-clients-get-tag-clients-by-tag-id-get" class="method get">GET</a><code class="uri">/tags{?tagId}{&amp;credentialId}{&amp;exclusiveClientId}{&amp;limit}{&amp;order}</code></h4><p>タグクライアントリスト取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-10"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-10" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags?<span class="hljs-attribute">tagId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">exclusiveClientId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">order=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>tagId</dt><dd><code>number</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>タグID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>exclusiveClientId</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>Growth Push クライアントID</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>100</span></span>&nbsp;<p>リミット</p>
+</dd><dt>order</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>descoding</span></span>&nbsp;<p>ソート</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>ascending</code> <code>descending</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+  </span>}
+]</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="tag-clients-get-tag-clients-by-client-id" class="resource"><h3 class="resource-heading">Get Tag Clients By Client Id <a href="#tag-clients-get-tag-clients-by-client-id" class="permalink">&nbsp;&para;</a></h3><div id="tag-clients-get-tag-clients-by-client-id-get" class="action get"><h4 class="action-heading"><div class="name">Get Tag Clients By Client Id</div><a href="#tag-clients-get-tag-clients-by-client-id-get" class="method get">GET</a><code class="uri">/tags{?clientId}{&amp;credentialId}{&amp;type}{&amp;exclusiveTagId}{&amp;limit}{&amp;order}</code></h4><p>タグクライアントの取得</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-11"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-11" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags?<span class="hljs-attribute">clientId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">credentialId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">type=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">exclusiveTagId=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">limit=</span><span class="hljs-literal"></span>&<span class="hljs-attribute">order=</span><span class="hljs-literal"></span></span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>clientId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クライアントID</p>
+</dd><dt>credentialId</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<p>Growthbeat クレデンシャルID</p>
+</dd><dt>type</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<p>タグタイプ</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>custom</code> <code>notification</code> <code>automation</code> <code>message</code> </p></dd><dt>exclusiveTagId</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<p>タグID</p>
+</dd><dt>limit</dt><dd><code>number</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>100</span></span>&nbsp;<p>リミット</p>
+</dd><dt>order</dt><dd><code>string</code>&nbsp;<span>(optional)</span>&nbsp;<span class="text-info default"><strong>Default:&nbsp;</strong><span>descoding</span></span>&nbsp;<p>ソート</p>
+<p class="choices"><strong>Choices:&nbsp;</strong><code>ascending</code> <code>descending</code> </p></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+  </span>}
+]</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="tag-clients-create-new-tags" class="resource"><h3 class="resource-heading">Create New Tags <a href="#tag-clients-create-new-tags" class="permalink">&nbsp;&para;</a></h3><div id="tag-clients-create-new-tags-post" class="action post"><h4 class="action-heading"><div class="name">Create New Tags</div><a href="#tag-clients-create-new-tags-post" class="method post">POST</a><code class="uri">/tags</code></h4><p>タグクライアントの作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-12"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-12" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<div class="note">
+<ul>
+<li>
+<p>Growthbeat クライアントID と、Growthbeat クレデンシャルID を使用します。</p>
+</li>
+<li>
+<p>このAPIは、指定のデバイスにまとめてタグ付けをします。既にタグが登録されている場合は、そのvalueを更新します。</p>
+</li>
+<li>
+<p>リクエスト数は指定したタグの件数分カウントされます。また、Notificationタグは更新する事はできません。</p>
+</li>
+<li>
+<p>大量のタグを更新することを想定しているため <strong>反映までに時間がかかる場合があります(数時間以上かかる場合があります)</strong>  。即時性が必要な場合は、1件ずつのタグ付けを利用してください。</p>
+</li>
+</ul>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">{\"clientId\"</span>": <span class="hljs-value"><span class="hljs-string">"\"GROWTHBEAT_CLIENT_ID\",\"credentialId\":\"GROWTHBEAT_CREDENTIAL_ID\",\"tagIdValues\":[{\"tagId\":1,\"value\":\"hoge\"},{\"tagId\":2,\"value\":\"fuga\"}]}"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">{\"clientId\"</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"JSON"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"{\"clientId\""</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>[
+  {
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+  </span>}
+]</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="tag-clients-create-new-tag-by-client-id" class="resource"><h3 class="resource-heading">Create New Tag By Client Id <a href="#tag-clients-create-new-tag-by-client-id" class="permalink">&nbsp;&para;</a></h3><div id="tag-clients-create-new-tag-by-client-id-post" class="action post"><h4 class="action-heading"><div class="name">Create New Tag By Client Id</div><a href="#tag-clients-create-new-tag-by-client-id-post" class="method post">POST</a><code class="uri">/tags</code></h4><p>タグクライアントの作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-13"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-13" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<div class="note">
+<p>このAPIは、Growthbeat クレデンシャルID と、Growthbeat クライアントID を元にタグを紐付けます。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CLIENT_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クライアントID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"タグ名"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"タグ値"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"clientId"</span>,
+    <span class="hljs-string">"credentialId"</span>,
+    <span class="hljs-string">"name"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="tag-clients-create-new-tag-by-device-token" class="resource"><h3 class="resource-heading">Create New Tag By Device Token <a href="#tag-clients-create-new-tag-by-device-token" class="permalink">&nbsp;&para;</a></h3><div id="tag-clients-create-new-tag-by-device-token-post" class="action post"><h4 class="action-heading"><div class="name">Create New Tag By Device Token</div><a href="#tag-clients-create-new-tag-by-device-token-post" class="method post">POST</a><code class="uri">/tags</code></h4><p>タグクライアントの作成</p>
+<div class="warning">
+<h2 id="header-deprecation-notice-14"><i class="fa fa-warning"></i> Deprecation Notice <a class="permalink" href="#header-deprecation-notice-14" aria-hidden="true">¶</a></h2>
+<p>このAPIは <strong>廃止予定</strong> です。</p>
+</div>
+<div class="note">
+<p>このAPIは、Growthbeat クレデンシャルID と、デバイストークン を元にタグを紐付けます。</p>
+</div>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname">https://api.growthpush.com/3</span>/tags</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/x-www-form-urlencoded</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_APPLICATION_ID"</span></span>,
+  "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value"><span class="hljs-string">"GROWTHBEAT_CREDENTIAL_ID"</span></span>,
+  "<span class="hljs-attribute">token</span>": <span class="hljs-value"><span class="hljs-string">"DEVICE_TOKEN"</span></span>,
+  "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"NAME"</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">applicationId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat アプリケーションID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">credentialId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"Growthbeat クレデンシャルID"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">token</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"デバイストークン"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"タグ名"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
+      "<span class="hljs-attribute">description</span>": <span class="hljs-value"><span class="hljs-string">"タグ値"</span>
+    </span>}
+  </span>}</span>,
+  "<span class="hljs-attribute">required</span>": <span class="hljs-value">[
+    <span class="hljs-string">"applicationId"</span>,
+    <span class="hljs-string">"credentialId"</span>,
+    <span class="hljs-string">"token"</span>,
+    <span class="hljs-string">"name"</span>
+  ]</span>,
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span>
+</span>}</code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+  "<span class="hljs-attribute">tagId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">clientId</span>": <span class="hljs-value"><span class="hljs-number">0</span></span>,
+  "<span class="hljs-attribute">value</span>": <span class="hljs-value"><span class="hljs-string">"VALUE"</span>
+</span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
+  "<span class="hljs-attribute">$schema</span>": <span class="hljs-value"><span class="hljs-string">"http://json-schema.org/draft-04/schema#"</span></span>,
+  "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+  "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
+    "<span class="hljs-attribute">tagId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">clientId</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">value</span>": <span class="hljs-value">{
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+    </span>}
+  </span>}
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 27 Feb 2018</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>
