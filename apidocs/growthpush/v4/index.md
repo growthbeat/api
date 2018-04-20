@@ -91,15 +91,7 @@ Clients API : 2リクエスト / 秒
 + Request (application/x-www-form-urlencoded)
     + Headers
     + Attributes
-        + applicationId: GROWTHBEAT_APPLICATION_ID (required, string) - Growthbeat アプリケーションID
-        + credentialId: GROWTHBEAT_CREDENTIAL_ID (required, string) - Growthbeat クレデンシャルID
-        + token: DEVICE_TOKEN (required, string) - デバイストークン
-        + os: ios (required, enum[string]) - OS
-            + ios
-            + android
-        + environment: development (required, enum[string]) - デバイス環境
-            + production
-            + development
+        applicationId=${GROWTHBEAT_APPLICATION_ID}&credentialId=${GROWTHBEAT_CREDENTIAL_ID}&${token}&${os: (ios/android)}&environment=${environment: (development/production)}
 
 + Response 200 (application/json)
     + Attributes (GrowthbeatClient)
